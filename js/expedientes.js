@@ -22,18 +22,19 @@ async function cargarPersonas(){
 
         combo.innerHTML = '';
 
-        personas
-        .filter(p => p.Activo === 'Si')
-        .forEach(persona => {
+       personas
+.filter(p => p.Activo === 'Si')
+.forEach(persona => {
 
-            combo.innerHTML += `
-    <option
-    value="${persona.Nombre}"
-    data-actividad="${persona.Actividad}">
-    ${persona.Nombre}
+    combo.innerHTML += `
+<option
+value="${persona.Nombre}"
+data-actividad="${persona.Actividad}">
+${persona.Nombre}
 </option>
+`;
 
-        });
+});
 
         actualizarActividadPersona();
 
