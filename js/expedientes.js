@@ -39,11 +39,13 @@ ${persona.Nombre}
         actualizarActividadPersona();
 
     }
-    catch(error){
+   catch(error){
 
-        console.error(error);
+    console.error(error);
 
-    }
+    alert(error.toString());
+
+}
 
 }
 
