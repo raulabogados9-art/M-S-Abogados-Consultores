@@ -173,8 +173,10 @@ async function guardarSalida(){
 
         };
 
-        console.log(expediente);
-        console.log(movimiento);
+       console.log("ANTES FETCH EXPEDIENTE");
+	   console.log("DESPUES FETCH EXPEDIENTE");
+       console.log("ANTES FETCH MOVIMIENTO");
+       console.log("DESPUES FETCH MOVIMIENTO");
 
 await fetch(API_URL,{
     method:"POST",
@@ -201,15 +203,23 @@ document.getElementById(
     'txtObservaciones'
 ).value = '';
 
-await fetch(API_URL,{
-    method:"POST",
-    mode:"no-cors",
-    body:JSON.stringify({
-        sheet:"MOVIMIENTOS",
+console.log("ANTES FETCH MOVIMIENTO");
+
+await fetch(API_URL, {
+
+    method: "POST",
+
+    body: JSON.stringify({
+
+        sheet: "MOVIMIENTOS",
+
         ...movimiento
+
     })
+
 });
 
+console.log("DESPUES FETCH MOVIMIENTO");
         alert(
             'Salida registrada correctamente'
         );
@@ -219,9 +229,7 @@ await fetch(API_URL,{
 
         console.error(error);
 
-        alert(
-            'Error al registrar salida'
-        );
+      alert(error.toString());
 
     }
 
