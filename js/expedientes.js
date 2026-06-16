@@ -28,11 +28,10 @@ async function cargarPersonas(){
 
             combo.innerHTML += `
     <option
-        value="${persona.Nombre}"
-        data-actividad="${persona.Actividad}">
-        ${persona.Nombre}
-    </option>
-`;
+    value="${persona.Nombre}"
+    data-actividad="${persona.Actividad}">
+    ${persona.Nombre}
+</option>
 
         });
 
