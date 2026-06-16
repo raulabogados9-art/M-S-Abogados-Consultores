@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>M&S ABOGADOS CONSULTORES - EXPEDIENTES V2</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+href="css/estilos.css">
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+
+<div id="loginContainer" class="login-container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4>M&S ABOGADOS CONSULTORES</h4>
+        </div>
+
+        <div class="card-body">
+
+            <label>Usuario</label>
+            <input
+                type="text"
+                id="txtUsuario"
+                class="form-control">
+
+            <br>
+
+            <label>Contraseña</label>
+            <input
+                type="password"
+                id="txtPassword"
+                class="form-control">
+
+            <br>
+
+            <button
+                class="btn btn-primary w-100"
+                onclick="login()">
+
+                Iniciar Sesión
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SISTEMA -->
+
+<div id="mainContainer" style="display:none;">
+
+    <div class="alert alert-primary">
+        Usuario:
+        <span id="lblUsuario"></span>
+    </div>
+
+    <h2>Sistema de Expedientes</h2>
+
+    <hr>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <div>
+
+        <strong id="lblUsuarioSistema">
+    Usuario
+</strong>
+
+    </div>
+
+    <div>
+
+        <button
+            class="btn btn-danger btn-sm"
+            onclick="logout()">
+
+            Cerrar Sesión
+
+        </button>
+
+    </div>
+
+</div>
+
+<nav class="mb-3">
+
+    <button
+        class="btn btn-primary btn-sm"
+        onclick="mostrarModulo('expedientes')">
+        Expedientes
+    </button>
+
+    <button
+        class="btn btn-primary btn-sm"
+        id="menuPersonas"
+        onclick="mostrarModulo('personas')">
+        Personas
+    </button>
+
+    <button
+        class="btn btn-primary btn-sm"
+        id="menuActividades"
+        onclick="mostrarModulo('actividades')">
+        Actividades
+    </button>
+
+    <button
+        class="btn btn-primary btn-sm"
+        id="menuUsuarios"
+        onclick="mostrarModulo('usuarios')">
+        Usuarios
+    </button>
+
+</nav>
+
+<hr>
+
+<div id="expedientes">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h3>Control de Expedientes</h3>
+
+        <button
+            class="btn btn-success"
+            onclick="abrirModalSalida()">
+
+            Nueva Salida
+
+        </button>
+
+    </div>
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+
+            <tr>
+
+                <th>No. Expediente</th>
+                <th>No. Interno</th>
+                <th>Responsable</th>
+                <th>Estado</th>
+                <th>Último Movimiento</th>
+                <th>Acciones</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tbodyExpedientes">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div
+    class="modal fade"
+    id="modalSalida">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5>Nueva Salida de Expediente</h5>
+
+                <button
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label>No. Expediente</label>
+
+                        <input
+                            type="text"
+                            id="txtNoExpediente"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label>No. Interno</label>
+
+                        <input
+                            type="text"
+                            id="txtNumeroInterno"
+                            class="form-control">
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <label>Persona Responsable</label>
+
+                <select
+                    id="cmbPersonaResponsable"
+                    class="form-control">
+                </select>
+
+                <br>
+
+                <label>Actividad</label>
+
+                <input
+                    type="text"
+                    id="txtActividad"
+                    class="form-control"
+                    readonly>
+
+                <br>
+
+                <label>Observaciones</label>
+
+                <textarea
+                    id="txtObservaciones"
+                    class="form-control">
+                </textarea>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-success"
+                    onclick="guardarSalida()">
+
+                    Registrar Salida
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL USUARIO -->
+
+            
+<div
+    class="modal fade"
+    id="modalUsuario">
+
+<div class="modal-dialog">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h5>Nuevo Usuario</h5>
+
+        </div>
+
+        <div class="modal-body">
+
+            <input
+                id="txtNuevoUsuario"
+                class="form-control mb-2"
+                placeholder="Usuario">
+
+            <input
+                id="txtNuevoPassword"
+                class="form-control mb-2"
+                placeholder="Contraseña">
+
+            <input
+                id="txtNuevoNombre"
+                class="form-control mb-2"
+                placeholder="Nombre Completo">
+
+            <select
+                id="txtNuevoRol"
+                class="form-control">
+
+                <option>Administrador</option>
+                <option>Archivo</option>
+
+            </select>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn btn-primary"
+                onclick="guardarUsuario()">
+
+                Guardar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div id="personas" style="display:none;">
+    <h3>Personas</h3>
+    <p>Módulo en construcción</p>
+</div>
+
+<div id="actividades" style="display:none;">
+    <h3>Actividades</h3>
+    <p>Módulo en construcción</p>
+</div>
+
+<div id="usuarios" style="display:none;">
+    <h3>Usuarios</h3>
+
+    <button
+        class="btn btn-success mb-3"
+        onclick="abrirModalUsuario()">
+        Nuevo Usuario
+    </button>
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Activo</th>
+            </tr>
+        </thead>
+
+        <tbody id="tbodyUsuarios">
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="js/config.js"></script>
+<script src="js/usuarios.js"></script>
+<script src="js/expedientes.js"></script>
+<script src="js/auth.js"></script>
+
+</body>
+</html>
