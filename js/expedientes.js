@@ -174,18 +174,13 @@ async function guardarSalida(){
         console.log(expediente);
         console.log(movimiento);
 
-await fetch(API_URL, {
-
-    method: "POST",
-
-    body: JSON.stringify({
-
-        sheet: "EXPEDIENTES",
-
+await fetch(API_URL,{
+    method:"POST",
+    mode:"no-cors",
+    body:JSON.stringify({
+        sheet:"EXPEDIENTES",
         ...expediente
-
     })
-
 });
 
 document.getElementById(
@@ -204,18 +199,13 @@ document.getElementById(
     'txtObservaciones'
 ).value = '';
 
-await fetch(API_URL, {
-
-    method: "POST",
-
-    body: JSON.stringify({
-
-        sheet: "MOVIMIENTOS",
-
+await fetch(API_URL,{
+    method:"POST",
+    mode:"no-cors",
+    body:JSON.stringify({
+        sheet:"MOVIMIENTOS",
         ...movimiento
-
     })
-
 });
 
         alert(
