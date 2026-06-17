@@ -114,14 +114,14 @@ function logout(){
 
 function mostrarModulo(id){
 
-   const modulos = [
-    'expedientes',
-    'prestados',
-    'historico',
-    'personas',
-    'actividades',
-    'usuarios'
-];
+    const modulos = [
+        'expedientes',
+        'prestados',
+        'historico',
+        'personas',
+        'actividades',
+        'usuarios'
+    ];
 
     modulos.forEach(modulo => {
 
@@ -135,5 +135,12 @@ function mostrarModulo(id){
         .getElementById(id)
         .style.display = 'block';
 
-}
+    if(id === 'prestados'){
+        cargarPrestados();
+    }
 
+    if(id === 'historico'){
+        cargarHistorico();
+    }
+
+}
