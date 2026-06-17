@@ -77,6 +77,10 @@ document.getElementById(
 ).innerHTML =
 encontrado.NombreCompleto;
 
+cargarExpedientes();
+cargarPrestados();
+cargarHistorico();
+
 if(encontrado.Rol === 'Administrador'){
 
     cargarUsuariosTabla();
