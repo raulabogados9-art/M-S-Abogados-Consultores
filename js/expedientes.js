@@ -406,33 +406,32 @@ const movimiento = {
 
 };
 
-await fetch(API_URL,{
+	console.log("ID A ELIMINAR:", id);
 
+await fetch(API_URL,{
     method:'POST',
     mode:'no-cors',
+    headers:{
+        'Content-Type':'text/plain'
+    },
     body:JSON.stringify({
-
         sheet:'MOVIMIENTOS',
-
         ...movimiento
-
     })
-
 });
-
+	
 await fetch(API_URL,{
-
     method:'POST',
     mode:'no-cors',
+    headers:{
+        'Content-Type':'text/plain'
+    },
     body:JSON.stringify({
-
         action:'ELIMINAR_EXPEDIENTE',
-
         ID:id
-
     })
-
 });
+	console.log("SOLICITUD DE ELIMINACION ENVIADA");
 
 alert(
     'Expediente devuelto correctamente'
