@@ -245,6 +245,8 @@ console.log("DESPUES FETCH MOVIMIENTO");
 
 async function cargarPrestados(){
 
+	console.log("CARGANDO PRESTADOS");
+
 try{
 
     const response =
@@ -309,7 +311,7 @@ catch(error){
 }
 
 async function cargarHistorico(){
-
+console.log("CARGANDO HISTORICO");
 try{
 
     const response =
