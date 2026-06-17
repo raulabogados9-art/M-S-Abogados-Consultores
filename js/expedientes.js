@@ -409,7 +409,7 @@ const movimiento = {
 await fetch(API_URL,{
 
     method:'POST',
-
+    mode:'no-cors',
     body:JSON.stringify({
 
         sheet:'MOVIMIENTOS',
@@ -423,7 +423,7 @@ await fetch(API_URL,{
 await fetch(API_URL,{
 
     method:'POST',
-
+    mode:'no-cors',
     body:JSON.stringify({
 
         action:'ELIMINAR_EXPEDIENTE',
