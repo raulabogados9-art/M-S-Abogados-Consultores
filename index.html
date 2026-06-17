@@ -104,6 +104,18 @@ href="css/estilos.css">
     </button>
 
     <button
+    class="btn btn-primary btn-sm"
+    onclick="mostrarModulo('prestados')">
+    Prestados
+</button>
+
+<button
+    class="btn btn-primary btn-sm"
+    onclick="mostrarModulo('historico')">
+    Histórico
+</button>
+
+    <button
         class="btn btn-primary btn-sm"
         id="menuPersonas"
         onclick="mostrarModulo('personas')">
@@ -325,6 +337,61 @@ href="css/estilos.css">
     </div>
 
 </div>
+
+</div>
+
+    <div id="prestados" style="display:none;">
+
+    <h3>Expedientes Prestados</h3>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th>No. Expediente</th>
+                <th>No. Interno</th>
+                <th>Responsable</th>
+                <th>Acciones</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tbodyPrestados">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div id="historico" style="display:none;">
+
+    <h3>Histórico de Movimientos</h3>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th>Fecha</th>
+                <th>Expediente</th>
+                <th>Interno</th>
+                <th>Movimiento</th>
+                <th>Responsable</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tbodyHistorico">
+
+        </tbody>
+
+    </table>
 
 </div>
 
