@@ -224,6 +224,14 @@ console.log("DESPUES FETCH MOVIMIENTO");
             'Salida registrada correctamente'
         );
 
+		bootstrap.Modal.getInstance(
+    document.getElementById('modalSalida')
+).hide();
+
+		if(typeof cargarExpedientes === 'function'){
+    cargarExpedientes();
+}
+
     }
     catch(error){
 
