@@ -381,7 +381,7 @@ return;
 
 try{
 
-```
+
 const movimiento = {
 
     ID: Date.now(),
@@ -442,16 +442,15 @@ alert(
 cargarPrestados();
 
 cargarHistorico();
-```
+
 
 }
 catch(error){
 
-```
 console.error(error);
 
 alert(error.toString());
-```
+
 
 }
 
