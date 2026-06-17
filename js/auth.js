@@ -114,12 +114,14 @@ function logout(){
 
 function mostrarModulo(id){
 
-    const modulos = [
-        'expedientes',
-        'personas',
-        'actividades',
-        'usuarios'
-    ];
+   const modulos = [
+    'expedientes',
+    'prestados',
+    'historico',
+    'personas',
+    'actividades',
+    'usuarios'
+];
 
     modulos.forEach(modulo => {
 
