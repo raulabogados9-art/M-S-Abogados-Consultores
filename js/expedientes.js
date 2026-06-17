@@ -243,4 +243,136 @@ console.log("DESPUES FETCH MOVIMIENTO");
 
 }
 
+async function cargarPrestados(){
+
+try{
+
+    const response =
+        await fetch(
+            API_URL + '?sheet=EXPEDIENTES'
+        );
+
+    const datos =
+        await response.json();
+
+    const tbody =
+        document.getElementById(
+            'tbodyPrestados'
+        );
+
+    if(!tbody) return;
+
+    tbody.innerHTML = '';
+
+    datos.forEach(exp => {
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>${exp.NoExpediente}</td>
+
+            <td>${exp.NumeroInterno}</td>
+
+            <td>${exp.PersonaResponsable}</td>
+
+            <td>
+
+                <button
+                    class="btn btn-warning btn-sm"
+                    onclick="devolverExpediente(
+                        '${exp.ID}',
+                        '${exp.NoExpediente}',
+                        '${exp.NumeroInterno}',
+                        '${exp.PersonaResponsable}'
+                    )">
+
+                    Devolver
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+catch(error){
+
+    console.error(error);
+
+}
+
+}
+
+async function cargarHistorico(){
+
+try{
+
+    const response =
+        await fetch(
+            API_URL + '?sheet=MOVIMIENTOS'
+        );
+
+    const datos =
+        await response.json();
+
+    const tbody =
+        document.getElementById(
+            'tbodyHistorico'
+        );
+
+    if(!tbody) return;
+
+    tbody.innerHTML = '';
+
+    datos.reverse().forEach(mov => {
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>${mov.FechaHora}</td>
+
+            <td>${mov.NoExpediente}</td>
+
+            <td>${mov.NumeroInterno}</td>
+
+            <td>${mov.TipoMovimiento}</td>
+
+            <td>${mov.PersonaResponsable}</td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+catch(error){
+
+    console.error(error);
+
+}
+
+}
+
+function devolverExpediente(
+id,
+expediente,
+interno,
+responsable
+){
+
+alert(
+    'Próximo paso: registrar devolución de ' +
+    expediente +
+    ' / ' +
+    interno
+);
+
+}
 
