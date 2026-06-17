@@ -77,9 +77,17 @@ document.getElementById(
 ).innerHTML =
 encontrado.NombreCompleto;
 
-cargarExpedientes();
-cargarPrestados();
-cargarHistorico();
+if(typeof cargarExpedientes === 'function'){
+    cargarExpedientes();
+}
+
+if(typeof cargarPrestados === 'function'){
+    cargarPrestados();
+}
+
+if(typeof cargarHistorico === 'function'){
+    cargarHistorico();
+}
 
 if(encontrado.Rol === 'Administrador'){
 
