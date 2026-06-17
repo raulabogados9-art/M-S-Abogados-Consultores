@@ -362,19 +362,99 @@ catch(error){
 
 }
 
-function devolverExpediente(
+async function devolverExpediente(
 id,
 expediente,
 interno,
 responsable
 ){
 
+if(
+!confirm(
+'¿Deseas devolver el expediente ' +
+expediente +
+'?'
+)
+){
+return;
+}
+
+try{
+
+```
+const movimiento = {
+
+    ID: Date.now(),
+
+    NoExpediente: expediente,
+
+    NumeroInterno: interno,
+
+    TipoMovimiento: 'Devolucion',
+
+    PersonaResponsable: responsable,
+
+    UsuarioSistema:
+        sessionStorage.getItem(
+            'nombre'
+        ),
+
+    FechaHora:
+        new Date().toLocaleString(),
+
+    Observaciones:
+        'Devuelto al archivo'
+
+};
+
+await fetch(API_URL,{
+
+    method:'POST',
+
+    body:JSON.stringify({
+
+        sheet:'MOVIMIENTOS',
+
+        ...movimiento
+
+    })
+
+});
+
+await fetch(API_URL,{
+
+    method:'POST',
+
+    body:JSON.stringify({
+
+        action:'ELIMINAR_EXPEDIENTE',
+
+        ID:id
+
+    })
+
+});
+
 alert(
-    'Próximo paso: registrar devolución de ' +
-    expediente +
-    ' / ' +
-    interno
+    'Expediente devuelto correctamente'
 );
 
+cargarPrestados();
+
+cargarHistorico();
+```
+
 }
+catch(error){
+
+```
+console.error(error);
+
+alert(error.toString());
+```
+
+}
+
+}
+
 
