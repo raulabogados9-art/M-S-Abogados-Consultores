@@ -224,6 +224,30 @@ console.log("DESPUES FETCH MOVIMIENTO");
             'Salida registrada correctamente'
         );
 
+		document.getElementById(
+    'txtNoExpediente'
+).value = '';
+
+document.getElementById(
+    'txtNumeroInterno'
+).value = '';
+
+document.getElementById(
+    'txtActividad'
+).value = '';
+
+document.getElementById(
+    'txtObservaciones'
+).value = '';
+
+document.getElementById(
+    'cmbPersonaResponsable'
+).selectedIndex = -1;
+
+bootstrap.Modal.getInstance(
+    document.getElementById('modalSalida')
+).hide();
+
 		bootstrap.Modal.getInstance(
     document.getElementById('modalSalida')
 ).hide();
