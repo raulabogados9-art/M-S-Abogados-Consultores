@@ -148,7 +148,7 @@ href="css/estilos.css">
 
         <button
             class="btn btn-success"
-            onclick="abrirModalSalida()">
+            onclick="abrirModalExpediente()">
 
             Nuevo Expediente
 
@@ -165,9 +165,9 @@ href="css/estilos.css">
                 <th>No. Expediente</th>
                 <th>No. Interno</th>
                 <th>Responsable</th>
-                <th>Estado</th>
-                <th>Último Movimiento</th>
-                <th>Acciones</th>
+               <th>Actividad</th>
+               <th>Capturado por</th>
+               <th>Acciones</th>
 
             </tr>
 
@@ -191,7 +191,7 @@ href="css/estilos.css">
 
             <div class="modal-header">
 
-                <h5>Nueva Salida de Expediente</h5>
+                <h5>Nuevo Expediente</h5>
 
                 <button
                     class="btn-close"
@@ -262,9 +262,8 @@ href="css/estilos.css">
 
                 <button
                     class="btn btn-success"
-                    onclick="guardarSalida()">
-
-                    Registrar Salida
+                    onclick="guardarExpediente()">
+                    Guardar Expediente
 
                 </button>
 
@@ -317,6 +316,7 @@ href="css/estilos.css">
 
                 <option>Administrador</option>
                 <option>Archivo</option>
+                <option>Consulta</option>
 
             </select>
 
@@ -422,6 +422,8 @@ href="css/estilos.css">
                 <th>Nombre</th>
                 <th>Rol</th>
                 <th>Activo</th>
+                <th>Acciones</th>
+
             </tr>
         </thead>
 
