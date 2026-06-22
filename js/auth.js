@@ -118,66 +118,67 @@ location.reload();
 
 function mostrarModulo(id){
 
-const modulos=[
+    const modulos=[
 
-'expedientes',
-'prestados',
-'historico',
-'personas',
-'actividades',
-'usuarios'
+        'expedientes',
+        'prestados',
+        'historico',
+        'personas',
+        'actividades',
+        'usuarios'
 
-];
+    ];
 
-modulos.forEach(modulo=>{
+    modulos.forEach(modulo=>{
 
-const elemento=
+        const elemento=
+            document.getElementById(
+                modulo
+            );
 
-document.getElementById(
-modulo
-);
+        if(elemento){
 
-if(
-id==='personas'
-){
+            elemento.style.display='none';
 
-cargarPersonasTabla();
+        }
 
-}
+    });
 
-if(elemento){
+    document
+    .getElementById(
+        id
+    )
+    .style.display='block';
 
-elemento.style.display='none';
 
-}
+    /* CARGAS DINÁMICAS */
 
-});
+    if(
+        id==='prestados' &&
+        typeof cargarPrestados==='function'
+    ){
 
-document.getElementById(
-id
-).style.display='block';
+        cargarPrestados();
 
-if(
+    }
 
-id==='prestados' &&
-typeof cargarPrestados==='function'
+    if(
+        id==='historico' &&
+        typeof cargarHistorico==='function'
+    ){
 
-){
+        cargarHistorico();
 
-cargarPrestados();
+    }
 
-}
+    if(
+        id==='personas' &&
+        typeof cargarPersonasTabla==='function'
+    ){
 
-if(
+        cargarPersonasTabla();
 
-id==='historico' &&
-typeof cargarHistorico==='function'
-
-){
-
-cargarHistorico();
-
-}
+    }
 
 }
 
