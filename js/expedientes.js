@@ -318,33 +318,21 @@ interno,
 responsable,
 actividad,
 observaciones,
-usuario
+usuarioCaptura
 ){
 
-if(prestandoExpediente)return;
+if(prestandoExpediente){
+return;
+}
 
 prestandoExpediente=true;
 
 try{
 
 const fecha=
+new Date().toISOString();
 
-new Date()
-.toLocaleString(
-'es-MX',
-{
-timeZone:
-'America/Mexico_City'
-}
-);
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body:JSON.stringify({
-
-sheet:'PRESTADOS',
+const prestado={
 
 ID:Date.now(),
 
@@ -352,22 +340,20 @@ NoExpediente:expediente,
 NumeroInterno:interno,
 PersonaResponsable:responsable,
 Actividad:actividad,
-UsuarioCaptura:usuario,
-FechaPrimerSalida:fecha,
+
 Estado:'Prestado',
+
+FechaPrimerSalida:fecha,
+FechaUltimoMovimiento:fecha,
+
+Observaciones:observaciones,
+UsuarioCaptura:usuarioCaptura,
+
 Activo:'Si'
 
-})
+};
 
-});
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
+const movimiento={
 
 ID:Date.now(),
 
@@ -377,8 +363,28 @@ NumeroInterno:interno,
 TipoMovimiento:'Salida',
 
 PersonaResponsable:responsable,
+Actividad:actividad,
+
+UsuarioSistema:
+sessionStorage.getItem(
+'nombre'
+),
 
 FechaHora:fecha
+
+};
+
+await fetch(API_URL,{
+
+method:'POST',
+
+mode:'no-cors',
+
+body:JSON.stringify({
+
+sheet:'PRESTADOS',
+
+...prestado
 
 })
 
@@ -387,6 +393,24 @@ FechaHora:fecha
 await fetch(API_URL,{
 
 method:'POST',
+
+mode:'no-cors',
+
+body:JSON.stringify({
+
+sheet:'MOVIMIENTOS',
+
+...movimiento
+
+})
+
+});
+
+await fetch(API_URL,{
+
+method:'POST',
+
+mode:'no-cors',
 
 body:JSON.stringify({
 
@@ -397,10 +421,12 @@ ID:id
 
 });
 
+alert(
+'Expediente prestado correctamente'
+);
+
 cargarExpedientes();
-
 cargarPrestados();
-
 cargarHistorico();
 
 }
@@ -409,11 +435,13 @@ catch(error){
 console.error(error);
 
 }
+finally{
 
 prestandoExpediente=false;
 
 }
 
+}
 
 
 /* =======================
@@ -471,6 +499,98 @@ Devolver
 `;
 
 });
+
+}
+
+async function devolverExpediente(
+id,
+expediente,
+interno,
+responsable
+){
+
+if(devolviendoExpediente){
+return;
+}
+
+devolviendoExpediente=true;
+
+try{
+
+const fecha=
+new Date().toISOString();
+
+const movimiento={
+
+ID:Date.now(),
+
+NoExpediente:expediente,
+
+NumeroInterno:interno,
+
+TipoMovimiento:'Devolucion',
+
+PersonaResponsable:responsable,
+
+UsuarioSistema:
+sessionStorage.getItem(
+'nombre'
+),
+
+FechaHora:fecha
+
+};
+
+await fetch(API_URL,{
+
+method:'POST',
+
+mode:'no-cors',
+
+body:JSON.stringify({
+
+sheet:'MOVIMIENTOS',
+
+...movimiento
+
+})
+
+});
+
+await fetch(API_URL,{
+
+method:'POST',
+
+mode:'no-cors',
+
+body:JSON.stringify({
+
+action:'ELIMINAR_PRESTADO',
+ID:id
+
+})
+
+});
+
+alert(
+'Expediente devuelto correctamente'
+);
+
+cargarPrestados();
+cargarExpedientes();
+cargarHistorico();
+
+}
+catch(error){
+
+console.error(error);
+
+}
+finally{
+
+devolviendoExpediente=false;
+
+}
 
 }
 
