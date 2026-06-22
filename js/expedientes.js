@@ -1,5 +1,10 @@
-let personas = [];
-let expedientes = [];
+let personas=[];
+let expedientes=[];
+
+
+/* ==========================
+CARGAR PERSONAS
+========================== */
 
 async function cargarPersonas(){
 
@@ -10,7 +15,8 @@ await fetch(
 API_URL+'?sheet=PERSONAS'
 );
 
-personas=await response.json();
+personas=
+await response.json();
 
 const combo=
 document.getElementById(
@@ -20,14 +26,15 @@ document.getElementById(
 if(!combo)return;
 
 combo.innerHTML=`
-
 <option value="">
 Seleccione...
 </option>
 `;
 
 personas
-.filter(p=>p.Activo==='Si')
+.filter(
+p=>p.Activo==='Si'
+)
 .forEach(persona=>{
 
 combo.innerHTML+=`
@@ -35,8 +42,11 @@ combo.innerHTML+=`
 <option
 value="${persona.Nombre}"
 data-actividad="${persona.Actividad}">
+
 ${persona.Nombre}
+
 </option>
+
 `;
 
 });
@@ -50,6 +60,11 @@ console.error(error);
 
 }
 
+
+/* ==========================
+ACTUALIZAR ACTIVIDAD
+========================== */
+
 function actualizarActividadPersona(){
 
 const combo=
@@ -57,27 +72,30 @@ document.getElementById(
 'cmbPersonaResponsable'
 );
 
-if(
-combo.selectedIndex<0
-)return;
-
-const actividad=
-combo.options[
-combo.selectedIndex
-]?.dataset.actividad || '';
+if(combo.selectedIndex<0)return;
 
 document.getElementById(
 'txtActividad'
-).value=actividad;
+).value=
+
+combo.options[
+combo.selectedIndex
+]?.dataset.actividad||'';
 
 }
+
+
+/* ==========================
+EVENTO PERSONAS
+========================== */
 
 document.addEventListener(
 'change',
 function(e){
 
 if(
-e.target.id==='cmbPersonaResponsable'
+e.target.id===
+'cmbPersonaResponsable'
 ){
 
 actualizarActividadPersona();
@@ -86,6 +104,11 @@ actualizarActividadPersona();
 
 }
 );
+
+
+/* ==========================
+ABRIR MODAL
+========================== */
 
 function abrirModalExpediente(){
 
@@ -98,6 +121,11 @@ document.getElementById(
 ).show();
 
 }
+
+
+/* ==========================
+GUARDAR EXPEDIENTE
+========================== */
 
 async function guardarExpediente(){
 
@@ -149,14 +177,12 @@ sessionStorage.getItem(
 
 await fetch(API_URL,{
 
-method:"POST",
-
-mode:"no-cors",
+method:'POST',
+mode:'no-cors',
 
 body:JSON.stringify({
 
-sheet:"EXPEDIENTES",
-
+sheet:'EXPEDIENTES',
 ...expediente
 
 })
@@ -164,8 +190,11 @@ sheet:"EXPEDIENTES",
 });
 
 alert(
-'Expediente registrado correctamente'
+'Expediente registrado'
 );
+
+
+/* LIMPIAR */
 
 document.getElementById(
 'txtNoExpediente'
@@ -187,6 +216,9 @@ document.getElementById(
 'cmbPersonaResponsable'
 ).selectedIndex=0;
 
+
+/* CERRAR */
+
 bootstrap.Modal
 .getInstance(
 document.getElementById(
@@ -195,79 +227,32 @@ document.getElementById(
 )
 .hide();
 
-if(
-typeof cargarExpedientes==='function'
-){
 cargarExpedientes();
-}
 
 }
 catch(error){
 
 console.error(error);
 
-alert(
-error.toString()
-);
+alert(error);
 
 }
 
 }
 
-async function cargarHistorico(){
 
-try{
+/* ==========================
+CARGAR EXPEDIENTES
+========================== */
 
-const response=
-await fetch(
-API_URL+'?sheet=MOVIMIENTOS'
-);
-
-const datos=
-await response.json();
-
-const tbody=
-document.getElementById(
-'tbodyHistorico'
-);
-
-if(!tbody)return;
-
-tbody.innerHTML='';
-
-datos.reverse().forEach(mov=>{
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${mov.FechaHora}</td>
-<td>${mov.NoExpediente}</td>
-<td>${mov.NumeroInterno}</td>
-<td>${mov.TipoMovimiento}</td>
-<td>${mov.PersonaResponsable}</td>
-
-</tr>
-
-`;
-
-});
-
-}
-catch(error){
-
-console.error(error);
-
-}
-
-}
 async function cargarExpedientes(){
 
 try{
 
 const response=
 await fetch(
-API_URL+'?sheet=EXPEDIENTES'
+API_URL+
+'?sheet=EXPEDIENTES'
 );
 
 const datos=
@@ -292,27 +277,25 @@ sessionStorage.getItem(
 'rol'
 );
 
-/* FILTRO POR USUARIO */
-
-let expedientesFiltrados=
-datos;
+let filtrados=datos;
 
 if(
 rol==='Archivo'
 ){
 
-expedientesFiltrados=
+filtrados=
 datos.filter(
 
 e=>
 
-e.UsuarioCaptura===usuario
+e.UsuarioCaptura===
+usuario
 
 );
 
 }
 
-expedientesFiltrados.forEach(exp=>{
+filtrados.forEach(exp=>{
 
 tbody.innerHTML+=`
 
@@ -324,7 +307,7 @@ tbody.innerHTML+=`
 
 <td>${exp.PersonaResponsable}</td>
 
-<td>${exp.Actividad}</td>
+<td>${exp.Estado}</td>
 
 <td>${exp.UsuarioCaptura}</td>
 
@@ -364,6 +347,12 @@ console.error(error);
 }
 
 }
+
+
+/* ==========================
+PRESTAR
+========================== */
+
 async function prestarExpediente(
 id,
 expediente,
@@ -405,42 +394,14 @@ usuarioCaptura
 
 };
 
-const movimiento={
-
-ID:Date.now(),
-
-NoExpediente:expediente,
-
-NumeroInterno:interno,
-
-TipoMovimiento:'Salida',
-
-PersonaResponsable:responsable,
-
-Actividad:actividad,
-
-UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
-
-FechaHora:
-new Date().toLocaleString(),
-
-Observaciones:observaciones
-
-};
-
 await fetch(API_URL,{
 
 method:'POST',
-
 mode:'no-cors',
 
 body:JSON.stringify({
 
 sheet:'PRESTADOS',
-
 ...prestado
 
 })
@@ -450,29 +411,11 @@ sheet:'PRESTADOS',
 await fetch(API_URL,{
 
 method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
-
-...movimiento
-
-})
-
-});
-
-await fetch(API_URL,{
-
-method:'POST',
-
 mode:'no-cors',
 
 body:JSON.stringify({
 
 action:'ELIMINAR_EXPEDIENTE',
-
 ID:id
 
 })
@@ -492,10 +435,195 @@ catch(error){
 
 console.error(error);
 
-alert(
-error.toString()
-);
+}
 
 }
+
+
+/* ==========================
+PRESTADOS
+========================== */
+
+async function cargarPrestados(){
+
+try{
+
+const response=
+await fetch(
+API_URL+
+'?sheet=PRESTADOS'
+);
+
+const datos=
+await response.json();
+
+const tbody=
+document.getElementById(
+'tbodyPrestados'
+);
+
+tbody.innerHTML='';
+
+datos.forEach(exp=>{
+
+tbody.innerHTML+=`
+
+<tr>
+
+<td>${exp.NoExpediente}</td>
+
+<td>${exp.NumeroInterno}</td>
+
+<td>${exp.PersonaResponsable}</td>
+
+<td>
+
+<button
+class="btn btn-warning btn-sm"
+onclick="devolverExpediente(
+
+'${exp.ID}',
+'${exp.NoExpediente}',
+'${exp.NumeroInterno}',
+'${exp.PersonaResponsable}'
+
+)">
+
+Devolver
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+catch(error){
+
+console.error(error);
+
+}
+
+}
+
+
+/* ==========================
+HISTORICO
+========================== */
+
+async function cargarHistorico(){
+
+const response=
+await fetch(
+API_URL+
+'?sheet=MOVIMIENTOS'
+);
+
+const datos=
+await response.json();
+
+const tbody=
+document.getElementById(
+'tbodyHistorico'
+);
+
+tbody.innerHTML='';
+
+datos.reverse().forEach(mov=>{
+
+tbody.innerHTML+=`
+
+<tr>
+
+<td>${mov.FechaHora}</td>
+<td>${mov.NoExpediente}</td>
+<td>${mov.NumeroInterno}</td>
+<td>${mov.TipoMovimiento}</td>
+<td>${mov.PersonaResponsable}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+
+/* ==========================
+DEVOLVER
+========================== */
+
+async function devolverExpediente(
+id,
+expediente,
+interno,
+responsable
+){
+
+const movimiento={
+
+ID:Date.now(),
+
+NoExpediente:expediente,
+
+NumeroInterno:interno,
+
+TipoMovimiento:'Devolucion',
+
+PersonaResponsable:responsable,
+
+UsuarioSistema:
+sessionStorage.getItem(
+'nombre'
+),
+
+FechaHora:
+new Date().toLocaleString(),
+
+Observaciones:
+'Devuelto al archivo'
+
+};
+
+await fetch(API_URL,{
+
+method:'POST',
+mode:'no-cors',
+
+body:JSON.stringify({
+
+sheet:'MOVIMIENTOS',
+...movimiento
+
+})
+
+});
+
+await fetch(API_URL,{
+
+method:'POST',
+mode:'no-cors',
+
+body:JSON.stringify({
+
+action:'ELIMINAR_PRESTADO',
+ID:id
+
+})
+
+});
+
+alert(
+'Expediente devuelto'
+);
+
+cargarPrestados();
+
+cargarHistorico();
 
 }
