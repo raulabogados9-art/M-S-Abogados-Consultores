@@ -386,8 +386,97 @@ Cerrar Sesión
 </div>
 
 <div id="personas" style="display:none;">
-    <h3>Personas</h3>
-    <p>Módulo en construcción</p>
+
+<h3>Personas</h3>
+
+<button
+class="btn btn-success mb-3"
+onclick="abrirModalPersona()">
+
+Nueva Persona
+
+</button>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>Nombre</th>
+<th>Actividad</th>
+<th>Activo</th>
+<th>Acciones</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbodyPersonas">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- MODAL PERSONA -->
+
+<div
+class="modal fade"
+id="modalPersona">
+
+<div class="modal-dialog">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h5>Persona</h5>
+
+</div>
+
+<div class="modal-body">
+
+<input
+type="hidden"
+id="txtPersonaID">
+
+<label>Nombre</label>
+
+<input
+type="text"
+id="txtPersonaNombre"
+class="form-control">
+
+<br>
+
+<label>Actividad</label>
+
+<input
+type="text"
+id="txtPersonaActividad"
+class="form-control">
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-primary"
+onclick="guardarPersona()">
+
+Guardar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <div id="actividades" style="display:none;">
