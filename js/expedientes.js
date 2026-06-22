@@ -1,5 +1,8 @@
 let personas=[];
 let expedientes=[];
+let guardandoExpediente=false;
+let prestandoExpediente=false;
+let devolviendoExpediente=false;
 
 /* ==========================
 PERSONAS
@@ -120,6 +123,25 @@ GUARDAR
 
 async function guardarExpediente(){
 
+if(guardandoExpediente){
+return;
+}
+
+guardandoExpediente=true;
+
+const botonGuardar=
+document.querySelector(
+'#modalSalida .btn-success'
+);
+
+if(botonGuardar){
+
+botonGuardar.disabled=true;
+botonGuardar.innerText=
+'Guardando...';
+
+}
+
 try{
 
 const expediente={
@@ -183,6 +205,61 @@ sheet:'EXPEDIENTES',
 alert(
 'Expediente registrado correctamente'
 );
+
+document.getElementById(
+'txtNoExpediente'
+).value='';
+
+document.getElementById(
+'txtNumeroInterno'
+).value='';
+
+document.getElementById(
+'cmbPersonaResponsable'
+).selectedIndex=0;
+
+document.getElementById(
+'txtActividad'
+).value='';
+
+document.getElementById(
+'txtObservaciones'
+).value='';
+
+bootstrap.Modal
+.getInstance(
+
+document.getElementById(
+'modalSalida'
+
+)
+
+).hide();
+
+cargarExpedientes();
+
+}
+catch(error){
+
+console.error(error);
+
+}
+finally{
+
+guardandoExpediente=false;
+
+if(botonGuardar){
+
+botonGuardar.disabled=false;
+
+botonGuardar.innerText=
+'Guardar Expediente';
+
+}
+
+}
+
+}
 
   /* LIMPIAR FORMULARIO */
 
@@ -328,11 +405,22 @@ observaciones,
 usuarioCaptura
 ){
 
+if(prestandoExpediente){
+return;
+}
+
+prestandoExpediente=true;
+
 try{
 
-const fecha=
+const fechaMexico=
 
-new Date();
+new Date().toLocaleString(
+'es-MX',
+{
+timeZone:'America/Mexico_City'
+}
+);
 
 const prestado={
 
@@ -349,10 +437,10 @@ Actividad:actividad,
 Estado:'Prestado',
 
 FechaPrimerSalida:
-fecha,
+fechaMexico,
 
 FechaUltimoMovimiento:
-fecha,
+fechaMexico,
 
 Observaciones:
 observaciones,
@@ -383,62 +471,52 @@ sessionStorage.getItem(
 'nombre'
 ),
 
-FechaHora:fecha
+FechaHora:
+fechaMexico
 
 };
 
 await fetch(API_URL,{
-
 method:'POST',
-
 body:JSON.stringify({
-
 sheet:'PRESTADOS',
-
 ...prestado
-
 })
-
 });
 
 await fetch(API_URL,{
-
 method:'POST',
-
 body:JSON.stringify({
-
 sheet:'MOVIMIENTOS',
-
 ...movimiento
-
 })
-
 });
 
 await fetch(API_URL,{
-
 method:'POST',
-
 body:JSON.stringify({
-
 action:'ELIMINAR_EXPEDIENTE',
-
 ID:id
-
 })
-
 });
+
+alert(
+'Expediente prestado correctamente'
+);
 
 cargarExpedientes();
-
 cargarPrestados();
-
 cargarHistorico();
 
 }
 catch(error){
 
 console.error(error);
+
+}
+finally{
+
+prestandoExpediente=false;
 
 }
 
@@ -526,7 +604,22 @@ interno,
 responsable
 ){
 
+if(devolviendoExpediente){
+return;
+}
+
+devolviendoExpediente=true;
+
 try{
+
+const fechaMexico=
+
+new Date().toLocaleString(
+'es-MX',
+{
+timeZone:'America/Mexico_City'
+}
+);
 
 const movimiento={
 
@@ -545,7 +638,8 @@ sessionStorage.getItem(
 'nombre'
 ),
 
-FechaHora:new Date()
+FechaHora:
+fechaMexico
 
 };
 
@@ -582,15 +676,18 @@ alert(
 );
 
 cargarPrestados();
-
 cargarExpedientes();
-
 cargarHistorico();
 
 }
 catch(error){
 
 console.error(error);
+
+}
+finally{
+
+devolviendoExpediente=false;
 
 }
 
