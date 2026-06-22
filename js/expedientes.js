@@ -1,8 +1,8 @@
-let personas = [];
-let expedientes = [];
+let personas=[];
+let expedientes=[];
 
 /* ==========================
-   PERSONAS
+PERSONAS
 ========================== */
 
 async function cargarPersonas(){
@@ -33,7 +33,9 @@ Seleccione...
 `;
 
 personas
-.filter(p=>p.Activo==="Si")
+.filter(
+p=>p.Activo==="Si"
+)
 .forEach(persona=>{
 
 combo.innerHTML+=`
@@ -66,10 +68,6 @@ document.getElementById(
 'cmbPersonaResponsable'
 );
 
-if(
-combo.selectedIndex<0
-)return;
-
 const actividad=
 
 combo.options[
@@ -87,7 +85,8 @@ document.addEventListener(
 function(e){
 
 if(
-e.target.id==='cmbPersonaResponsable'
+e.target.id===
+'cmbPersonaResponsable'
 ){
 
 actualizarActividadPersona();
@@ -98,28 +97,25 @@ actualizarActividadPersona();
 );
 
 /* ==========================
-   ABRIR MODAL
+ABRIR MODAL
 ========================== */
 
 function abrirModalExpediente(){
 
 cargarPersonas();
 
-const modal=
 new bootstrap.Modal(
 
 document.getElementById(
 'modalSalida'
 )
 
-);
-
-modal.show();
+).show();
 
 }
 
 /* ==========================
-   GUARDAR EXPEDIENTE
+GUARDAR
 ========================== */
 
 async function guardarExpediente(){
@@ -172,13 +168,11 @@ Activo:'Si'
 
 await fetch(API_URL,{
 
-method:"POST",
-
-mode:"no-cors",
+method:'POST',
 
 body:JSON.stringify({
 
-sheet:"EXPEDIENTES",
+sheet:'EXPEDIENTES',
 
 ...expediente
 
@@ -189,30 +183,6 @@ sheet:"EXPEDIENTES",
 alert(
 'Expediente registrado correctamente'
 );
-
-/* LIMPIAR */
-
-document.getElementById(
-'txtNoExpediente'
-).value='';
-
-document.getElementById(
-'txtNumeroInterno'
-).value='';
-
-document.getElementById(
-'txtActividad'
-).value='';
-
-document.getElementById(
-'txtObservaciones'
-).value='';
-
-document.getElementById(
-'cmbPersonaResponsable'
-).selectedIndex=0;
-
-/* CERRAR MODAL */
 
 bootstrap.Modal
 .getInstance(
@@ -230,14 +200,12 @@ catch(error){
 
 console.error(error);
 
-alert(error.toString());
-
 }
 
 }
 
 /* ==========================
-   CARGAR EXPEDIENTES
+EXPEDIENTES
 ========================== */
 
 async function cargarExpedientes(){
@@ -246,7 +214,8 @@ try{
 
 const response=
 await fetch(
-API_URL+'?sheet=EXPEDIENTES'
+API_URL+
+'?sheet=EXPEDIENTES'
 );
 
 const datos=
@@ -257,15 +226,15 @@ document.getElementById(
 'tbodyExpedientes'
 );
 
-if(!tbody)return;
-
 tbody.innerHTML='';
 
 const disponibles=
-datos.filter(e=>
+datos.filter(
 
-e.Estado==="Disponible" &&
-e.Activo==="Si"
+e=>
+
+e.Estado==='Disponible' &&
+e.Activo==='Si'
 
 );
 
@@ -324,7 +293,7 @@ console.error(error);
 }
 
 /* ==========================
-   PRESTAR
+PRESTAR
 ========================== */
 
 async function prestarExpediente(
@@ -339,15 +308,9 @@ usuarioCaptura
 
 try{
 
-const fechaMexico=
+const fecha=
 
-new Date().toLocaleString(
-'es-MX',
-{
-timeZone:
-'America/Mexico_City'
-}
-);
+new Date();
 
 const prestado={
 
@@ -364,12 +327,13 @@ Actividad:actividad,
 Estado:'Prestado',
 
 FechaPrimerSalida:
-fechaMexico,
+fecha,
 
 FechaUltimoMovimiento:
-fechaMexico,
+fecha,
 
-Observaciones:observaciones,
+Observaciones:
+observaciones,
 
 UsuarioCaptura:
 usuarioCaptura,
@@ -397,47 +361,56 @@ sessionStorage.getItem(
 'nombre'
 ),
 
-FechaHora:
-fechaMexico,
-
-Observaciones:
-observaciones
+FechaHora:fecha
 
 };
 
 await fetch(API_URL,{
+
 method:'POST',
-mode:'no-cors',
+
 body:JSON.stringify({
+
 sheet:'PRESTADOS',
+
 ...prestado
+
 })
+
 });
 
 await fetch(API_URL,{
+
 method:'POST',
-mode:'no-cors',
+
 body:JSON.stringify({
+
 sheet:'MOVIMIENTOS',
+
 ...movimiento
+
 })
+
 });
 
 await fetch(API_URL,{
-method:'POST',
-mode:'no-cors',
-body:JSON.stringify({
-action:'ELIMINAR_EXPEDIENTE',
-ID:id
-})
-});
 
-alert(
-'Expediente prestado correctamente'
-);
+method:'POST',
+
+body:JSON.stringify({
+
+action:'ELIMINAR_EXPEDIENTE',
+
+ID:id
+
+})
+
+});
 
 cargarExpedientes();
+
 cargarPrestados();
+
 cargarHistorico();
 
 }
@@ -450,7 +423,7 @@ console.error(error);
 }
 
 /* ==========================
-   PRESTADOS
+PRESTADOS
 ========================== */
 
 async function cargarPrestados(){
@@ -459,7 +432,8 @@ try{
 
 const response=
 await fetch(
-API_URL+'?sheet=PRESTADOS'
+API_URL+
+'?sheet=PRESTADOS'
 );
 
 const datos=
@@ -469,8 +443,6 @@ const tbody=
 document.getElementById(
 'tbodyPrestados'
 );
-
-if(!tbody)return;
 
 tbody.innerHTML='';
 
@@ -489,7 +461,16 @@ tbody.innerHTML+=`
 <td>
 
 <button
-class="btn btn-warning btn-sm">
+class="btn btn-warning btn-sm"
+
+onclick="devolverExpediente(
+
+'${exp.ID}',
+'${exp.NoExpediente}',
+'${exp.NumeroInterno}',
+'${exp.PersonaResponsable}'
+
+)">
 
 Devolver
 
@@ -513,7 +494,88 @@ console.error(error);
 }
 
 /* ==========================
-   HISTORICO
+DEVOLVER
+========================== */
+
+async function devolverExpediente(
+id,
+expediente,
+interno,
+responsable
+){
+
+try{
+
+const movimiento={
+
+ID:Date.now(),
+
+NoExpediente:expediente,
+
+NumeroInterno:interno,
+
+TipoMovimiento:'Devolucion',
+
+PersonaResponsable:responsable,
+
+UsuarioSistema:
+sessionStorage.getItem(
+'nombre'
+),
+
+FechaHora:new Date()
+
+};
+
+await fetch(API_URL,{
+
+method:'POST',
+
+body:JSON.stringify({
+
+sheet:'MOVIMIENTOS',
+
+...movimiento
+
+})
+
+});
+
+await fetch(API_URL,{
+
+method:'POST',
+
+body:JSON.stringify({
+
+action:'ELIMINAR_PRESTADO',
+
+ID:id
+
+})
+
+});
+
+alert(
+'Expediente devuelto correctamente'
+);
+
+cargarPrestados();
+
+cargarExpedientes();
+
+cargarHistorico();
+
+}
+catch(error){
+
+console.error(error);
+
+}
+
+}
+
+/* ==========================
+HISTORICO
 ========================== */
 
 async function cargarHistorico(){
@@ -522,7 +584,8 @@ try{
 
 const response=
 await fetch(
-API_URL+'?sheet=MOVIMIENTOS'
+API_URL+
+'?sheet=MOVIMIENTOS'
 );
 
 const datos=
@@ -533,8 +596,6 @@ document.getElementById(
 'tbodyHistorico'
 );
 
-if(!tbody)return;
-
 tbody.innerHTML='';
 
 datos.reverse().forEach(mov=>{
@@ -544,11 +605,17 @@ let fecha='';
 if(mov.FechaHora){
 
 fecha=
+
 new Date(
 mov.FechaHora
-).toLocaleString(
+)
+
+.toLocaleString(
+
 'es-MX',
+
 {
+
 timeZone:
 'America/Mexico_City',
 
@@ -558,9 +625,11 @@ year:'numeric',
 
 hour:'numeric',
 minute:'2-digit',
+
 hour12:true
 
 }
+
 );
 
 }
