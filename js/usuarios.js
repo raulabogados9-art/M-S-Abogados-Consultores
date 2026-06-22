@@ -1,5 +1,3 @@
-let usuarios=[];
-
 async function cargarUsuarios(){
 
 try{
