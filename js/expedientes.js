@@ -549,10 +549,17 @@ mov.FechaHora
 ).toLocaleString(
 'es-MX',
 {
-timeZone:'America/Mexico_City',
+timeZone:
+'America/Mexico_City',
+
+day:'2-digit',
+month:'2-digit',
+year:'numeric',
+
 hour:'numeric',
 minute:'2-digit',
 hour12:true
+
 }
 );
 
@@ -563,9 +570,13 @@ tbody.innerHTML+=`
 <tr>
 
 <td>${fecha}</td>
+
 <td>${mov.NoExpediente||''}</td>
+
 <td>${mov.NumeroInterno||''}</td>
+
 <td>${mov.TipoMovimiento||''}</td>
+
 <td>${mov.PersonaResponsable||''}</td>
 
 </tr>
@@ -573,97 +584,6 @@ tbody.innerHTML+=`
 `;
 
 });
-
-}
-catch(error){
-
-console.error(error);
-
-}
-
-}
-
-async function devolverExpediente(
-id,
-expediente,
-interno,
-responsable
-){
-
-try{
-
-const fechaMexico=
-
-new Date().toLocaleString(
-'es-MX',
-{
-timeZone:'America/Mexico_City'
-}
-);
-
-const movimiento={
-
-ID:Date.now(),
-
-NoExpediente:expediente,
-
-NumeroInterno:interno,
-
-TipoMovimiento:'Devolucion',
-
-PersonaResponsable:responsable,
-
-UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
-
-FechaHora:
-fechaMexico
-
-};
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
-
-...movimiento
-
-})
-
-});
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-action:'ELIMINAR_PRESTADO',
-
-ID:id
-
-})
-
-});
-
-alert(
-'Expediente devuelto correctamente'
-);
-
-cargarPrestados();
-
-cargarHistorico();
-
-cargarExpedientes();
 
 }
 catch(error){
