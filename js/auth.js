@@ -192,64 +192,72 @@ cargarUsuariosTabla();
 }
 window.onload=function(){
 
-if(
+if(sessionStorage.getItem('usuario')){
 
-sessionStorage.getItem(
-'usuario'
-)
-
-){
-
+const login=
 document.getElementById(
 'loginContainer'
-).style.display='none';
-
-document.getElementById(
-'mainContainer'
-).style.display='block';
-
-document.getElementById(
-'lblUsuarioSistema'
-).innerHTML=
-
-sessionStorage.getItem(
-'nombre'
 );
 
+if(login){
+
+login.style.display='none';
+
+}
+
+const main=
+document.getElementById(
+'mainContainer'
+);
+
+if(main){
+
+main.style.display='block';
+
+}
+
+/* USUARIO */
+
+const lblUsuario=
 document.getElementById(
 'lblUsuario'
-).innerHTML=
+);
+
+if(lblUsuario){
+
+lblUsuario.innerHTML=
 
 sessionStorage.getItem(
 'nombre'
-)+
+)
+
++
+
 ' ('+
+
 sessionStorage.getItem(
 'rol'
-)+')';
+)
 
++')';
 
-/* RECARGAR MÓDULOS */
+}
 
-if(
-typeof cargarExpedientes==='function'
-){
+/* CARGAR MODULOS */
+
+if(typeof cargarExpedientes==='function'){
 
 cargarExpedientes();
 
 }
 
-if(
-typeof cargarPrestados==='function'
-){
+if(typeof cargarPrestados==='function'){
 
 cargarPrestados();
 
 }
 
-if(
-typeof cargarHistorico==='function'
-){
+if(typeof cargarHistorico==='function'){
 
 cargarHistorico();
 
