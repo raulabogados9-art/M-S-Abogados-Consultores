@@ -383,7 +383,15 @@ FechaPrimerSalida:
 new Date().toLocaleDateString(),
 
 FechaUltimoMovimiento:
-new Date().toLocaleString(),
+new Date().toLocaleString(
+'es-MX',
+{
+timeZone:'America/Mexico_City',
+hour:'numeric',
+minute:'2-digit',
+hour12:true
+}
+)
 
 Observaciones:observaciones,
 
@@ -583,7 +591,15 @@ sessionStorage.getItem(
 ),
 
 FechaHora:
-new Date().toLocaleString(),
+new Date().toLocaleString(
+'es-MX',
+{
+timeZone:'America/Mexico_City',
+hour:'numeric',
+minute:'2-digit',
+hour12:true
+}
+)
 
 Observaciones:
 'Devuelto al archivo'
