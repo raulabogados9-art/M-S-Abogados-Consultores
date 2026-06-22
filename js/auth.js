@@ -118,91 +118,76 @@ location.reload();
 
 function mostrarModulo(id){
 
-    const modulos=[
+const modulos=[
 
-        'expedientes',
-        'prestados',
-        'historico',
-        'personas',
-        'actividades',
-        'usuarios'
+'expedientes',
+'prestados',
+'historico',
+'personas',
+'actividades',
+'usuarios'
 
-    ];
+];
 
-    /* ocultar todos */
+modulos.forEach(modulo=>{
 
-    modulos.forEach(modulo=>{
+const elemento=
+document.getElementById(
+modulo
+);
 
-        const elemento=
-        document.getElementById(
-            modulo
-        );
+if(elemento){
 
-        if(elemento){
+elemento.style.display='none';
 
-            elemento.style.display='none';
+}
 
-        }
+});
 
-    });
+document
+.getElementById(id)
+.style.display='block';
 
-    /* mostrar seleccionado */
 
-    const moduloActual=
-    document.getElementById(id);
+if(
+id==='expedientes'
+){
 
-    if(moduloActual){
+cargarExpedientes();
 
-        moduloActual.style.display='block';
+}
 
-    }
+if(
+id==='prestados'
+){
 
-    /* cargar módulos dinámicamente */
+cargarPrestados();
 
-    if(
-        id==='expedientes' &&
-        typeof cargarExpedientes==='function'
-    ){
+}
 
-        cargarExpedientes();
+if(
+id==='historico'
+){
 
-    }
+cargarHistorico();
 
-    if(
-        id==='prestados' &&
-        typeof cargarPrestados==='function'
-    ){
+}
 
-        cargarPrestados();
+if(
+id==='personas'
+){
 
-    }
+cargarPersonasTabla();
 
-    if(
-        id==='historico' &&
-        typeof cargarHistorico==='function'
-    ){
+}
 
-        cargarHistorico();
+if(
+id==='usuarios'
+){
 
-    }
+cargarUsuariosTabla();
 
-    if(
-        id==='personas' &&
-        typeof cargarPersonasTabla==='function'
-    ){
-
-        cargarPersonasTabla();
-
-    }
-
-    if(
-        id==='usuarios' &&
-        typeof cargarUsuariosTabla==='function'
-    ){
-
-        cargarUsuariosTabla();
-
-    }
+}
 
 }
 window.onload=function(){
@@ -224,26 +209,49 @@ document.getElementById(
 ).style.display='block';
 
 document.getElementById(
+'lblUsuarioSistema'
+).innerHTML=
+
+sessionStorage.getItem(
+'nombre'
+);
+
+document.getElementById(
 'lblUsuario'
 ).innerHTML=
 
 sessionStorage.getItem(
 'nombre'
-)
-
-+
-
+)+
 ' ('+
-
 sessionStorage.getItem(
 'rol'
-)
+)+')';
 
-+')';
 
-if(typeof cargarExpedientes==='function'){
+/* RECARGAR MÓDULOS */
+
+if(
+typeof cargarExpedientes==='function'
+){
 
 cargarExpedientes();
+
+}
+
+if(
+typeof cargarPrestados==='function'
+){
+
+cargarPrestados();
+
+}
+
+if(
+typeof cargarHistorico==='function'
+){
+
+cargarHistorico();
 
 }
 
