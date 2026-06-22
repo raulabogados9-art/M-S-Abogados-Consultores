@@ -137,6 +137,14 @@ document.getElementById(
 modulo
 );
 
+if(
+id==='personas'
+){
+
+cargarPersonasTabla();
+
+}
+
 if(elemento){
 
 elemento.style.display='none';
