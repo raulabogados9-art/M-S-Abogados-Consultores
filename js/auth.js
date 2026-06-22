@@ -1,12 +1,26 @@
+let usuarios = [];
+
 async function cargarUsuarios() {
 
-    const response = await fetch(
-        API_URL + '?sheet=USUARIOS'
-    );
+    try{
 
-    usuarios = await response.json();
+        const response = await fetch(
+            API_URL + '?sheet=USUARIOS'
+        );
 
-    return usuarios;
+        usuarios = await response.json();
+
+        return usuarios;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        return [];
+
+    }
+
 }
 
 async function login() {
@@ -27,9 +41,11 @@ async function login() {
 
     const encontrado =
         usuarios.find(u =>
+
             u.Usuario === usuario &&
             u.Password === password &&
             u.Activo === 'Si'
+
         );
 
     if(!encontrado){
@@ -39,80 +55,124 @@ async function login() {
         );
 
         return;
+
     }
 
+    /* GUARDAR SESIÓN */
+
     sessionStorage.setItem(
-    'usuario',
-    encontrado.Usuario
-);
+        'usuario',
+        encontrado.Usuario
+    );
 
-sessionStorage.setItem(
-    'nombre',
-    encontrado.NombreCompleto
-);
+    sessionStorage.setItem(
+        'nombre',
+        encontrado.NombreCompleto
+    );
 
-sessionStorage.setItem(
-    'rol',
-    encontrado.Rol
-);
+    sessionStorage.setItem(
+        'rol',
+        encontrado.Rol
+    );
 
-document.getElementById(
-    'loginContainer'
-).style.display = 'none';
-
-document.getElementById(
-    'mainContainer'
-).style.display = 'block';
-
-document.getElementById(
-    'lblUsuario'
-).innerHTML =
-encontrado.NombreCompleto +
-' (' +
-encontrado.Rol +
-')';
-
-document.getElementById(
-    'lblUsuarioSistema'
-).innerHTML =
-encontrado.NombreCompleto;
-
-if(typeof cargarExpedientes === 'function'){
-    cargarExpedientes();
-}
-
-if(typeof cargarPrestados === 'function'){
-    cargarPrestados();
-}
-
-if(typeof cargarHistorico === 'function'){
-    cargarHistorico();
-}
-
-if(encontrado.Rol === 'Administrador'){
-
-    cargarUsuariosTabla();
-
-}
-
-
-// CONTROL DE MENÚS POR ROL
-
-if(encontrado.Rol !== 'Administrador'){
+    /* MOSTRAR SISTEMA */
 
     document.getElementById(
-        'menuUsuarios'
-    ).style.display = 'none';
+        'loginContainer'
+    ).style.display='none';
 
     document.getElementById(
-        'menuPersonas'
-    ).style.display = 'none';
+        'mainContainer'
+    ).style.display='block';
 
     document.getElementById(
-        'menuActividades'
-    ).style.display = 'none';
+        'lblUsuario'
+    ).innerHTML=
 
-}
+    encontrado.NombreCompleto +
+    ' (' +
+    encontrado.Rol +
+    ')';
+
+    document.getElementById(
+        'lblUsuarioSistema'
+    ).innerHTML=
+
+    encontrado.NombreCompleto;
+
+    /* CARGAR SOLO LO NECESARIO */
+
+    if(typeof cargarExpedientes === 'function'){
+
+        cargarExpedientes();
+
+    }
+
+    /* ADMINISTRADOR */
+
+    if(encontrado.Rol==='Administrador'){
+
+        document.getElementById(
+            'menuUsuarios'
+        ).style.display='inline-block';
+
+        document.getElementById(
+            'menuPersonas'
+        ).style.display='inline-block';
+
+        document.getElementById(
+            'menuActividades'
+        ).style.display='inline-block';
+
+        if(
+            typeof cargarUsuariosTabla
+            === 'function'
+        ){
+
+            cargarUsuariosTabla();
+
+        }
+
+    }
+
+    /* ARCHIVO */
+
+    if(encontrado.Rol==='Archivo'){
+
+        document.getElementById(
+            'menuUsuarios'
+        ).style.display='none';
+
+    }
+
+    /* CONSULTA */
+
+    if(encontrado.Rol==='Consulta'){
+
+        document.getElementById(
+            'menuUsuarios'
+        ).style.display='none';
+
+        document.getElementById(
+            'menuPersonas'
+        ).style.display='none';
+
+        document.getElementById(
+            'menuActividades'
+        ).style.display='none';
+
+        const botonNuevo =
+            document.querySelector(
+                '.btn-success'
+            );
+
+        if(botonNuevo){
+
+            botonNuevo.style.display='none';
+
+        }
+
+    }
 
 }
 
@@ -126,33 +186,108 @@ function logout(){
 
 function mostrarModulo(id){
 
-    const modulos = [
+    const modulos=[
+
         'expedientes',
         'prestados',
         'historico',
         'personas',
         'actividades',
         'usuarios'
+
     ];
 
-    modulos.forEach(modulo => {
+    modulos.forEach(modulo=>{
 
-        document
-            .getElementById(modulo)
-            .style.display = 'none';
+        const elemento=
+            document.getElementById(
+                modulo
+            );
+
+        if(elemento){
+
+            elemento.style.display='none';
+
+        }
 
     });
 
     document
-        .getElementById(id)
-        .style.display = 'block';
+    .getElementById(
+        id
+    )
+    .style.display='block';
 
-    if(id === 'prestados'){
+    /* CARGAS BAJO DEMANDA */
+
+    if(
+        id==='prestados' &&
+        typeof cargarPrestados==='function'
+    ){
+
         cargarPrestados();
+
     }
 
-    if(id === 'historico'){
+    if(
+        id==='historico' &&
+        typeof cargarHistorico==='function'
+    ){
+
         cargarHistorico();
+
     }
+
+}
+
+/* RECUPERAR SESIÓN */
+
+window.onload=function(){
+
+if(
+
+sessionStorage.getItem(
+'usuario'
+)
+
+){
+
+document.getElementById(
+'loginContainer'
+).style.display='none';
+
+document.getElementById(
+'mainContainer'
+).style.display='block';
+
+document.getElementById(
+'lblUsuarioSistema'
+).innerHTML=
+
+sessionStorage.getItem(
+'nombre'
+);
+
+document.getElementById(
+'lblUsuario'
+).innerHTML=
+
+sessionStorage.getItem(
+'nombre'
+)+
+' ('+
+sessionStorage.getItem(
+'rol'
+)+')';
+
+if(
+typeof cargarExpedientes==='function'
+){
+
+cargarExpedientes();
+
+}
+
+}
 
 }
