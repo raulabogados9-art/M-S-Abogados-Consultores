@@ -380,7 +380,12 @@ Actividad:actividad,
 Estado:'Prestado',
 
 FechaPrimerSalida:
-new Date().toLocaleDateString(),
+new Date().toLocaleDateString(
+'es-MX',
+{
+timeZone:'America/Mexico_City'
+}
+)
 
 FechaUltimoMovimiento:
 new Date().toLocaleString(
