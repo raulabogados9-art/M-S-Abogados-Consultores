@@ -92,13 +92,7 @@ async function login() {
     encontrado.Rol +
     ')';
 
-    document.getElementById(
-        'lblUsuarioSistema'
-    ).innerHTML=
-
-    encontrado.NombreCompleto;
-
-    /* CARGAR SOLO LO NECESARIO */
+   /* CARGAR SOLO LO NECESARIO */
 
     if(typeof cargarExpedientes === 'function'){
 
