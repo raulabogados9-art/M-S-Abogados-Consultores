@@ -184,6 +184,28 @@ alert(
 'Expediente registrado correctamente'
 );
 
+  /* LIMPIAR FORMULARIO */
+
+document.getElementById(
+'txtNoExpediente'
+).value='';
+
+document.getElementById(
+'txtNumeroInterno'
+).value='';
+
+document.getElementById(
+'cmbPersonaResponsable'
+).selectedIndex=0;
+
+document.getElementById(
+'txtActividad'
+).value='';
+
+document.getElementById(
+'txtObservaciones'
+).value='';
+
 bootstrap.Modal
 .getInstance(
 
