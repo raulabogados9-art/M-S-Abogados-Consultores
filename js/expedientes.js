@@ -552,7 +552,24 @@ tbody.innerHTML+=`
 
 <tr>
 
-<td>${mov.FechaHora}</td>
+<td>
+
+new Date(
+mov.FechaHora
+).toLocaleString(
+'es-MX',
+{
+timeZone:'America/Mexico_City',
+day:'2-digit',
+month:'2-digit',
+year:'numeric',
+hour:'numeric',
+minute:'2-digit',
+hour12:true
+}
+)
+
+</td>
 <td>${mov.NoExpediente}</td>
 <td>${mov.NumeroInterno}</td>
 <td>${mov.TipoMovimiento}</td>
