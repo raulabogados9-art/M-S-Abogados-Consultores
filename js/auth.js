@@ -1,234 +1,279 @@
-async function cargarUsuarios() {
+let usuarios=[];
 
-    try{
+async function cargarUsuarios(){
 
-        const response = await fetch(
-            API_URL + '?sheet=USUARIOS'
-        );
+try{
 
-        usuarios = await response.json();
+const response=
+await fetch(
+API_URL+'?sheet=USUARIOS'
+);
 
-        return usuarios;
+usuarios=
+await response.json();
 
-    }
-    catch(error){
+return usuarios;
 
-        console.error(error);
+}
+catch(error){
 
-        return [];
+console.error(error);
 
-    }
+return [];
 
 }
 
-async function login() {
+}
 
-    const usuario =
-        document
-        .getElementById('txtUsuario')
-        .value
-        .trim();
+async function login(){
 
-    const password =
-        document
-        .getElementById('txtPassword')
-        .value
-        .trim();
+const usuario=
+document
+.getElementById(
+'txtUsuario'
+)
+.value
+.trim();
 
-    await cargarUsuarios();
+const password=
+document
+.getElementById(
+'txtPassword'
+)
+.value
+.trim();
 
-    const encontrado =
-        usuarios.find(u =>
+await cargarUsuarios();
 
-            u.Usuario === usuario &&
-            u.Password === password &&
-            u.Activo === 'Si'
+const encontrado=
+usuarios.find(u=>
 
-        );
+u.Usuario===usuario &&
+u.Password===password &&
+u.Activo==='Si'
 
-    if(!encontrado){
+);
 
-        alert(
-            'Usuario o contraseña incorrectos'
-        );
+if(!encontrado){
 
-        return;
+alert(
+'Usuario o contraseña incorrectos'
+);
 
-    }
+return;
 
-    /* GUARDAR SESIÓN */
+}
 
-    sessionStorage.setItem(
-        'usuario',
-        encontrado.Usuario
-    );
+/* GUARDAR SESIÓN */
 
-    sessionStorage.setItem(
-        'nombre',
-        encontrado.NombreCompleto
-    );
+sessionStorage.setItem(
 
-    sessionStorage.setItem(
-        'rol',
-        encontrado.Rol
-    );
+'usuario',
+encontrado.Usuario
 
-    /* MOSTRAR SISTEMA */
+);
 
-    document.getElementById(
-        'loginContainer'
-    ).style.display='none';
+sessionStorage.setItem(
 
-    document.getElementById(
-        'mainContainer'
-    ).style.display='block';
+'nombre',
+encontrado.NombreCompleto ||
+encontrado.Nombre ||
+'Administrador'
 
-    document.getElementById(
-        'lblUsuario'
-    ).innerHTML=
+);
 
-    encontrado.NombreCompleto +
-    ' (' +
-    encontrado.Rol +
-    ')';
+sessionStorage.setItem(
 
-   /* CARGAR SOLO LO NECESARIO */
+'rol',
+encontrado.Rol
 
-    if(typeof cargarExpedientes === 'function'){
+);
 
-        cargarExpedientes();
+/* MOSTRAR SISTEMA */
 
-    }
+document.getElementById(
+'loginContainer'
+).style.display='none';
 
-    /* ADMINISTRADOR */
+document.getElementById(
+'mainContainer'
+).style.display='block';
 
-    if(encontrado.Rol==='Administrador'){
+/* SOLO ESTA ETIQUETA */
 
-        document.getElementById(
-            'menuUsuarios'
-        ).style.display='inline-block';
+document.getElementById(
+'lblUsuario'
+).innerHTML=
 
-        document.getElementById(
-            'menuPersonas'
-        ).style.display='inline-block';
+sessionStorage.getItem(
+'nombre'
+)
 
-        document.getElementById(
-            'menuActividades'
-        ).style.display='inline-block';
++
 
-        if(
-            typeof cargarUsuariosTabla
-            === 'function'
-        ){
+' ('+
 
-            cargarUsuariosTabla();
+sessionStorage.getItem(
+'rol'
+)
 
-        }
++')';
 
-    }
+/* CARGAR EXPEDIENTES */
 
-    /* ARCHIVO */
+if(
+typeof cargarExpedientes==='function'
+){
 
-    if(encontrado.Rol==='Archivo'){
+cargarExpedientes();
 
-        document.getElementById(
-            'menuUsuarios'
-        ).style.display='none';
+}
 
-    }
+/* ADMIN */
 
-    /* CONSULTA */
+if(
+encontrado.Rol==='Administrador'
+){
 
-    if(encontrado.Rol==='Consulta'){
+document.getElementById(
+'menuUsuarios'
+).style.display='inline-block';
 
-        document.getElementById(
-            'menuUsuarios'
-        ).style.display='none';
+document.getElementById(
+'menuPersonas'
+).style.display='inline-block';
 
-        document.getElementById(
-            'menuPersonas'
-        ).style.display='none';
+document.getElementById(
+'menuActividades'
+).style.display='inline-block';
 
-        document.getElementById(
-            'menuActividades'
-        ).style.display='none';
+if(
+typeof cargarUsuariosTabla
+==='function'
+){
 
-        const botonNuevo =
-            document.querySelector(
-                '.btn-success'
-            );
+cargarUsuariosTabla();
 
-        if(botonNuevo){
+}
 
-            botonNuevo.style.display='none';
+}
 
-        }
+/* ARCHIVO */
 
-    }
+if(
+encontrado.Rol==='Archivo'
+){
+
+document.getElementById(
+'menuUsuarios'
+).style.display='none';
+
+}
+
+/* CONSULTA */
+
+if(
+encontrado.Rol==='Consulta'
+){
+
+document.getElementById(
+'menuUsuarios'
+).style.display='none';
+
+document.getElementById(
+'menuPersonas'
+).style.display='none';
+
+document.getElementById(
+'menuActividades'
+).style.display='none';
+
+const botonNuevo=
+
+document.querySelector(
+'.btn-success'
+);
+
+if(
+botonNuevo
+){
+
+botonNuevo.style.display='none';
+
+}
+
+}
 
 }
 
 function logout(){
 
-    sessionStorage.clear();
+sessionStorage.clear();
 
-    location.reload();
+location.reload();
 
 }
 
 function mostrarModulo(id){
 
-    const modulos=[
+const modulos=[
 
-        'expedientes',
-        'prestados',
-        'historico',
-        'personas',
-        'actividades',
-        'usuarios'
+'expedientes',
+'prestados',
+'historico',
+'personas',
+'actividades',
+'usuarios'
 
-    ];
+];
 
-    modulos.forEach(modulo=>{
+modulos.forEach(modulo=>{
 
-        const elemento=
-            document.getElementById(
-                modulo
-            );
+const elemento=
 
-        if(elemento){
+document.getElementById(
+modulo
+);
 
-            elemento.style.display='none';
+if(
+elemento
+){
 
-        }
+elemento.style.display='none';
 
-    });
+}
 
-    document
-    .getElementById(
-        id
-    )
-    .style.display='block';
+});
 
-    /* CARGAS BAJO DEMANDA */
+document
+.getElementById(
+id
+)
+.style.display='block';
 
-    if(
-        id==='prestados' &&
-        typeof cargarPrestados==='function'
-    ){
+/* CARGAS BAJO DEMANDA */
 
-        cargarPrestados();
+if(
 
-    }
+id==='prestados' &&
+typeof cargarPrestados==='function'
 
-    if(
-        id==='historico' &&
-        typeof cargarHistorico==='function'
-    ){
+){
 
-        cargarHistorico();
+cargarPrestados();
 
-    }
+}
+
+if(
+
+id==='historico' &&
+typeof cargarHistorico==='function'
+
+){
+
+cargarHistorico();
+
+}
 
 }
 
@@ -253,24 +298,22 @@ document.getElementById(
 ).style.display='block';
 
 document.getElementById(
-'lblUsuarioSistema'
-).innerHTML=
-
-sessionStorage.getItem(
-'nombre'
-);
-
-document.getElementById(
 'lblUsuario'
 ).innerHTML=
 
 sessionStorage.getItem(
 'nombre'
-)+
+)
+
++
+
 ' ('+
+
 sessionStorage.getItem(
 'rol'
-)+')';
+)
+
++')';
 
 if(
 typeof cargarExpedientes==='function'
