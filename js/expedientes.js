@@ -596,11 +596,13 @@ devolviendoExpediente=false;
 
 
 
-/* =======================
+/* ==========================
 HISTORICO
-======================= */
+========================== */
 
 async function cargarHistorico(){
+
+try{
 
 const response=
 await fetch(
@@ -615,15 +617,43 @@ document.getElementById(
 'tbodyHistorico'
 );
 
+if(!tbody)return;
+
 tbody.innerHTML='';
 
 datos.reverse().forEach(mov=>{
+
+let fechaFormateada='';
+
+if(mov.FechaHora){
+
+const fecha=
+new Date(mov.FechaHora);
+
+fechaFormateada=
+fecha.toLocaleString(
+'es-MX',
+{
+timeZone:'America/Mexico_City',
+
+day:'2-digit',
+month:'2-digit',
+year:'numeric',
+
+hour:'numeric',
+minute:'2-digit',
+
+hour12:true
+}
+);
+
+}
 
 tbody.innerHTML+=`
 
 <tr>
 
-<td>${mov.FechaHora||''}</td>
+<td>${fechaFormateada}</td>
 
 <td>${mov.NoExpediente||''}</td>
 
@@ -638,5 +668,15 @@ tbody.innerHTML+=`
 `;
 
 });
+
+}
+catch(error){
+
+console.error(
+'Error histórico:',
+error
+);
+
+}
 
 }
