@@ -129,12 +129,14 @@ function mostrarModulo(id){
 
     ];
 
+    /* ocultar todos */
+
     modulos.forEach(modulo=>{
 
         const elemento=
-            document.getElementById(
-                modulo
-            );
+        document.getElementById(
+            modulo
+        );
 
         if(elemento){
 
@@ -144,14 +146,27 @@ function mostrarModulo(id){
 
     });
 
-    document
-    .getElementById(
-        id
-    )
-    .style.display='block';
+    /* mostrar seleccionado */
 
+    const moduloActual=
+    document.getElementById(id);
 
-    /* CARGAS DINÁMICAS */
+    if(moduloActual){
+
+        moduloActual.style.display='block';
+
+    }
+
+    /* cargar módulos dinámicamente */
+
+    if(
+        id==='expedientes' &&
+        typeof cargarExpedientes==='function'
+    ){
+
+        cargarExpedientes();
+
+    }
 
     if(
         id==='prestados' &&
@@ -180,8 +195,16 @@ function mostrarModulo(id){
 
     }
 
-}
+    if(
+        id==='usuarios' &&
+        typeof cargarUsuariosTabla==='function'
+    ){
 
+        cargarUsuariosTabla();
+
+    }
+
+}
 window.onload=function(){
 
 if(
