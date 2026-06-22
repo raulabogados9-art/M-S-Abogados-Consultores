@@ -14,8 +14,7 @@ await response.json();
 
 return usuarios;
 
-}
-catch(error){
+}catch(error){
 
 console.error(error);
 
@@ -28,20 +27,14 @@ return [];
 async function login(){
 
 const usuario=
-document
-.getElementById(
+document.getElementById(
 'txtUsuario'
-)
-.value
-.trim();
+).value.trim();
 
 const password=
-document
-.getElementById(
+document.getElementById(
 'txtPassword'
-)
-.value
-.trim();
+).value.trim();
 
 await cargarUsuarios();
 
@@ -64,32 +57,22 @@ return;
 
 }
 
-/* GUARDAR SESIÓN */
-
 sessionStorage.setItem(
-
 'usuario',
 encontrado.Usuario
-
 );
 
 sessionStorage.setItem(
-
 'nombre',
 encontrado.NombreCompleto ||
 encontrado.Nombre ||
 'Administrador'
-
 );
 
 sessionStorage.setItem(
-
 'rol',
 encontrado.Rol
-
 );
-
-/* MOSTRAR SISTEMA */
 
 document.getElementById(
 'loginContainer'
@@ -98,8 +81,6 @@ document.getElementById(
 document.getElementById(
 'mainContainer'
 ).style.display='block';
-
-/* SOLO ESTA ETIQUETA */
 
 document.getElementById(
 'lblUsuario'
@@ -119,88 +100,9 @@ sessionStorage.getItem(
 
 +')';
 
-/* CARGAR EXPEDIENTES */
-
-if(
-typeof cargarExpedientes==='function'
-){
+if(typeof cargarExpedientes==='function'){
 
 cargarExpedientes();
-
-}
-
-/* ADMIN */
-
-if(
-encontrado.Rol==='Administrador'
-){
-
-document.getElementById(
-'menuUsuarios'
-).style.display='inline-block';
-
-document.getElementById(
-'menuPersonas'
-).style.display='inline-block';
-
-document.getElementById(
-'menuActividades'
-).style.display='inline-block';
-
-if(
-typeof cargarUsuariosTabla
-==='function'
-){
-
-cargarUsuariosTabla();
-
-}
-
-}
-
-/* ARCHIVO */
-
-if(
-encontrado.Rol==='Archivo'
-){
-
-document.getElementById(
-'menuUsuarios'
-).style.display='none';
-
-}
-
-/* CONSULTA */
-
-if(
-encontrado.Rol==='Consulta'
-){
-
-document.getElementById(
-'menuUsuarios'
-).style.display='none';
-
-document.getElementById(
-'menuPersonas'
-).style.display='none';
-
-document.getElementById(
-'menuActividades'
-).style.display='none';
-
-const botonNuevo=
-
-document.querySelector(
-'.btn-success'
-);
-
-if(
-botonNuevo
-){
-
-botonNuevo.style.display='none';
-
-}
 
 }
 
@@ -235,9 +137,7 @@ document.getElementById(
 modulo
 );
 
-if(
-elemento
-){
+if(elemento){
 
 elemento.style.display='none';
 
@@ -245,13 +145,9 @@ elemento.style.display='none';
 
 });
 
-document
-.getElementById(
+document.getElementById(
 id
-)
-.style.display='block';
-
-/* CARGAS BAJO DEMANDA */
+).style.display='block';
 
 if(
 
@@ -276,8 +172,6 @@ cargarHistorico();
 }
 
 }
-
-/* RECUPERAR SESIÓN */
 
 window.onload=function(){
 
@@ -315,9 +209,7 @@ sessionStorage.getItem(
 
 +')';
 
-if(
-typeof cargarExpedientes==='function'
-){
+if(typeof cargarExpedientes==='function'){
 
 cargarExpedientes();
 
