@@ -14,7 +14,8 @@ await response.json();
 
 return usuarios;
 
-}catch(error){
+}
+catch(error){
 
 console.error(error);
 
@@ -100,11 +101,9 @@ sessionStorage.getItem(
 
 +')';
 
-if(typeof cargarExpedientes==='function'){
-
 cargarExpedientes();
-
-}
+cargarPrestados();
+cargarHistorico();
 
 }
 
@@ -118,85 +117,67 @@ location.reload();
 
 function mostrarModulo(id){
 
-    const modulos=[
+const modulos=[
 
-        'expedientes',
-        'prestados',
-        'historico',
-        'personas',
-        'actividades',
-        'usuarios'
+'expedientes',
+'prestados',
+'historico',
+'personas',
+'actividades',
+'usuarios'
 
-    ];
+];
 
-    modulos.forEach(modulo=>{
+modulos.forEach(modulo=>{
 
-        const elemento=
-        document.getElementById(modulo);
+const elemento=
+document.getElementById(
+modulo
+);
 
-        if(elemento){
+if(elemento){
 
-            elemento.style.display='none';
-
-        }
-
-    });
-
-    document
-    .getElementById(id)
-    .style.display='block';
-
-
-    /* CARGAS BAJO DEMANDA */
-
-    if(
-    id==='expedientes' &&
-    typeof cargarExpedientes==='function'
-    ){
-
-        cargarExpedientes();
-
-    }
-
-    if(
-    id==='prestados' &&
-    typeof cargarPrestados==='function'
-    ){
-
-        cargarPrestados();
-
-    }
-
-    if(
-    id==='historico' &&
-    typeof cargarHistorico==='function'
-    ){
-
-        cargarHistorico();
-
-    }
-
-    if(
-    id==='personas' &&
-    typeof cargarPersonasTabla==='function'
-    ){
-
-        cargarPersonasTabla();
-
-    }
-
-    if(
-    id==='usuarios' &&
-    typeof cargarUsuariosTabla==='function'
-    ){
-
-        cargarUsuariosTabla();
-
-    }
+elemento.style.display='none';
 
 }
+
+});
+
+document
+.getElementById(id)
+.style.display='block';
+
+
 if(
-id==='personas'
+id==='expedientes' &&
+typeof cargarExpedientes==='function'
+){
+
+cargarExpedientes();
+
+}
+
+if(
+id==='prestados' &&
+typeof cargarPrestados==='function'
+){
+
+cargarPrestados();
+
+}
+
+if(
+id==='historico' &&
+typeof cargarHistorico==='function'
+){
+
+cargarHistorico();
+
+}
+
+if(
+id==='personas' &&
+typeof cargarPersonasTabla==='function'
 ){
 
 cargarPersonasTabla();
@@ -204,7 +185,8 @@ cargarPersonasTabla();
 }
 
 if(
-id==='usuarios'
+id==='usuarios' &&
+typeof cargarUsuariosTabla==='function'
 ){
 
 cargarUsuariosTabla();
@@ -212,9 +194,12 @@ cargarUsuariosTabla();
 }
 
 }
+
 window.onload=function(){
 
-if(sessionStorage.getItem('usuario')){
+if(sessionStorage.getItem(
+'usuario'
+)){
 
 const login=
 document.getElementById(
@@ -237,8 +222,6 @@ if(main){
 main.style.display='block';
 
 }
-
-/* USUARIO */
 
 const lblUsuario=
 document.getElementById(
@@ -265,25 +248,9 @@ sessionStorage.getItem(
 
 }
 
-/* CARGAR MODULOS */
-
-if(typeof cargarExpedientes==='function'){
-
 cargarExpedientes();
-
-}
-
-if(typeof cargarPrestados==='function'){
-
 cargarPrestados();
-
-}
-
-if(typeof cargarHistorico==='function'){
-
 cargarHistorico();
-
-}
 
 }
 
