@@ -480,8 +480,87 @@ Guardar
 </div>
 
 <div id="actividades" style="display:none;">
-    <h3>Actividades</h3>
-    <p>Módulo en construcción</p>
+
+<h3>Actividades</h3>
+
+<button
+class="btn btn-success mb-3"
+onclick="abrirModalActividad()">
+
+Nueva Actividad
+
+</button>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+
+<th>Actividad</th>
+<th>Activo</th>
+<th>Acciones</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbodyActividades">
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- MODAL ACTIVIDAD -->
+
+<div
+class="modal fade"
+id="modalActividad">
+
+<div class="modal-dialog">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h5>Actividad</h5>
+
+</div>
+
+<div class="modal-body">
+
+<input
+type="hidden"
+id="txtActividadID">
+
+<label>Nombre actividad</label>
+
+<input
+type="text"
+id="txtActividadNombre"
+class="form-control">
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-primary"
+onclick="guardarActividad()">
+
+Guardar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 <div id="usuarios" style="display:none;">
