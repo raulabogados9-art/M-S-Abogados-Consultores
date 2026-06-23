@@ -149,18 +149,16 @@ async function guardarActividad(){
 try{
 
 const id=
-
 document.getElementById(
 'txtActividadID'
 ).value.trim();
 
-const nombre=
-
+const actividad=
 document.getElementById(
 'txtActividadNombre'
 ).value.trim();
 
-if(nombre===''){
+if(!actividad){
 
 alert(
 'Ingrese una actividad'
@@ -170,55 +168,47 @@ return;
 
 }
 
+let datos={};
+
 if(id!==''){
 
-/* EDITAR */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
+datos={
 
 action:
 'EDITAR_ACTIVIDAD',
 
 ID:id,
 
-Actividad:nombre
+Actividad:actividad
 
-})
-
-});
+};
 
 }else{
 
-/* NUEVA */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
+datos={
 
 sheet:
 'ACTIVIDADES_CATALOGO',
 
 ID:Date.now(),
 
-Actividad:nombre,
+Actividad:actividad,
 
 Activo:'Si'
 
-})
-
-});
+};
 
 }
+
+await fetch(API_URL,{
+
+method:'POST',
+
+body:JSON.stringify(
+datos
+)
+
+});
 
 alert(
 'Actividad guardada correctamente'
@@ -238,7 +228,7 @@ setTimeout(()=>{
 
 cargarActividadesTabla();
 
-},500);
+},800);
 
 }
 catch(error){
@@ -275,7 +265,7 @@ body:JSON.stringify({
 action:
 'CAMBIAR_ESTADO_ACTIVIDAD',
 
-ID:id.trim(),
+ID:id,
 
 Activo:nuevoEstado
 
@@ -283,20 +273,20 @@ Activo:nuevoEstado
 
 });
 
+alert(
+'Estado actualizado correctamente'
+);
+
 setTimeout(()=>{
 
 cargarActividadesTabla();
 
-},500);
+},800);
 
 }
 catch(error){
 
 console.error(error);
-
-alert(
-'Error al actualizar'
-);
 
 }
 
