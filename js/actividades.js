@@ -215,8 +215,43 @@ id,
 estado
 ){
 
+try{
+
+await fetch(API_URL,{
+
+method:'POST',
+
+body:JSON.stringify({
+
+action:'CAMBIAR_ESTADO_ACTIVIDAD',
+
+ID:id,
+
+Activo:
+
+estado==='Si'
+?'No'
+:'Si'
+
+})
+
+});
+
 alert(
-'Pendiente siguiente paso'
+'Estado actualizado correctamente'
 );
+
+cargarActividadesTabla();
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+'Error al actualizar'
+);
+
+}
 
 }
