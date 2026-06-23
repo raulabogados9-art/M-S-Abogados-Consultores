@@ -1,5 +1,9 @@
 let personasSistema=[];
 
+/* ==========================
+CARGAR PERSONAS
+========================== */
+
 async function cargarPersonasTabla(){
 
 try{
@@ -81,6 +85,9 @@ console.error(error);
 
 }
 
+/* ==========================
+ABRIR MODAL
+========================== */
 
 function abrirModalPersona(){
 
@@ -100,12 +107,16 @@ new bootstrap.Modal(
 
 document.getElementById(
 'modalPersona'
+
 )
 
 ).show();
 
 }
 
+/* ==========================
+EDITAR
+========================== */
 
 function editarPersona(
 id,
@@ -129,16 +140,72 @@ new bootstrap.Modal(
 
 document.getElementById(
 'modalPersona'
+
 )
 
 ).show();
 
 }
 
+/* ==========================
+GUARDAR
+========================== */
 
 async function guardarPersona(){
 
 try{
+
+const nombre=
+
+document.getElementById(
+'txtPersonaNombre'
+).value.trim();
+
+const actividad=
+
+document.getElementById(
+'txtPersonaActividad'
+).value.trim();
+
+if(
+nombre===''
+){
+
+alert(
+'Ingrese nombre'
+);
+
+return;
+
+}
+
+/* VALIDAR DUPLICADOS */
+
+const existe=
+
+personasSistema.find(
+
+p=>
+
+p.Nombre.toLowerCase()
+===nombre.toLowerCase()
+
+);
+
+if(
+existe &&
+document.getElementById(
+'txtPersonaID'
+).value===''
+){
+
+alert(
+'La persona ya existe'
+);
+
+return;
+
+}
 
 const persona={
 
@@ -150,17 +217,9 @@ document.getElementById(
 
 Date.now(),
 
-Nombre:
+Nombre:nombre,
 
-document.getElementById(
-'txtPersonaNombre'
-).value,
-
-Actividad:
-
-document.getElementById(
-'txtPersonaActividad'
-).value,
+Actividad:actividad,
 
 Activo:'Si'
 
@@ -189,6 +248,7 @@ bootstrap.Modal
 
 document.getElementById(
 'modalPersona'
+
 )
 
 ).hide();
@@ -204,14 +264,51 @@ console.error(error);
 
 }
 
+/* ==========================
+ACTIVAR / DESACTIVAR
+========================== */
 
 async function cambiarEstadoPersona(
 id,
 estado
 ){
 
+try{
+
+const nuevoEstado=
+
+estado==='Si'
+?'No'
+:'Si';
+
+await fetch(API_URL,{
+
+method:'POST',
+
+body:JSON.stringify({
+
+action:
+'CAMBIAR_ESTADO_PERSONA',
+
+ID:id,
+
+Activo:nuevoEstado
+
+})
+
+});
+
 alert(
-'Pendiente siguiente paso'
+'Estado actualizado'
 );
+
+cargarPersonasTabla();
+
+}
+catch(error){
+
+console.error(error);
+
+}
 
 }
