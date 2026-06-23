@@ -192,7 +192,14 @@ typeof cargarUsuariosTabla==='function'
 cargarUsuariosTabla();
 
 }
+if(
+id==='actividades' &&
+typeof cargarActividadesTabla==='function'
+){
 
+cargarActividadesTabla();
+
+}
 }
 
 window.onload=function(){
