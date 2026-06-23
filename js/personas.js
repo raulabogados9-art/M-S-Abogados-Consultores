@@ -11,7 +11,7 @@ try{
 const response=
 await fetch(
 API_URL+'?sheet=PERSONAS'
-);
+)
 
 personasSistema=
 await response.json();
