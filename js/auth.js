@@ -211,7 +211,7 @@ if(login){
 login.style.display='none';
 
 }
-}
+
 const main=
 document.getElementById(
 'mainContainer'
