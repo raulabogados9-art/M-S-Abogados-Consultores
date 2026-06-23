@@ -168,17 +168,43 @@ return;
 
 }
 
-const datos={
+let datos={};
 
-sheet:'ACTIVIDADES_CATALOGO',
+/* EDITAR */
 
-ID:id || Date.now(),
+if(id!==''){
+
+datos={
+
+action:
+'EDITAR_ACTIVIDAD',
+
+ID:id,
+
+Actividad:actividad
+
+};
+
+}
+
+/* NUEVA ACTIVIDAD */
+
+else{
+
+datos={
+
+sheet:
+'ACTIVIDADES_CATALOGO',
+
+ID:Date.now(),
 
 Actividad:actividad,
 
 Activo:'Si'
 
 };
+
+}
 
 await fetch(API_URL,{
 
@@ -198,8 +224,7 @@ bootstrap.Modal
 .getInstance(
 
 document.getElementById(
-'modalActividad'
-)
+'modalActividad')
 
 ).hide();
 
