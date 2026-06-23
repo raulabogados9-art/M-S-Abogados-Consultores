@@ -118,61 +118,83 @@ location.reload();
 
 function mostrarModulo(id){
 
-const modulos=[
+    const modulos=[
 
-'expedientes',
-'prestados',
-'historico',
-'personas',
-'actividades',
-'usuarios'
+        'expedientes',
+        'prestados',
+        'historico',
+        'personas',
+        'actividades',
+        'usuarios'
 
-];
+    ];
 
-modulos.forEach(modulo=>{
+    modulos.forEach(modulo=>{
 
-const elemento=
-document.getElementById(
-modulo
-);
+        const elemento=
+        document.getElementById(modulo);
 
-if(elemento){
+        if(elemento){
 
-elemento.style.display='none';
+            elemento.style.display='none';
+
+        }
+
+    });
+
+    document
+    .getElementById(id)
+    .style.display='block';
+
+
+    /* CARGAS BAJO DEMANDA */
+
+    if(
+    id==='expedientes' &&
+    typeof cargarExpedientes==='function'
+    ){
+
+        cargarExpedientes();
+
+    }
+
+    if(
+    id==='prestados' &&
+    typeof cargarPrestados==='function'
+    ){
+
+        cargarPrestados();
+
+    }
+
+    if(
+    id==='historico' &&
+    typeof cargarHistorico==='function'
+    ){
+
+        cargarHistorico();
+
+    }
+
+    if(
+    id==='personas' &&
+    typeof cargarPersonasTabla==='function'
+    ){
+
+        cargarPersonasTabla();
+
+    }
+
+    if(
+    id==='usuarios' &&
+    typeof cargarUsuariosTabla==='function'
+    ){
+
+        cargarUsuariosTabla();
+
+    }
 
 }
-
-});
-
-document
-.getElementById(id)
-.style.display='block';
-
-
-if(
-id==='expedientes'
-){
-
-cargarExpedientes();
-
-}
-
-if(
-id==='prestados'
-){
-
-cargarPrestados();
-
-}
-
-if(
-id==='historico'
-){
-
-cargarHistorico();
-
-}
-
 if(
 id==='personas'
 ){
