@@ -110,7 +110,7 @@ document.getElementById(
 
 
 /* ==========================
-EDITAR
+EDITAR ACTIVIDAD
 ========================== */
 
 function editarActividad(
@@ -120,11 +120,13 @@ actividad
 
 document.getElementById(
 'txtActividadID'
-).value=id;
+).value=
+String(id);
 
 document.getElementById(
 'txtActividadNombre'
-).value=actividad;
+).value=
+actividad;
 
 new bootstrap.Modal(
 
@@ -139,46 +141,84 @@ document.getElementById(
 
 
 /* ==========================
-GUARDAR
+GUARDAR ACTIVIDAD
 ========================== */
 
 async function guardarActividad(){
 
 try{
 
-const actividad={
-
-ID:
+const id=
 
 document.getElementById(
 'txtActividadID'
-).value ||
+).value.trim();
 
-Date.now(),
-
-Actividad:
+const nombre=
 
 document.getElementById(
 'txtActividadNombre'
-).value,
+).value.trim();
 
-Activo:'Si'
+if(nombre===''){
 
-};
+alert(
+'Ingrese una actividad'
+);
+
+return;
+
+}
+
+if(id!==''){
+
+/* EDITAR */
 
 await fetch(API_URL,{
 
 method:'POST',
 
+mode:'no-cors',
+
 body:JSON.stringify({
 
-sheet:'ACTIVIDADES_CATALOGO',
+action:
+'EDITAR_ACTIVIDAD',
 
-...actividad
+ID:id,
+
+Actividad:nombre
 
 })
 
 });
+
+}else{
+
+/* NUEVA */
+
+await fetch(API_URL,{
+
+method:'POST',
+
+mode:'no-cors',
+
+body:JSON.stringify({
+
+sheet:
+'ACTIVIDADES_CATALOGO',
+
+ID:Date.now(),
+
+Actividad:nombre,
+
+Activo:'Si'
+
+})
+
+});
+
+}
 
 alert(
 'Actividad guardada correctamente'
@@ -194,7 +234,11 @@ document.getElementById(
 
 ).hide();
 
+setTimeout(()=>{
+
 cargarActividadesTabla();
+
+},500);
 
 }
 catch(error){
@@ -204,7 +248,6 @@ console.error(error);
 }
 
 }
-
 
 /* ==========================
 ACTIVAR / DESACTIVAR
