@@ -168,37 +168,17 @@ return;
 
 }
 
-let datos={};
+const datos={
 
-if(id!==''){
+sheet:'ACTIVIDADES_CATALOGO',
 
-datos={
-
-action:
-'EDITAR_ACTIVIDAD',
-
-ID:id,
-
-Actividad:actividad
-
-};
-
-}else{
-
-datos={
-
-sheet:
-'ACTIVIDADES_CATALOGO',
-
-ID:Date.now(),
+ID:id || Date.now(),
 
 Actividad:actividad,
 
 Activo:'Si'
 
 };
-
-}
 
 await fetch(API_URL,{
 
@@ -219,16 +199,11 @@ bootstrap.Modal
 
 document.getElementById(
 'modalActividad'
-
 )
 
 ).hide();
 
-setTimeout(()=>{
-
 cargarActividadesTabla();
-
-},800);
 
 }
 catch(error){
@@ -238,7 +213,6 @@ console.error(error);
 }
 
 }
-
 /* ==========================
 ACTIVAR / DESACTIVAR
 ========================== */
