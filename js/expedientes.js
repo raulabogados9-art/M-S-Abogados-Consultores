@@ -606,7 +606,8 @@ try{
 
 const response=
 await fetch(
-API_URL+'?sheet=MOVIMIENTOS'
+API_URL+
+'?sheet=MOVIMIENTOS'
 );
 
 const datos=
@@ -617,32 +618,28 @@ document.getElementById(
 'tbodyHistorico'
 );
 
-if(!tbody)return;
-
 tbody.innerHTML='';
 
 datos.reverse().forEach(mov=>{
 
-let fechaFormateada='';
+let fecha='';
 
 if(mov.FechaHora){
 
-const fecha=
-new Date(mov.FechaHora);
-
-fechaFormateada=
-fecha.toLocaleString(
+fecha=
+new Date(
+mov.FechaHora
+)
+.toLocaleString(
 'es-MX',
 {
 timeZone:'America/Mexico_City',
-
 day:'2-digit',
 month:'2-digit',
 year:'numeric',
-
-hour:'numeric',
+hour:'2-digit',
 minute:'2-digit',
-
+second:'2-digit',
 hour12:true
 }
 );
@@ -653,7 +650,7 @@ tbody.innerHTML+=`
 
 <tr>
 
-<td>${fechaFormateada}</td>
+<td>${fecha}</td>
 
 <td>${mov.NoExpediente||''}</td>
 
@@ -672,10 +669,7 @@ tbody.innerHTML+=`
 }
 catch(error){
 
-console.error(
-'Error histórico:',
-error
-);
+console.error(error);
 
 }
 
