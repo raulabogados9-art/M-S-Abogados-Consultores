@@ -217,31 +217,34 @@ estado
 
 try{
 
+const nuevoEstado=
+
+estado==='Si'
+?'No'
+:'Si';
+
 await fetch(API_URL,{
 
 method:'POST',
 
 body:JSON.stringify({
 
-action:'CAMBIAR_ESTADO_ACTIVIDAD',
+action:
+'CAMBIAR_ESTADO_ACTIVIDAD',
 
-ID:id,
+ID:id.trim(),
 
-Activo:
-
-estado==='Si'
-?'No'
-:'Si'
+Activo:nuevoEstado
 
 })
 
 });
 
-alert(
-'Estado actualizado correctamente'
-);
+setTimeout(()=>{
 
 cargarActividadesTabla();
+
+},500);
 
 }
 catch(error){
