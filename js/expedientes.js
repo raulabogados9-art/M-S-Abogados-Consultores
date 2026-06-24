@@ -1,8 +1,9 @@
-/*javascript*/
+```javascript
 let personas=[];
 let guardandoExpediente=false;
 let prestandoExpediente=false;
 let devolviendoExpediente=false;
+
 
 /* =======================
 PERSONAS
@@ -12,6 +13,11 @@ async function cargarPersonas(){
 
 try{
 
+console.log(
+'API:',
+API_URL
+);
+
 const response=
 await fetch(
 API_URL+'?sheet=PERSONAS'
@@ -19,6 +25,11 @@ API_URL+'?sheet=PERSONAS'
 
 personas=
 await response.json();
+
+console.log(
+'PERSONAS:',
+personas
+);
 
 const combo=
 document.getElementById(
@@ -34,15 +45,15 @@ personas
 .filter(
 p=>p.Activo==="Si"
 )
-.forEach(p=>{
+.forEach(persona=>{
 
 combo.innerHTML+=`
 
 <option
-value="${p.Nombre}"
-data-actividad="${p.Actividad}">
+value="${persona.Nombre}"
+data-actividad="${persona.Actividad}">
 
-${p.Nombre}
+${persona.Nombre}
 
 </option>
 
@@ -53,11 +64,19 @@ ${p.Nombre}
 }
 catch(error){
 
-console.error(error);
+console.error(
+'ERROR PERSONAS:',
+error
+);
 
 }
 
 }
+
+
+/* =======================
+ACTIVIDAD AUTOMATICA
+======================= */
 
 function actualizarActividadPersona(){
 
@@ -78,6 +97,25 @@ document.getElementById(
 actividad;
 
 }
+
+
+document.addEventListener(
+'change',
+function(e){
+
+if(
+
+e.target.id===
+'cmbPersonaResponsable'
+
+){
+
+actualizarActividadPersona();
+
+}
+
+}
+);
 
 
 /* =======================
@@ -221,22 +259,39 @@ API_URL+'?sheet=EXPEDIENTES'
 const datos=
 await response.json();
 
+console.log(
+'EXPEDIENTES:',
+datos
+);
+
 const tbody=
 document.getElementById(
 'tbodyExpedientes'
 );
 
+if(!tbody)return;
+
 tbody.innerHTML='';
 
-datos.forEach(exp=>{
+datos
+.filter(
+e=>e.Activo==="Si"
+)
+.forEach(exp=>{
 
 tbody.innerHTML+=`
 
 <tr>
 
 <td>${exp.NoExpediente||''}</td>
+
 <td>${exp.NumeroInterno||''}</td>
+
 <td>${exp.PersonaResponsable||''}</td>
+
+<td>${exp.Estado||''}</td>
+
+<td>${exp.UsuarioCaptura||''}</td>
 
 <td>
 
@@ -246,11 +301,7 @@ onclick="prestarExpediente(
 
 '${exp.ID}',
 '${exp.NoExpediente}',
-'${exp.NumeroInterno}',
-'${exp.PersonaResponsable}',
-'${exp.Actividad}',
-'${exp.Observaciones}',
-'${exp.UsuarioCaptura}'
+'${exp.NumeroInterno}'
 
 )">
 
@@ -280,15 +331,7 @@ console.error(error);
 PRESTAR
 ======================= */
 
-async function prestarExpediente(
-id,
-expediente,
-interno,
-responsable,
-actividad,
-observaciones,
-usuarioCaptura
-){
+function prestarExpediente(){
 
 alert(
 'Prestar funcionando'
@@ -303,15 +346,9 @@ PRESTADOS
 
 async function cargarPrestados(){
 
-const response=
-await fetch(
-API_URL+'?sheet=PRESTADOS'
+console.log(
+'Prestados activo'
 );
-
-const datos=
-await response.json();
-
-console.log(datos);
 
 }
 
@@ -322,15 +359,9 @@ HISTORICO
 
 async function cargarHistorico(){
 
-const response=
-await fetch(
-API_URL+'?sheet=MOVIMIENTOS'
+console.log(
+'Historico activo'
 );
 
-const datos=
-await response.json();
-
-console.log(datos);
-
 }
-
+```
