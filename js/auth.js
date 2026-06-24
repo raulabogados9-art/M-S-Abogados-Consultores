@@ -1,3 +1,36 @@
+let usuarios=[];
+
+/* ==========================
+CARGAR USUARIOS
+========================== */
+
+async function cargarUsuariosSistema(){
+
+try{
+
+const response=
+await fetch(
+API_URL+'?sheet=USUARIOS'
+);
+
+usuarios=
+await response.json();
+
+}
+catch(error){
+
+console.error(
+'Error cargando usuarios:',
+error
+);
+
+usuarios=[];
+
+}
+
+}
+
+
 /* ==========================
 LOGIN
 ========================== */
@@ -7,18 +40,24 @@ async function login(){
 try{
 
 const usuario=
+
 document.getElementById(
 'txtUsuario'
-).value.trim();
+)
+.value
+.trim();
 
 const password=
+
 document.getElementById(
 'txtPassword'
-).value.trim();
+)
+.value
+.trim();
 
 if(
-!usuario ||
-!password
+usuario==='' ||
+password===''
 ){
 
 alert(
@@ -29,37 +68,21 @@ return;
 
 }
 
-const response=
-await fetch(
-API_URL+'?sheet=USUARIOS'
-);
+await cargarUsuariosSistema();
 
-const usuarios=
-await response.json();
-
-const usuarioEncontrado=
+const usuarioValido=
 
 usuarios.find(u=>
 
-String(
-u.Usuario
-).trim()===usuario
+u.Usuario===usuario &&
 
-&&
+u.Password===password &&
 
-String(
-u.Password
-).trim()===password
-
-&&
-
-String(
-u.Activo
-).trim()==='Si'
+u.Activo==="Si"
 
 );
 
-if(!usuarioEncontrado){
+if(!usuarioValido){
 
 alert(
 'Usuario o contraseña incorrectos'
@@ -72,121 +95,61 @@ return;
 /* GUARDAR SESION */
 
 sessionStorage.setItem(
-'usuario',
-usuarioEncontrado.Usuario
+'nombre',
+usuarioValido.NombreCompleto
 );
 
 sessionStorage.setItem(
-'nombre',
-usuarioEncontrado.Nombre
+'usuario',
+usuarioValido.Usuario
 );
 
 sessionStorage.setItem(
 'rol',
-usuarioEncontrado.Rol
+usuarioValido.Rol
 );
 
-/* OCULTAR LOGIN */
+/* MOSTRAR SISTEMA */
 
 document.getElementById(
 'loginContainer'
 ).style.display='none';
 
 document.getElementById(
-'sistemaContainer'
+'mainContainer'
 ).style.display='block';
 
-
-/* MOSTRAR MODULOS SEGUN ROL */
-
-const rol=
-usuarioEncontrado.Rol;
-
-if(
-rol!=="Administrador"
-){
-
-const btnUsuarios=
 document.getElementById(
-'menuUsuarios'
-);
-
-const btnPersonas=
-document.getElementById(
-'menuPersonas'
-);
-
-const btnActividades=
-document.getElementById(
-'menuActividades'
-);
-
-if(btnUsuarios)
-btnUsuarios.style.display='none';
-
-if(btnPersonas)
-btnPersonas.style.display='none';
-
-if(btnActividades)
-btnActividades.style.display='none';
-
-}
+'lblUsuario'
+).innerText=
+usuarioValido.NombreCompleto;
 
 
-/* CARGAR DATOS DEL SISTEMA */
+/* PERMISOS */
 
-if(
-typeof cargarExpedientes==='function'
-){
+configurarPermisos();
+
+
+/* CARGAS INICIALES */
 
 cargarExpedientes();
 
-}
-
-if(
-typeof cargarPrestados==='function'
-){
-
 cargarPrestados();
-
-}
-
-if(
-typeof cargarHistorico==='function'
-){
 
 cargarHistorico();
 
-}
-
-if(
-typeof cargarPersonasTabla==='function'
-){
-
 cargarPersonasTabla();
 
-}
-
-if(
-typeof cargarActividadesTabla==='function'
-){
-
 cargarActividadesTabla();
-
-}
-
-if(
-typeof cargarUsuariosTabla==='function'
-){
 
 cargarUsuariosTabla();
 
 }
-
-}
 catch(error){
 
-console.error(error);
+console.error(
+error
+);
 
 alert(
 'Error al iniciar sesión'
@@ -198,13 +161,145 @@ alert(
 
 
 /* ==========================
-CERRAR SESION
+PERMISOS
 ========================== */
 
-function cerrarSesion(){
+function configurarPermisos(){
+
+const rol=
+
+sessionStorage.getItem(
+'rol'
+);
+
+const menuUsuarios=
+document.getElementById(
+'menuUsuarios'
+);
+
+const menuPersonas=
+document.getElementById(
+'menuPersonas'
+);
+
+const menuActividades=
+document.getElementById(
+'menuActividades'
+);
+
+if(
+rol==="Administrador"
+){
+
+menuUsuarios.style.display='';
+menuPersonas.style.display='';
+menuActividades.style.display='';
+
+}
+else{
+
+menuUsuarios.style.display='none';
+menuPersonas.style.display='none';
+menuActividades.style.display='none';
+
+}
+
+}
+
+
+/* ==========================
+LOGOUT
+========================== */
+
+function logout(){
 
 sessionStorage.clear();
 
 location.reload();
+
+}
+
+
+/* ==========================
+CAMBIAR MODULOS
+========================== */
+
+function mostrarModulo(id){
+
+const modulos=[
+
+'expedientes',
+'prestados',
+'historico',
+'personas',
+'actividades',
+'usuarios'
+
+];
+
+modulos.forEach(modulo=>{
+
+const elemento=
+document.getElementById(
+modulo
+);
+
+if(elemento){
+
+elemento.style.display='none';
+
+}
+
+});
+
+document.getElementById(
+id
+).style.display='block';
+
+}
+
+
+/* ==========================
+VALIDAR SESION AL CARGAR
+========================== */
+
+window.onload=function(){
+
+const nombre=
+
+sessionStorage.getItem(
+'nombre'
+);
+
+if(nombre){
+
+document.getElementById(
+'loginContainer'
+).style.display='none';
+
+document.getElementById(
+'mainContainer'
+).style.display='block';
+
+document.getElementById(
+'lblUsuario'
+).innerText=
+nombre;
+
+configurarPermisos();
+
+cargarExpedientes();
+
+cargarPrestados();
+
+cargarHistorico();
+
+cargarPersonasTabla();
+
+cargarActividadesTabla();
+
+cargarUsuariosTabla();
+
+}
 
 }
