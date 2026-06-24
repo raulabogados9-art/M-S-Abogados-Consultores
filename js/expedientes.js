@@ -152,12 +152,12 @@ ID:Date.now(),
 NoExpediente:
 document.getElementById(
 'txtNoExpediente'
-).value,
+).value.trim(),
 
 NumeroInterno:
 document.getElementById(
 'txtNumeroInterno'
-).value,
+).value.trim(),
 
 PersonaResponsable:
 document.getElementById(
@@ -179,7 +179,7 @@ sessionStorage.getItem(
 'nombre'
 ),
 
-Estado:"Disponible",
+Estado:"Prestado",
 
 Activo:"Si"
 
@@ -193,6 +193,43 @@ body:JSON.stringify({
 
 sheet:'EXPEDIENTES',
 ...expediente
+
+})
+
+});
+
+/* REGISTRAR MOVIMIENTO */
+
+await fetch(API_URL,{
+
+method:'POST',
+
+body:JSON.stringify({
+
+sheet:'MOVIMIENTOS',
+
+Fecha:new Date().toLocaleDateString(),
+
+Hora:new Date().toLocaleTimeString(),
+
+TipoMovimiento:'Salida',
+
+ID:expediente.ID,
+
+NoExpediente:
+expediente.NoExpediente,
+
+NumeroInterno:
+expediente.NumeroInterno,
+
+PersonaResponsable:
+expediente.PersonaResponsable,
+
+Actividad:
+expediente.Actividad,
+
+UsuarioCaptura:
+expediente.UsuarioCaptura
 
 })
 
@@ -221,7 +258,6 @@ console.error(error);
 guardandoExpediente=false;
 
 }
-
 
 /* =======================
 EXPEDIENTES
