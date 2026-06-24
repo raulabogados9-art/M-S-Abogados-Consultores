@@ -1,676 +1,213 @@
-let personas=[];
-let guardandoExpediente=false;
-let prestandoExpediente=false;
-let devolviendoExpediente=false;
+/*javascript*/
+const API_URL='TU_URL_APPS_SCRIPT_AQUI';
 
+/* ==========================
+LOGIN
+========================== */
 
-/* =======================
-PERSONAS
-======================= */
-
-async function cargarPersonas(){
+async function login(){
 
 try{
 
-const response=
-await fetch(
-API_URL+'?sheet=PERSONAS'
-);
-
-personas=
-await response.json();
-
-const combo=
+const usuario=
 document.getElementById(
-'cmbPersonaResponsable'
-);
+'txtUsuario'
+).value.trim();
 
-if(!combo)return;
-
-combo.innerHTML=`
-<option value="">
-Seleccione...
-</option>
-`;
-
-personas
-.filter(
-p=>p.Activo==="Si"
-)
-.forEach(persona=>{
-
-combo.innerHTML+=`
-
-<option
-value="${persona.Nombre}"
-data-actividad="${persona.Actividad}">
-
-${persona.Nombre}
-
-</option>
-
-`;
-
-});
-
-}
-catch(error){
-
-console.error(error);
-
-}
-
-}
-
-function actualizarActividadPersona(){
-
-const combo=
+const password=
 document.getElementById(
-'cmbPersonaResponsable'
-);
-
-const actividad=
-
-combo.options[
-combo.selectedIndex
-]?.dataset.actividad || '';
-
-document.getElementById(
-'txtActividad'
-).value=actividad;
-
-}
-
-document.addEventListener(
-'change',
-function(e){
+'txtPassword'
+).value.trim();
 
 if(
-e.target.id===
-'cmbPersonaResponsable'
+!usuario ||
+!password
 ){
 
-actualizarActividadPersona();
-
-}
-
-}
-);
-
-
-/* =======================
-MODAL
-======================= */
-
-function abrirModalExpediente(){
-
-document.getElementById(
-'txtNoExpediente'
-).value='';
-
-document.getElementById(
-'txtNumeroInterno'
-).value='';
-
-document.getElementById(
-'txtActividad'
-).value='';
-
-document.getElementById(
-'txtObservaciones'
-).value='';
-
-cargarPersonas();
-
-new bootstrap.Modal(
-
-document.getElementById(
-'modalSalida'
-)
-
-).show();
-
-}
-
-
-/* =======================
-GUARDAR
-======================= */
-
-async function guardarExpediente(){
-
-if(guardandoExpediente)return;
-
-guardandoExpediente=true;
-
-try{
-
-const expediente={
-
-ID:Date.now(),
-
-NoExpediente:
-document.getElementById(
-'txtNoExpediente'
-).value,
-
-NumeroInterno:
-document.getElementById(
-'txtNumeroInterno'
-).value,
-
-PersonaResponsable:
-document.getElementById(
-'cmbPersonaResponsable'
-).value,
-
-Actividad:
-document.getElementById(
-'txtActividad'
-).value,
-
-Observaciones:
-document.getElementById(
-'txtObservaciones'
-).value,
-
-UsuarioCaptura:
-sessionStorage.getItem(
-'nombre'
-),
-
-Estado:"Disponible",
-
-Activo:"Si"
-
-};
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body:JSON.stringify({
-
-sheet:'EXPEDIENTES',
-...expediente
-
-})
-
-});
-
 alert(
-'Expediente registrado'
+'Ingrese usuario y contraseña'
 );
 
-bootstrap.Modal
-.getInstance(
-document.getElementById(
-'modalSalida'
-)
-).hide();
-
-cargarExpedientes();
+return;
 
 }
-catch(error){
-
-console.error(error);
-
-}
-
-guardandoExpediente=false;
-
-}
-
-
-/* =======================
-EXPEDIENTES
-======================= */
-
-async function cargarExpedientes(){
-
-try{
 
 const response=
 await fetch(
-API_URL+'?sheet=EXPEDIENTES'
+API_URL+'?sheet=USUARIOS'
 );
 
-const datos=
+const usuarios=
 await response.json();
 
-const tbody=
-document.getElementById(
-'tbodyExpedientes'
+const usuarioEncontrado=
+
+usuarios.find(u=>
+
+String(
+u.Usuario
+).trim()===usuario
+
+&&
+
+String(
+u.Password
+).trim()===password
+
+&&
+
+String(
+u.Activo
+).trim()==='Si'
+
 );
 
-tbody.innerHTML='';
-
-datos
-.filter(e=>
-
-e.Activo==="Si"
-
-)
-
-.forEach(exp=>{
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${exp.NoExpediente||''}</td>
-
-<td>${exp.NumeroInterno||''}</td>
-
-<td>${exp.PersonaResponsable||''}</td>
-
-<td>${exp.Estado||''}</td>
-
-<td>${exp.UsuarioCaptura||''}</td>
-
-<td>
-
-<button
-class="btn btn-primary btn-sm"
-onclick="prestarExpediente(
-
-'${exp.ID}',
-'${exp.NoExpediente}',
-'${exp.NumeroInterno}',
-'${exp.PersonaResponsable}',
-'${exp.Actividad}',
-'${exp.Observaciones}',
-'${exp.UsuarioCaptura}'
-
-)">
-
-Prestar
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-catch(error){
-
-console.error(error);
-
-}
-
-}
-
-
-/* =======================
-PRESTAR
-======================= */
-
-async function prestarExpediente(
-id,
-expediente,
-interno,
-responsable,
-actividad,
-observaciones,
-usuarioCaptura
-){
-
-if(prestandoExpediente){
-return;
-}
-
-prestandoExpediente=true;
-
-try{
-
-const fecha=
-new Date().toISOString();
-
-const prestado={
-
-ID:Date.now(),
-
-NoExpediente:expediente,
-NumeroInterno:interno,
-PersonaResponsable:responsable,
-Actividad:actividad,
-
-Estado:'Prestado',
-
-FechaPrimerSalida:fecha,
-FechaUltimoMovimiento:fecha,
-
-Observaciones:observaciones,
-UsuarioCaptura:usuarioCaptura,
-
-Activo:'Si'
-
-};
-
-const movimiento={
-
-ID:Date.now(),
-
-NoExpediente:expediente,
-NumeroInterno:interno,
-
-TipoMovimiento:'Salida',
-
-PersonaResponsable:responsable,
-Actividad:actividad,
-
-UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
-
-FechaHora:fecha
-
-};
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-sheet:'PRESTADOS',
-
-...prestado
-
-})
-
-});
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
-
-...movimiento
-
-})
-
-});
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-action:'ELIMINAR_EXPEDIENTE',
-ID:id
-
-})
-
-});
+if(!usuarioEncontrado){
 
 alert(
-'Expediente prestado correctamente'
+'Usuario o contraseña incorrectos'
 );
 
+return;
+
+}
+
+/* GUARDAR SESION */
+
+sessionStorage.setItem(
+'usuario',
+usuarioEncontrado.Usuario
+);
+
+sessionStorage.setItem(
+'nombre',
+usuarioEncontrado.Nombre
+);
+
+sessionStorage.setItem(
+'rol',
+usuarioEncontrado.Rol
+);
+
+/* OCULTAR LOGIN */
+
+document.getElementById(
+'loginContainer'
+).style.display='none';
+
+document.getElementById(
+'sistemaContainer'
+).style.display='block';
+
+
+/* MOSTRAR MODULOS SEGUN ROL */
+
+const rol=
+usuarioEncontrado.Rol;
+
+if(
+rol!=="Administrador"
+){
+
+const btnUsuarios=
+document.getElementById(
+'menuUsuarios'
+);
+
+const btnPersonas=
+document.getElementById(
+'menuPersonas'
+);
+
+const btnActividades=
+document.getElementById(
+'menuActividades'
+);
+
+if(btnUsuarios)
+btnUsuarios.style.display='none';
+
+if(btnPersonas)
+btnPersonas.style.display='none';
+
+if(btnActividades)
+btnActividades.style.display='none';
+
+}
+
+
+/* CARGAR DATOS DEL SISTEMA */
+
+if(
+typeof cargarExpedientes==='function'
+){
+
 cargarExpedientes();
+
+}
+
+if(
+typeof cargarPrestados==='function'
+){
+
 cargarPrestados();
+
+}
+
+if(
+typeof cargarHistorico==='function'
+){
+
 cargarHistorico();
 
 }
-catch(error){
 
-console.error(error);
-
-}
-finally{
-
-prestandoExpediente=false;
-
-}
-
-}
-
-
-/* =======================
-PRESTADOS
-======================= */
-
-async function cargarPrestados(){
-
-const response=
-await fetch(
-API_URL+'?sheet=PRESTADOS'
-);
-
-const datos=
-await response.json();
-
-const tbody=
-document.getElementById(
-'tbodyPrestados'
-);
-
-tbody.innerHTML='';
-
-datos.forEach(exp=>{
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${exp.NoExpediente}</td>
-<td>${exp.NumeroInterno}</td>
-<td>${exp.PersonaResponsable}</td>
-
-<td>
-
-<button
-class="btn btn-warning btn-sm"
-onclick="devolverExpediente(
-
-'${exp.ID}',
-'${exp.NoExpediente}',
-'${exp.NumeroInterno}',
-'${exp.PersonaResponsable}'
-
-)">
-
-Devolver
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-async function devolverExpediente(
-id,
-expediente,
-interno,
-responsable
+if(
+typeof cargarPersonasTabla==='function'
 ){
 
-if(devolviendoExpediente){
-return;
+cargarPersonasTabla();
+
 }
 
-devolviendoExpediente=true;
+if(
+typeof cargarActividadesTabla==='function'
+){
 
-try{
+cargarActividadesTabla();
 
-const fecha=
-new Date().toISOString();
+}
 
-const movimiento={
+if(
+typeof cargarUsuariosTabla==='function'
+){
 
-ID:Date.now(),
+cargarUsuariosTabla();
 
-NoExpediente:expediente,
-
-NumeroInterno:interno,
-
-TipoMovimiento:'Devolucion',
-
-PersonaResponsable:responsable,
-
-UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
-
-FechaHora:fecha
-
-};
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
-
-...movimiento
-
-})
-
-});
-
-await fetch(API_URL,{
-
-method:'POST',
-
-mode:'no-cors',
-
-body:JSON.stringify({
-
-action:'ELIMINAR_PRESTADO',
-ID:id
-
-})
-
-});
-
-alert(
-'Expediente devuelto correctamente'
-);
-
-cargarPrestados();
-cargarExpedientes();
-cargarHistorico();
+}
 
 }
 catch(error){
 
 console.error(error);
 
-}
-finally{
-
-devolviendoExpediente=false;
-
-}
+alert(
+'Error al iniciar sesión'
+);
 
 }
 
+}
 
 
 /* ==========================
-HISTORICO
+CERRAR SESION
 ========================== */
 
-async function cargarHistorico(){
+function cerrarSesion(){
 
-try{
+sessionStorage.clear();
 
-const response=
-await fetch(
-API_URL+
-'?sheet=MOVIMIENTOS'
-);
-
-const datos=
-await response.json();
-
-const tbody=
-document.getElementById(
-'tbodyHistorico'
-);
-
-tbody.innerHTML='';
-
-datos.reverse().forEach(mov=>{
-
-let fecha='';
-
-if(mov.FechaHora){
-
-fecha=
-new Date(
-mov.FechaHora
-)
-.toLocaleString(
-'es-MX',
-{
-timeZone:'America/Mexico_City',
-day:'2-digit',
-month:'2-digit',
-year:'numeric',
-hour:'2-digit',
-minute:'2-digit',
-second:'2-digit',
-hour12:true
-}
-);
-
-}
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${fecha}</td>
-
-<td>${mov.NoExpediente||''}</td>
-
-<td>${mov.NumeroInterno||''}</td>
-
-<td>${mov.TipoMovimiento||''}</td>
-
-<td>${mov.PersonaResponsable||''}</td>
-
-</tr>
-
-`;
-
-});
-
-}
-catch(error){
-
-console.error(error);
-
-}
+location.reload();
 
 }
