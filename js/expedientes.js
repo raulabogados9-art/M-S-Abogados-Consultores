@@ -488,7 +488,7 @@ async function cargarPrestados(){
 
 const response=
 await fetch(
-API_URL+'?sheet=PRESTADOS'
+API_URL+'?sheet=EXPEDIENTES'
 );
 
 const datos=
@@ -507,9 +507,11 @@ tbody.innerHTML+=`
 
 <tr>
 
-<td>${exp.NoExpediente}</td>
-<td>${exp.NumeroInterno}</td>
-<td>${exp.PersonaResponsable}</td>
+<td>${exp.NoExpediente||''}</td>
+
+<td>${exp.NumeroInterno||''}</td>
+
+<td>${exp.PersonaResponsable||''}</td>
 
 <td>
 
@@ -538,6 +540,11 @@ Devolver
 
 }
 
+
+/* =======================
+DEVOLVER
+======================= */
+
 async function devolverExpediente(
 id,
 expediente,
@@ -554,34 +561,43 @@ devolviendoExpediente=true;
 try{
 
 const fecha=
-new Date().toISOString();
+new Date();
 
 const movimiento={
 
 ID:Date.now(),
 
-NoExpediente:expediente,
+NoExpediente:
+expediente,
 
-NumeroInterno:interno,
+NumeroInterno:
+interno,
 
-TipoMovimiento:'Devolucion',
+TipoMovimiento:
+'Devolucion',
 
-PersonaResponsable:responsable,
+PersonaResponsable:
+responsable,
 
 UsuarioSistema:
 sessionStorage.getItem(
 'nombre'
 ),
 
-FechaHora:fecha
+Fecha:
+fecha.toLocaleDateString(),
+
+Hora:
+fecha.toLocaleTimeString()
 
 };
+
+
+/* GUARDAR MOVIMIENTO */
 
 await fetch(API_URL,{
 
 method:'POST',
-
-mode:'no-cors',
 
 body:JSON.stringify({
 
@@ -593,15 +609,18 @@ sheet:'MOVIMIENTOS',
 
 });
 
+
+/* ELIMINAR DE EXPEDIENTES */
+
 await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
-
 body:JSON.stringify({
 
-action:'ELIMINAR_PRESTADO',
+action:
+'ELIMINAR_EXPEDIENTE',
+
 ID:id
 
 })
@@ -613,7 +632,9 @@ alert(
 );
 
 cargarPrestados();
+
 cargarExpedientes();
+
 cargarHistorico();
 
 }
