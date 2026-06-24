@@ -1,8 +1,8 @@
+/*javascript*/
 let personas=[];
 let guardandoExpediente=false;
 let prestandoExpediente=false;
 let devolviendoExpediente=false;
-
 
 /* =======================
 PERSONAS
@@ -27,25 +27,22 @@ document.getElementById(
 
 if(!combo)return;
 
-combo.innerHTML=`
-<option value="">
-Seleccione...
-</option>
-`;
+combo.innerHTML=
+'<option value="">Seleccione...</option>';
 
 personas
 .filter(
 p=>p.Activo==="Si"
 )
-.forEach(persona=>{
+.forEach(p=>{
 
 combo.innerHTML+=`
 
 <option
-value="${persona.Nombre}"
-data-actividad="${persona.Actividad}">
+value="${p.Nombre}"
+data-actividad="${p.Actividad}">
 
-${persona.Nombre}
+${p.Nombre}
 
 </option>
 
@@ -77,25 +74,10 @@ combo.selectedIndex
 
 document.getElementById(
 'txtActividad'
-).value=actividad;
+).value=
+actividad;
 
 }
-
-document.addEventListener(
-'change',
-function(e){
-
-if(
-e.target.id===
-'cmbPersonaResponsable'
-){
-
-actualizarActividadPersona();
-
-}
-
-}
-);
 
 
 /* =======================
@@ -179,9 +161,9 @@ sessionStorage.getItem(
 'nombre'
 ),
 
-Estado:"Disponible",
+Estado:'Disponible',
 
-Activo:"Si"
+Activo:'Si'
 
 };
 
@@ -222,6 +204,7 @@ guardandoExpediente=false;
 
 }
 
+
 /* =======================
 EXPEDIENTES
 ======================= */
@@ -231,47 +214,29 @@ async function cargarExpedientes(){
 try{
 
 const response=
-
 await fetch(
 API_URL+'?sheet=EXPEDIENTES'
 );
 
 const datos=
-
 await response.json();
 
 const tbody=
-
 document.getElementById(
 'tbodyExpedientes'
 );
 
-if(!tbody)return;
-
 tbody.innerHTML='';
 
-datos
-.filter(exp=>
-
-exp.Activo==="Si"
-
-)
-
-.forEach(exp=>{
+datos.forEach(exp=>{
 
 tbody.innerHTML+=`
 
 <tr>
 
 <td>${exp.NoExpediente||''}</td>
-
 <td>${exp.NumeroInterno||''}</td>
-
 <td>${exp.PersonaResponsable||''}</td>
-
-<td>${exp.Actividad||''}</td>
-
-<td>${exp.UsuarioCaptura||''}</td>
 
 <td>
 
@@ -310,6 +275,7 @@ console.error(error);
 
 }
 
+
 /* =======================
 PRESTAR
 ======================= */
@@ -324,120 +290,9 @@ observaciones,
 usuarioCaptura
 ){
 
-if(prestandoExpediente)return;
-
-prestandoExpediente=true;
-
-try{
-
-const fecha=
-new Date().toISOString();
-
-const prestado={
-
-ID,
-
-NoExpediente,
-NumeroInterno,
-PersonaResponsable,
-Actividad,
-
-Estado:'Prestado',
-
-Observaciones,
-
-UsuarioCaptura,
-
-Activo:'Si'
-
-};
-
-/* GUARDAR EN PRESTADOS */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body.stringify({
-
-sheet:'PRESTADOS',
-
-...prestado
-
-})
-
-});
-
-/* REGISTRAR MOVIMIENTO */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body.stringify({
-
-sheet:'MOVIMIENTOS',
-
-ID.now(),
-
-NoExpediente,
-
-NumeroInterno,
-
-TipoMovimiento:'Salida',
-
-PersonaResponsable,
-
-Actividad,
-
-UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
-
-FechaHora
-
-})
-
-});
-
-/* ELIMINAR DE EXPEDIENTES */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body.stringify({
-
-action:'ELIMINAR_EXPEDIENTE',
-
-ID
-
-})
-
-});
-
 alert(
-'Expediente prestado correctamente'
+'Prestar funcionando'
 );
-
-await cargarExpedientes();
-
-await cargarPrestados();
-
-await cargarHistorico();
-
-}
-catch(error){
-
-console.error(error);
-
-}
-finally{
-
-prestandoExpediente=false;
-
-}
 
 }
 
@@ -449,351 +304,33 @@ PRESTADOS
 async function cargarPrestados(){
 
 const response=
-
 await fetch(
 API_URL+'?sheet=PRESTADOS'
 );
 
 const datos=
-
 await response.json();
 
-const tbody=
-
-document.getElementById(
-'tbodyPrestados'
-);
-
-tbody.innerHTML='';
-
-datos.forEach(exp=>{
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${exp.NoExpediente}</td>
-
-<td>${exp.NumeroInterno}</td>
-
-<td>${exp.PersonaResponsable}</td>
-
-<td>
-
-<button
-class="btn btn-warning btn-sm"
-onclick="devolverExpediente(
-
-'${exp.ID}',
-'${exp.NoExpediente}',
-'${exp.NumeroInterno}',
-'${exp.PersonaResponsable}',
-'${exp.Actividad}',
-'${exp.Observaciones}',
-'${exp.UsuarioCaptura}'
-
-)">
-
-Devolver
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
+console.log(datos);
 
 }
 
 
 /* =======================
-DEVOLVER
-======================= */
-
-async function devolverExpediente(
-id,
-expediente,
-interno,
-responsable,
-actividad,
-observaciones,
-usuarioCaptura
-){
-
-if(devolviendoExpediente)return;
-
-devolviendoExpediente=true;
-
-try{
-
-const fecha=
-new Date().toISOString();
-
-/* REGISTRAR DEVOLUCION */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body.stringify({
-
-sheet:'MOVIMIENTOS',
-
-ID.now(),
-
-NoExpediente,
-
-NumeroInterno,
-
-TipoMovimiento:'Devolucion',
-
-PersonaResponsable,
-
-Actividad,
-
-UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
-
-FechaHora
-
-})
-
-});
-
-/* REGRESAR A EXPEDIENTES */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body.stringify({
-
-sheet:'EXPEDIENTES',
-
-ID,
-
-NoExpediente,
-
-NumeroInterno,
-
-PersonaResponsable,
-
-Actividad,
-
-Observaciones,
-
-UsuarioCaptura,
-
-Estado:'Disponible',
-
-Activo:'Si'
-
-})
-
-});
-
-/* ELIMINAR DE PRESTADOS */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body.stringify({
-
-action:'ELIMINAR_PRESTADO',
-
-ID
-
-})
-
-});
-
-alert(
-'Expediente devuelto correctamente'
-);
-
-await cargarExpedientes();
-
-await cargarPrestados();
-
-await cargarHistorico();
-
-}
-catch(error){
-
-console.error(error);
-
-}
-finally{
-
-devolviendoExpediente=false;
-
-}
-
-}
-
-
-/* ==========================
 HISTORICO
-========================== */
+======================= */
 
 async function cargarHistorico(){
 
-try{
-
 const response=
 await fetch(
-API_URL+
-'?sheet=MOVIMIENTOS'
+API_URL+'?sheet=MOVIMIENTOS'
 );
 
 const datos=
 await response.json();
 
-const tbody=
-document.getElementById(
-'tbodyHistorico'
-);
-
-tbody.innerHTML='';
-
-datos.reverse().forEach(mov=>{
-
-let fecha='';
-
-if(mov.FechaHora){
-
-fecha=
-new Date(
-mov.FechaHora
-)
-.toLocaleString(
-'es-MX',
-{
-timeZone:'America/Mexico_City',
-day:'2-digit',
-month:'2-digit',
-year:'numeric',
-hour:'2-digit',
-minute:'2-digit',
-second:'2-digit',
-hour12:true
-}
-);
+console.log(datos);
 
 }
 
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${fecha}</td>
-
-<td>${mov.NoExpediente||''}</td>
-
-<td>${mov.NumeroInterno||''}</td>
-
-<td>${mov.TipoMovimiento||''}</td>
-
-<td>${mov.PersonaResponsable||''}</td>
-
-</tr>
-
-`;
-
-});
-
-}
-catch(error){
-
-console.error(error);
-
-}
-
-}
-
-/* ==========================
-BUSCAR EXPEDIENTES
-========================== */
-
-function filtrarExpedientes(){
-
-const texto=
-
-document
-.getElementById(
-'txtBuscarExpediente'
-)
-.value
-.toLowerCase();
-
-const filas=
-
-document.querySelectorAll(
-'#tbodyExpedientes tr'
-);
-
-filas.forEach(fila=>{
-
-const contenido=
-
-fila.innerText
-.toLowerCase();
-
-fila.style.display=
-
-contenido.includes(
-texto
-)
-
-?''
-
-:'none';
-
-});
-
-}
-
-/* ==========================
-BUSCAR HISTORICO
-========================== */
-
-function buscarHistorico(){
-
-const texto=
-
-document.getElementById(
-'txtBuscarHistorico'
-)
-.value
-.toLowerCase();
-
-const filas=
-
-document.querySelectorAll(
-'#tbodyHistorico tr'
-);
-
-filas.forEach(fila=>{
-
-const contenido=
-
-fila.innerText
-.toLowerCase();
-
-fila.style.display=
-
-contenido.includes(texto)
-
-? ''
-
-: 'none';
-
-});
-
-}
