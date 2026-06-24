@@ -335,93 +335,83 @@ new Date().toISOString();
 
 const prestado={
 
-ID:id,
+ID,
 
-NoExpediente:expediente,
-
-NumeroInterno:interno,
-
-PersonaResponsable:responsable,
-
-Actividad:actividad,
+NoExpediente,
+NumeroInterno,
+PersonaResponsable,
+Actividad,
 
 Estado:'Prestado',
 
-Observaciones:observaciones,
+Observaciones,
 
-UsuarioCaptura:usuarioCaptura,
+UsuarioCaptura,
 
 Activo:'Si'
 
 };
 
-const movimiento={
-
-ID:Date.now(),
-
-NoExpediente:expediente,
-
-NumeroInterno:interno,
-
-TipoMovimiento:'Salida',
-
-PersonaResponsable:responsable,
-
-Actividad:actividad,
-
-UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
-
-FechaHora:fecha
-
-};
-
-
-/* guardar prestado */
+/* GUARDAR EN PRESTADOS */
 
 await fetch(API_URL,{
 
 method:'POST',
 
-body:JSON.stringify({
+body.stringify({
 
 sheet:'PRESTADOS',
+
 ...prestado
 
 })
 
 });
 
-
-/* registrar movimiento */
+/* REGISTRAR MOVIMIENTO */
 
 await fetch(API_URL,{
 
 method:'POST',
 
-body:JSON.stringify({
+body.stringify({
 
 sheet:'MOVIMIENTOS',
-...movimiento
+
+ID.now(),
+
+NoExpediente,
+
+NumeroInterno,
+
+TipoMovimiento:'Salida',
+
+PersonaResponsable,
+
+Actividad,
+
+UsuarioSistema:
+sessionStorage.getItem(
+'nombre'
+),
+
+FechaHora
 
 })
 
 });
 
-
-/* eliminar expediente disponible */
+/* ELIMINAR DE EXPEDIENTES */
 
 await fetch(API_URL,{
 
 method:'POST',
 
-body:JSON.stringify({
+body.stringify({
 
 action:'ELIMINAR_EXPEDIENTE',
 
-ID:id
+ID
 
 })
 
@@ -431,9 +421,11 @@ alert(
 'Expediente prestado correctamente'
 );
 
-cargarExpedientes();
+await cargarExpedientes();
 
-cargarPrestados();
+await cargarPrestados();
+
+await cargarHistorico();
 
 }
 catch(error){
@@ -448,7 +440,6 @@ prestandoExpediente=false;
 }
 
 }
-
 
 
 /* =======================
@@ -532,74 +523,71 @@ observaciones,
 usuarioCaptura
 ){
 
+if(devolviendoExpediente)return;
+
+devolviendoExpediente=true;
+
 try{
 
 const fecha=
 new Date().toISOString();
 
-const movimiento={
+/* REGISTRAR DEVOLUCION */
 
-ID:Date.now(),
+await fetch(API_URL,{
 
-NoExpediente:expediente,
+method:'POST',
 
-NumeroInterno:interno,
+body.stringify({
+
+sheet:'MOVIMIENTOS',
+
+ID.now(),
+
+NoExpediente,
+
+NumeroInterno,
 
 TipoMovimiento:'Devolucion',
 
-PersonaResponsable:responsable,
+PersonaResponsable,
 
-Actividad:actividad,
+Actividad,
 
 UsuarioSistema:
 sessionStorage.getItem(
 'nombre'
 ),
 
-FechaHora:fecha
-
-};
-
-
-/* registrar devolución */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
-...movimiento
+FechaHora
 
 })
 
 });
 
-
-/* regresar expediente */
+/* REGRESAR A EXPEDIENTES */
 
 await fetch(API_URL,{
 
 method:'POST',
 
-body:JSON.stringify({
+body.stringify({
 
 sheet:'EXPEDIENTES',
 
-ID:id,
+ID,
 
-NoExpediente:expediente,
+NoExpediente,
 
-NumeroInterno:interno,
+NumeroInterno,
 
-PersonaResponsable:responsable,
+PersonaResponsable,
 
-Actividad:actividad,
+Actividad,
 
-Observaciones:observaciones,
+Observaciones,
 
-UsuarioCaptura:usuarioCaptura,
+UsuarioCaptura,
 
 Estado:'Disponible',
 
@@ -609,18 +597,17 @@ Activo:'Si'
 
 });
 
-
-/* eliminar de prestados */
+/* ELIMINAR DE PRESTADOS */
 
 await fetch(API_URL,{
 
 method:'POST',
 
-body:JSON.stringify({
+body.stringify({
 
 action:'ELIMINAR_PRESTADO',
 
-ID:id
+ID
 
 })
 
@@ -630,16 +617,21 @@ alert(
 'Expediente devuelto correctamente'
 );
 
-cargarPrestados();
+await cargarExpedientes();
 
-cargarExpedientes();
+await cargarPrestados();
 
-cargarHistorico();
+await cargarHistorico();
 
 }
 catch(error){
 
 console.error(error);
+
+}
+finally{
+
+devolviendoExpediente=false;
 
 }
 
