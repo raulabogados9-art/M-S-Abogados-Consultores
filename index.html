@@ -138,9 +138,9 @@ Cerrar Sesión
 
     <div class="d-flex justify-content-between mb-3">
 
-        <h3>Control de Expedientes</h3>
+<h3>Control de Expedientes</h3>
 
-       <button
+<button
 class="btn btn-success"
 onclick="abrirModalExpediente()">
 
@@ -148,7 +148,14 @@ Nuevo Expediente
 
 </button>
 
-    </div>
+</div>
+
+<input
+type="text"
+id="txtBuscarExpediente"
+class="form-control mb-3"
+placeholder="Buscar expediente..."
+onkeyup="filtrarExpedientes()">
 
     <table class="table table-bordered table-striped">
 
