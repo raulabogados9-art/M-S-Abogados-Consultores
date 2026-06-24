@@ -3,7 +3,6 @@ let guardandoExpediente=false;
 let prestandoExpediente=false;
 let devolviendoExpediente=false;
 
-
 /* =======================
 PERSONAS
 ======================= */
