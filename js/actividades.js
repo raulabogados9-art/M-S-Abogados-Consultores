@@ -121,18 +121,22 @@ actividad
 document.getElementById(
 'txtActividadID'
 ).value=
-String(id);
+String(id).trim();
 
 document.getElementById(
 'txtActividadNombre'
 ).value=
 actividad;
 
+console.log(
+'ID EDITAR:',
+id
+);
+
 new bootstrap.Modal(
 
 document.getElementById(
 'modalActividad'
-
 )
 
 ).show();
@@ -149,14 +153,20 @@ async function guardarActividad(){
 try{
 
 const id=
+
 document.getElementById(
 'txtActividadID'
-).value.trim();
+)
+.value
+.trim();
 
 const actividad=
+
 document.getElementById(
 'txtActividadNombre'
-).value.trim();
+)
+.value
+.trim();
 
 if(!actividad){
 
@@ -168,11 +178,11 @@ return;
 
 }
 
-let datos={};
+/* SI TIENE ID = EDITAR */
 
-/* EDITAR */
+let datos;
 
-if(id!==''){
+if(id){
 
 datos={
 
@@ -187,7 +197,7 @@ Actividad:actividad
 
 }
 
-/* NUEVA ACTIVIDAD */
+/* NUEVA */
 
 else{
 
@@ -196,15 +206,23 @@ datos={
 sheet:
 'ACTIVIDADES_CATALOGO',
 
-ID:Date.now(),
+ID:
+Date.now(),
 
-Actividad:actividad,
+Actividad:
+actividad,
 
-Activo:'Si'
+Activo:
+'Si'
 
 };
 
 }
+
+console.log(
+'ENVIANDO:',
+datos
+);
 
 await fetch(API_URL,{
 
@@ -216,27 +234,29 @@ datos
 
 });
 
-alert(
-'Actividad guardada correctamente'
-);
-
 bootstrap.Modal
 .getInstance(
 
 document.getElementById(
-'modalActividad')
+'modalActividad'
+)
 
 ).hide();
 
 cargarActividadesTabla();
 
+alert(
+'Actividad guardada correctamente'
+);
+
 }
 catch(error){
 
-console.error(error);
+console.error(
+error
+);
 
 }
-
 }
 /* ==========================
 ACTIVAR / DESACTIVAR
