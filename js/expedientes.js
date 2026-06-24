@@ -179,7 +179,7 @@ sessionStorage.getItem(
 'nombre'
 ),
 
-Estado:"Prestado",
+Estado:"Disponible",
 
 Activo:"Si"
 
@@ -193,43 +193,6 @@ body:JSON.stringify({
 
 sheet:'EXPEDIENTES',
 ...expediente
-
-})
-
-});
-
-/* REGISTRAR MOVIMIENTO */
-
-await fetch(API_URL,{
-
-method:'POST',
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
-
-Fecha:new Date().toLocaleDateString(),
-
-Hora:new Date().toLocaleTimeString(),
-
-TipoMovimiento:'Salida',
-
-ID:expediente.ID,
-
-NoExpediente:
-expediente.NoExpediente,
-
-NumeroInterno:
-expediente.NumeroInterno,
-
-PersonaResponsable:
-expediente.PersonaResponsable,
-
-Actividad:
-expediente.Actividad,
-
-UsuarioCaptura:
-expediente.UsuarioCaptura
 
 })
 
@@ -259,89 +222,6 @@ guardandoExpediente=false;
 
 }
 
-/* =======================
-EXPEDIENTES
-======================= */
-
-async function cargarExpedientes(){
-
-try{
-
-const response=
-await fetch(
-API_URL+'?sheet=EXPEDIENTES'
-);
-
-const datos=
-await response.json();
-
-const tbody=
-document.getElementById(
-'tbodyExpedientes'
-);
-
-tbody.innerHTML='';
-
-datos
-.filter(e=>
-
-e.Activo==="Si"
-
-)
-
-.forEach(exp=>{
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${exp.NoExpediente||''}</td>
-
-<td>${exp.NumeroInterno||''}</td>
-
-<td>${exp.PersonaResponsable||''}</td>
-
-<td>${exp.Estado||''}</td>
-
-<td>${exp.UsuarioCaptura||''}</td>
-
-<td>
-
-<button
-class="btn btn-primary btn-sm"
-onclick="prestarExpediente(
-
-'${exp.ID}',
-'${exp.NoExpediente}',
-'${exp.NumeroInterno}',
-'${exp.PersonaResponsable}',
-'${exp.Actividad}',
-'${exp.Observaciones}',
-'${exp.UsuarioCaptura}'
-
-)">
-
-Prestar
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-catch(error){
-
-console.error(error);
-
-}
-
-}
-
 
 /* =======================
 PRESTAR
@@ -357,9 +237,7 @@ observaciones,
 usuarioCaptura
 ){
 
-if(prestandoExpediente){
-return;
-}
+if(prestandoExpediente)return;
 
 prestandoExpediente=true;
 
@@ -370,19 +248,20 @@ new Date().toISOString();
 
 const prestado={
 
-ID:Date.now(),
+ID:id,
 
 NoExpediente:expediente,
+
 NumeroInterno:interno,
+
 PersonaResponsable:responsable,
+
 Actividad:actividad,
 
 Estado:'Prestado',
 
-FechaPrimerSalida:fecha,
-FechaUltimoMovimiento:fecha,
-
 Observaciones:observaciones,
+
 UsuarioCaptura:usuarioCaptura,
 
 Activo:'Si'
@@ -394,11 +273,13 @@ const movimiento={
 ID:Date.now(),
 
 NoExpediente:expediente,
+
 NumeroInterno:interno,
 
 TipoMovimiento:'Salida',
 
 PersonaResponsable:responsable,
+
 Actividad:actividad,
 
 UsuarioSistema:
@@ -410,47 +291,49 @@ FechaHora:fecha
 
 };
 
+
+/* guardar prestado */
+
 await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
-
 body:JSON.stringify({
 
 sheet:'PRESTADOS',
-
 ...prestado
 
 })
 
 });
 
+
+/* registrar movimiento */
+
 await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
-
 body:JSON.stringify({
 
 sheet:'MOVIMIENTOS',
-
 ...movimiento
 
 })
 
 });
 
+
+/* eliminar expediente disponible */
+
 await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
-
 body:JSON.stringify({
 
 action:'ELIMINAR_EXPEDIENTE',
+
 ID:id
 
 })
@@ -462,8 +345,8 @@ alert(
 );
 
 cargarExpedientes();
+
 cargarPrestados();
-cargarHistorico();
 
 }
 catch(error){
@@ -480,6 +363,7 @@ prestandoExpediente=false;
 }
 
 
+
 /* =======================
 PRESTADOS
 ======================= */
@@ -487,14 +371,17 @@ PRESTADOS
 async function cargarPrestados(){
 
 const response=
+
 await fetch(
-API_URL+'?sheet=EXPEDIENTES'
+API_URL+'?sheet=PRESTADOS'
 );
 
 const datos=
+
 await response.json();
 
 const tbody=
+
 document.getElementById(
 'tbodyPrestados'
 );
@@ -507,11 +394,11 @@ tbody.innerHTML+=`
 
 <tr>
 
-<td>${exp.NoExpediente||''}</td>
+<td>${exp.NoExpediente}</td>
 
-<td>${exp.NumeroInterno||''}</td>
+<td>${exp.NumeroInterno}</td>
 
-<td>${exp.PersonaResponsable||''}</td>
+<td>${exp.PersonaResponsable}</td>
 
 <td>
 
@@ -522,7 +409,10 @@ onclick="devolverExpediente(
 '${exp.ID}',
 '${exp.NoExpediente}',
 '${exp.NumeroInterno}',
-'${exp.PersonaResponsable}'
+'${exp.PersonaResponsable}',
+'${exp.Actividad}',
+'${exp.Observaciones}',
+'${exp.UsuarioCaptura}'
 
 )">
 
@@ -549,51 +439,42 @@ async function devolverExpediente(
 id,
 expediente,
 interno,
-responsable
+responsable,
+actividad,
+observaciones,
+usuarioCaptura
 ){
-
-if(devolviendoExpediente){
-return;
-}
-
-devolviendoExpediente=true;
 
 try{
 
 const fecha=
-new Date();
+new Date().toISOString();
 
 const movimiento={
 
 ID:Date.now(),
 
-NoExpediente:
-expediente,
+NoExpediente:expediente,
 
-NumeroInterno:
-interno,
+NumeroInterno:interno,
 
-TipoMovimiento:
-'Devolucion',
+TipoMovimiento:'Devolucion',
 
-PersonaResponsable:
-responsable,
+PersonaResponsable:responsable,
+
+Actividad:actividad,
 
 UsuarioSistema:
 sessionStorage.getItem(
 'nombre'
 ),
 
-Fecha:
-fecha.toLocaleDateString(),
-
-Hora:
-fecha.toLocaleTimeString()
+FechaHora:fecha
 
 };
 
 
-/* GUARDAR MOVIMIENTO */
+/* registrar devolución */
 
 await fetch(API_URL,{
 
@@ -602,7 +483,6 @@ method:'POST',
 body:JSON.stringify({
 
 sheet:'MOVIMIENTOS',
-
 ...movimiento
 
 })
@@ -610,7 +490,7 @@ sheet:'MOVIMIENTOS',
 });
 
 
-/* ELIMINAR DE EXPEDIENTES */
+/* regresar expediente */
 
 await fetch(API_URL,{
 
@@ -618,8 +498,40 @@ method:'POST',
 
 body:JSON.stringify({
 
-action:
-'ELIMINAR_EXPEDIENTE',
+sheet:'EXPEDIENTES',
+
+ID:id,
+
+NoExpediente:expediente,
+
+NumeroInterno:interno,
+
+PersonaResponsable:responsable,
+
+Actividad:actividad,
+
+Observaciones:observaciones,
+
+UsuarioCaptura:usuarioCaptura,
+
+Estado:'Disponible',
+
+Activo:'Si'
+
+})
+
+});
+
+
+/* eliminar de prestados */
+
+await fetch(API_URL,{
+
+method:'POST',
+
+body:JSON.stringify({
+
+action:'ELIMINAR_PRESTADO',
 
 ID:id
 
@@ -643,14 +555,8 @@ catch(error){
 console.error(error);
 
 }
-finally{
-
-devolviendoExpediente=false;
 
 }
-
-}
-
 
 
 /* ==========================
