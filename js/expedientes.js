@@ -1,4 +1,4 @@
-```javascript
+/*javascript*/
 let personas=[];
 let guardandoExpediente=false;
 let prestandoExpediente=false;
@@ -364,4 +364,4 @@ console.log(
 );
 
 }
-```
+
