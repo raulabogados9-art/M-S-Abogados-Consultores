@@ -716,3 +716,42 @@ texto
 });
 
 }
+
+/* ==========================
+BUSCAR HISTORICO
+========================== */
+
+function buscarHistorico(){
+
+const texto=
+
+document.getElementById(
+'txtBuscarHistorico'
+)
+.value
+.toLowerCase();
+
+const filas=
+
+document.querySelectorAll(
+'#tbodyHistorico tr'
+);
+
+filas.forEach(fila=>{
+
+const contenido=
+
+fila.innerText
+.toLowerCase();
+
+fila.style.display=
+
+contenido.includes(texto)
+
+? ''
+
+: 'none';
+
+});
+
+}
