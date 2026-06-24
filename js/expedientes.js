@@ -222,6 +222,93 @@ guardandoExpediente=false;
 
 }
 
+/* =======================
+EXPEDIENTES
+======================= */
+
+async function cargarExpedientes(){
+
+try{
+
+const response=
+
+await fetch(
+API_URL+'?sheet=EXPEDIENTES'
+);
+
+const datos=
+
+await response.json();
+
+const tbody=
+
+document.getElementById(
+'tbodyExpedientes'
+);
+
+if(!tbody)return;
+
+tbody.innerHTML='';
+
+datos
+.filter(exp=>
+
+exp.Activo==="Si"
+
+)
+
+.forEach(exp=>{
+
+tbody.innerHTML+=`
+
+<tr>
+
+<td>${exp.NoExpediente||''}</td>
+
+<td>${exp.NumeroInterno||''}</td>
+
+<td>${exp.PersonaResponsable||''}</td>
+
+<td>${exp.Actividad||''}</td>
+
+<td>${exp.UsuarioCaptura||''}</td>
+
+<td>
+
+<button
+class="btn btn-primary btn-sm"
+onclick="prestarExpediente(
+
+'${exp.ID}',
+'${exp.NoExpediente}',
+'${exp.NumeroInterno}',
+'${exp.PersonaResponsable}',
+'${exp.Actividad}',
+'${exp.Observaciones}',
+'${exp.UsuarioCaptura}'
+
+)">
+
+Prestar
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+catch(error){
+
+console.error(error);
+
+}
+
+}
 
 /* =======================
 PRESTAR
