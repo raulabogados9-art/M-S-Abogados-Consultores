@@ -50,6 +50,21 @@ Editar
 
 </button>
 
+<button
+class="btn btn-danger btn-sm"
+onclick="cambiarEstadoActividad(
+
+'${a.ID}',
+'${a.Activo}'
+
+)">
+
+${a.Activo==='Si'
+?'Desactivar'
+:'Activar'}
+
+</button>
+
 </td>
 
 </tr>
