@@ -1,5 +1,5 @@
 /*javascript*/
-const API_URL='TU_URL_APPS_SCRIPT_AQUI';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxasYCrzKGGPTUMIJYYPifWqfswdRjdha65DQfegxGUfQAxHGQ-Ukv5Cn5CwzxJ9SQP6Q/exec';
 
 /* ==========================
 LOGIN
