@@ -300,3 +300,10 @@ console.error(error);
 }
 
 }
+
+/* EXPONER FUNCIONES AL HTML */
+
+window.cambiarEstadoPersona = cambiarEstadoPersona;
+window.editarPersona = editarPersona;
+window.guardarPersona = guardarPersona;
+window.cargarPersonas = cargarPersonas;
