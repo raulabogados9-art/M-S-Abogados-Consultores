@@ -317,7 +317,7 @@ estadoActual==="Si"
 "Si";
 
 const respuesta=
-await fetch(WEBAPP_URL,{
+await fetch(API_URL,{
 
 method:"POST",
 
@@ -334,7 +334,7 @@ Activo:nuevoEstado
 })
 
 });
-
+  
 const resultado=
 await respuesta.json();
 
