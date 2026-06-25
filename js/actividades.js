@@ -1,3 +1,5 @@
+let actividadesSistema=[];
+
 /* ==========================
 CARGAR ACTIVIDADES
 ========================== */
@@ -38,10 +40,8 @@ tbody.innerHTML+=`
 <button
 class="btn btn-warning btn-sm"
 onclick="editarActividad(
-
 '${a.ID}',
 '${a.Actividad}'
-
 )">
 
 Editar
@@ -51,15 +51,15 @@ Editar
 <button
 class="btn btn-danger btn-sm"
 onclick="cambiarEstadoActividad(
-
 '${a.ID}',
 '${a.Activo}'
-
 )">
 
 ${a.Activo==='Si'
-?'Desactivar'
-:'Activar'}
+?
+'Desactivar'
+:
+'Activar'}
 
 </button>
 
@@ -79,7 +79,6 @@ console.error(error);
 }
 
 }
-
 
 /* ==========================
 ABRIR MODAL
@@ -106,9 +105,8 @@ document.getElementById(
 
 }
 
-
 /* ==========================
-EDITAR ACTIVIDAD
+EDITAR
 ========================== */
 
 function editarActividad(
@@ -118,32 +116,25 @@ actividad
 
 document.getElementById(
 'txtActividadID'
-).value=
-String(id).trim();
+).value=id;
 
 document.getElementById(
 'txtActividadNombre'
-).value=
-actividad;
-
-console.log(
-'ID EDITAR:',
-id
-);
+).value=actividad;
 
 new bootstrap.Modal(
 
 document.getElementById(
 'modalActividad'
+
 )
 
 ).show();
 
 }
 
-
 /* ==========================
-GUARDAR ACTIVIDAD
+GUARDAR
 ========================== */
 
 async function guardarActividad(){
@@ -176,9 +167,45 @@ return;
 
 }
 
-/* SI TIENE ID = EDITAR */
+/* VALIDAR DUPLICADO */
+
+const existe=
+
+actividadesSistema.find(
+
+a=>
+
+a.Actividad
+.toLowerCase()
+
+===
+
+actividad
+.toLowerCase()
+
+&&
+
+String(a.ID)
+
+!==
+
+String(id)
+
+);
+
+if(existe){
+
+alert(
+'La actividad ya existe'
+);
+
+return;
+
+}
 
 let datos;
+
+/* EDITAR */
 
 if(id){
 
@@ -217,11 +244,7 @@ Activo:
 
 }
 
-console.log(
-'ENVIANDO:',
-datos
-);
-
+const respuesta=
 await fetch(API_URL,{
 
 method:'POST',
@@ -232,6 +255,11 @@ datos
 
 });
 
+const resultado=
+await respuesta.json();
+
+if(resultado.success){
+
 bootstrap.Modal
 .getInstance(
 
@@ -241,21 +269,29 @@ document.getElementById(
 
 ).hide();
 
-cargarActividadesTabla();
-
 alert(
 'Actividad guardada correctamente'
 );
 
-}
-catch(error){
+cargarActividadesTabla();
 
-console.error(
-error
+}else{
+
+alert(
+resultado.error
 );
 
 }
+
 }
+catch(error){
+
+console.error(error);
+
+}
+
+}
+
 /* ==========================
 ACTIVAR / DESACTIVAR
 ========================== */
@@ -269,13 +305,20 @@ try{
 
 const nuevoEstado=
 
-estado==='Si'
-?'No'
-:'Si';
+estado==="Si"
+?
+"No"
+:
+"Si";
 
+const respuesta=
 await fetch(API_URL,{
 
 method:'POST',
+
+headers:{
+"Content-Type":"application/json"
+},
 
 body:JSON.stringify({
 
@@ -290,15 +333,24 @@ Activo:nuevoEstado
 
 });
 
+const resultado=
+await respuesta.json();
+
+if(resultado.success){
+
 alert(
-'Estado actualizado correctamente'
+'Estado actualizado'
 );
 
-setTimeout(()=>{
+await cargarActividadesTabla();
 
-cargarActividadesTabla();
+}else{
 
-},800);
+alert(
+resultado.error
+);
+
+}
 
 }
 catch(error){
@@ -308,3 +360,20 @@ console.error(error);
 }
 
 }
+
+/* EXPONER */
+
+window.editarActividad=
+editarActividad;
+
+window.guardarActividad=
+guardarActividad;
+
+window.cambiarEstadoActividad=
+cambiarEstadoActividad;
+
+window.cargarActividadesTabla=
+cargarActividadesTabla;
+
+window.abrirModalActividad=
+abrirModalActividad;
