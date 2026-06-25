@@ -1,5 +1,3 @@
-let actividadesSistema=[];
-
 /* ==========================
 CARGAR ACTIVIDADES
 ========================== */
