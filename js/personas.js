@@ -301,9 +301,77 @@ console.error(error);
 
 }
 
+/* ==========================
+CAMBIAR ESTADO PERSONA
+========================== */
+
+async function cambiarEstadoPersona(id,estadoActual){
+
+try{
+
+const nuevoEstado=
+estadoActual==="Si"
+?
+"No"
+:
+"Si";
+
+const respuesta=
+await fetch(WEBAPP_URL,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+action:"CAMBIAR_ESTADO_PERSONA",
+ID:id,
+Activo:nuevoEstado
+
+})
+
+});
+
+const resultado=
+await respuesta.json();
+
+console.log(resultado);
+
+if(resultado.success){
+
+alert("Estado actualizado");
+
+await cargarPersonasTabla();
+
+}else{
+
+alert(
+resultado.error
+);
+
+}
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+"Error al actualizar"
+);
+
+}
+
+}
+
 /* EXPONER FUNCIONES AL HTML */
 
 window.cambiarEstadoPersona = cambiarEstadoPersona;
 window.editarPersona = editarPersona;
 window.guardarPersona = guardarPersona;
-window.cargarPersonas = cargarPersonas;
+window.cargarPersonasTabla = cargarPersonasTabla;
+window.abrirModalPersona = abrirModalPersona;
