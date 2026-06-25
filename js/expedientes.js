@@ -320,16 +320,13 @@ observaciones,
 usuarioCaptura
 ){
 
-if(prestandoExpediente){
-return;
-}
+if(prestandoExpediente)return;
 
 prestandoExpediente=true;
 
 try{
 
-const fecha=
-new Date().toISOString();
+const fecha=new Date().toISOString();
 
 const prestado={
 
@@ -365,45 +362,62 @@ PersonaResponsable:responsable,
 Actividad:actividad,
 
 UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
+sessionStorage.getItem('nombre'),
 
 FechaHora:fecha
 
 };
 
+
+/* guardar prestado */
+
 await fetch(API_URL,{
 
 method:'POST',
 
+headers:{
+'Content-Type':'text/plain;charset=utf-8'
+},
+
 body:JSON.stringify({
 
 sheet:'PRESTADOS',
-
 ...prestado
 
 })
 
 });
 
+
+/* guardar movimiento */
+
 await fetch(API_URL,{
 
 method:'POST',
 
+headers:{
+'Content-Type':'text/plain;charset=utf-8'
+},
+
 body:JSON.stringify({
 
 sheet:'MOVIMIENTOS',
-
 ...movimiento
 
 })
 
 });
 
-const eliminar=await fetch(API_URL,{
+
+/* eliminar expediente */
+
+await fetch(API_URL,{
 
 method:'POST',
+
+headers:{
+'Content-Type':'text/plain;charset=utf-8'
+},
 
 body:JSON.stringify({
 
@@ -414,22 +428,24 @@ ID:id
 
 });
 
-console.log(
-await eliminar.text()
-);
-
 alert(
 'Expediente prestado correctamente'
 );
 
-cargarExpedientes();
-cargarPrestados();
-cargarHistorico();
+await cargarExpedientes();
+
+await cargarPrestados();
+
+await cargarHistorico();
 
 }
 catch(error){
 
 console.error(error);
+
+alert(
+'Error al prestar expediente'
+);
 
 }
 finally{
@@ -439,7 +455,6 @@ prestandoExpediente=false;
 }
 
 }
-
 
 /* =======================
 PRESTADOS
@@ -506,9 +521,7 @@ interno,
 responsable
 ){
 
-if(devolviendoExpediente){
-return;
-}
+if(devolviendoExpediente)return;
 
 devolviendoExpediente=true;
 
@@ -522,7 +535,6 @@ const movimiento={
 ID:Date.now(),
 
 NoExpediente:expediente,
-
 NumeroInterno:interno,
 
 TipoMovimiento:'Devolucion',
@@ -542,19 +554,26 @@ await fetch(API_URL,{
 
 method:'POST',
 
+headers:{
+'Content-Type':'text/plain;charset=utf-8'
+},
+
 body:JSON.stringify({
 
 sheet:'MOVIMIENTOS',
-
 ...movimiento
 
 })
 
 });
 
-const eliminar=await fetch(API_URL,{
+await fetch(API_URL,{
 
 method:'POST',
+
+headers:{
+'Content-Type':'text/plain;charset=utf-8'
+},
 
 body:JSON.stringify({
 
@@ -565,17 +584,15 @@ ID:id
 
 });
 
-console.log(
-await eliminar.text()
-);
-
 alert(
 'Expediente devuelto correctamente'
 );
 
-cargarPrestados();
-cargarExpedientes();
-cargarHistorico();
+await cargarPrestados();
+
+await cargarExpedientes();
+
+await cargarHistorico();
 
 }
 catch(error){
@@ -590,7 +607,6 @@ devolviendoExpediente=false;
 }
 
 }
-
 
 
 /* ==========================
