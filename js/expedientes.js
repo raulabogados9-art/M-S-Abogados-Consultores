@@ -377,10 +377,6 @@ await fetch(API_URL,{
 
 method:'POST',
 
-headers:{
-'Content-Type':'application/json'
-},
-
 body:JSON.stringify({
 
 sheet:'PRESTADOS',
@@ -395,10 +391,6 @@ await fetch(API_URL,{
 
 method:'POST',
 
-headers:{
-'Content-Type':'application/json'
-},
-
 body:JSON.stringify({
 
 sheet:'MOVIMIENTOS',
@@ -412,10 +404,6 @@ sheet:'MOVIMIENTOS',
 const eliminar=await fetch(API_URL,{
 
 method:'POST',
-
-headers:{
-'Content-Type':'application/json'
-},
 
 body:JSON.stringify({
 
@@ -554,10 +542,6 @@ await fetch(API_URL,{
 
 method:'POST',
 
-headers:{
-'Content-Type':'application/json'
-},
-
 body:JSON.stringify({
 
 sheet:'MOVIMIENTOS',
@@ -571,10 +555,6 @@ sheet:'MOVIMIENTOS',
 const eliminar=await fetch(API_URL,{
 
 method:'POST',
-
-headers:{
-'Content-Type':'application/json'
-},
 
 body:JSON.stringify({
 
