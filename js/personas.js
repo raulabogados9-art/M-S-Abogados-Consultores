@@ -321,10 +321,6 @@ await fetch(API_URL,{
 
 method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
-
 body:JSON.stringify({
 
 action:"CAMBIAR_ESTADO_PERSONA",
@@ -334,7 +330,7 @@ Activo:nuevoEstado
 })
 
 });
-  
+
 const resultado=
 await respuesta.json();
 
@@ -348,21 +344,16 @@ await cargarPersonasTabla();
 
 }else{
 
-alert(
-resultado.error
-);
+alert(resultado.error);
 
 }
 
 }
-
 catch(error){
 
 console.error(error);
 
-alert(
-"Error al actualizar"
-);
+alert("Error al actualizar");
 
 }
 
