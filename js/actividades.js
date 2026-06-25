@@ -303,20 +303,16 @@ try{
 
 const nuevoEstado=
 
-estado==="Si"
+estado==='Si'
 ?
-"No"
+'No'
 :
-"Si";
+'Si';
 
 const respuesta=
 await fetch(API_URL,{
 
 method:'POST',
-
-headers:{
-"Content-Type":"application/json"
-},
 
 body:JSON.stringify({
 
@@ -337,7 +333,7 @@ await respuesta.json();
 if(resultado.success){
 
 alert(
-'Estado actualizado'
+'Estado actualizado correctamente'
 );
 
 await cargarActividadesTabla();
@@ -355,23 +351,10 @@ catch(error){
 
 console.error(error);
 
-}
+alert(
+'Error al actualizar'
+);
 
 }
 
-/* EXPONER */
-
-window.editarActividad=
-editarActividad;
-
-window.guardarActividad=
-guardarActividad;
-
-window.cambiarEstadoActividad=
-cambiarEstadoActividad;
-
-window.cargarActividadesTabla=
-cargarActividadesTabla;
-
-window.abrirModalActividad=
-abrirModalActividad;
+}
