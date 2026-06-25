@@ -1,4 +1,62 @@
 let personasSistema=[];
+let actividadesSistema=[];
+
+/* ==========================
+CARGAR ACTIVIDADES COMBO
+========================== */
+
+async function cargarActividadesCombo(){
+
+try{
+
+const response=
+await fetch(
+API_URL+'?sheet=ACTIVIDADES_CATALOGO'
+);
+
+actividadesSistema=
+await response.json();
+
+const combo=
+document.getElementById(
+'txtPersonaActividad'
+);
+
+if(!combo)return;
+
+combo.innerHTML=`
+<option value="">
+Seleccione...
+</option>
+`;
+
+actividadesSistema
+.filter(
+a=>a.Activo==="Si"
+)
+.forEach(a=>{
+
+combo.innerHTML+=`
+
+<option
+value="${a.Actividad}">
+
+${a.Actividad}
+
+</option>
+
+`;
+
+});
+
+}
+catch(error){
+
+console.error(error);
+
+}
+
+}
 
 /* ==========================
 CARGAR PERSONAS
@@ -11,7 +69,7 @@ try{
 const response=
 await fetch(
 API_URL+'?sheet=PERSONAS'
-)
+);
 
 personasSistema=
 await response.json();
@@ -42,11 +100,9 @@ tbody.innerHTML+=`
 <button
 class="btn btn-warning btn-sm"
 onclick="editarPersona(
-
 '${p.ID}',
 '${p.Nombre}',
 '${p.Actividad}'
-
 )">
 
 Editar
@@ -56,15 +112,16 @@ Editar
 <button
 class="btn btn-danger btn-sm"
 onclick="cambiarEstadoPersona(
-
 '${p.ID}',
 '${p.Activo}'
-
 )">
 
 ${p.Activo==='Si'
-?'Desactivar'
-:'Activar'}
+?
+'Desactivar'
+:
+'Activar'
+}
 
 </button>
 
@@ -86,10 +143,10 @@ console.error(error);
 }
 
 /* ==========================
-ABRIR MODAL
+ABRIR MODAL NUEVO
 ========================== */
 
-function abrirModalPersona(){
+async function abrirModalPersona(){
 
 document.getElementById(
 'txtPersonaID'
@@ -98,6 +155,8 @@ document.getElementById(
 document.getElementById(
 'txtPersonaNombre'
 ).value='';
+
+await cargarActividadesCombo();
 
 document.getElementById(
 'txtPersonaActividad'
@@ -115,10 +174,10 @@ document.getElementById(
 }
 
 /* ==========================
-EDITAR
+EDITAR PERSONA
 ========================== */
 
-function editarPersona(
+async function editarPersona(
 id,
 nombre,
 actividad
@@ -131,6 +190,8 @@ document.getElementById(
 document.getElementById(
 'txtPersonaNombre'
 ).value=nombre;
+
+await cargarActividadesCombo();
 
 document.getElementById(
 'txtPersonaActividad'
@@ -156,20 +217,18 @@ async function guardarPersona(){
 try{
 
 const nombre=
-
 document.getElementById(
 'txtPersonaNombre'
-).value.trim();
+)
+.value.trim();
 
 const actividad=
-
 document.getElementById(
 'txtPersonaActividad'
-).value.trim();
+)
+.value.trim();
 
-if(
-nombre===''
-){
+if(nombre===''){
 
 alert(
 'Ingrese nombre'
@@ -179,28 +238,10 @@ return;
 
 }
 
-/* VALIDAR DUPLICADOS */
-
-const existe=
-
-personasSistema.find(
-
-p=>
-
-p.Nombre.toLowerCase()
-===nombre.toLowerCase()
-
-);
-
-if(
-existe &&
-document.getElementById(
-'txtPersonaID'
-).value===''
-){
+if(actividad===''){
 
 alert(
-'La persona ya existe'
+'Seleccione actividad'
 );
 
 return;
@@ -210,11 +251,10 @@ return;
 const persona={
 
 ID:
-
 document.getElementById(
 'txtPersonaID'
-).value ||
-
+).value
+||
 Date.now(),
 
 Nombre:nombre,
@@ -245,12 +285,9 @@ alert(
 
 bootstrap.Modal
 .getInstance(
-
 document.getElementById(
 'modalPersona'
-
 )
-
 ).hide();
 
 cargarPersonasTabla();
@@ -259,87 +296,6 @@ cargarPersonasTabla();
 catch(error){
 
 console.error(error);
-
-}
-
-}
-
-/* ==========================
-ACTIVAR / DESACTIVAR
-========================== */
-
-async function cambiarEstadoPersona(
-id,
-estado
-){
-
-try{
-
-const nuevoEstado=
-
-estado==="Si"
-?
-"No"
-:
-"Si";
-
-const response=
-
-await fetch(
-API_URL,
-{
-
-method:"POST",
-
-body:JSON.stringify({
-
-action:
-"CAMBIAR_ESTADO_PERSONA",
-
-ID:
-String(id).trim(),
-
-Activo:
-nuevoEstado
-
-})
-
-}
-
-);
-
-const resultado=
-await response.json();
-
-console.log(
-resultado
-);
-
-if(
-resultado.success
-){
-
-alert(
-'Estado actualizado'
-);
-
-await cargarPersonasTabla();
-
-}
-else{
-
-alert(
-resultado.error
-);
-
-}
-
-}
-catch(error){
-
-console.error(
-error
-);
 
 }
 
