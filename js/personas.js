@@ -277,37 +277,69 @@ try{
 
 const nuevoEstado=
 
-estado==='Si'
-?'No'
-:'Si';
+estado==="Si"
+?
+"No"
+:
+"Si";
 
-await fetch(API_URL,{
+const response=
 
-method:'POST',
+await fetch(
+API_URL,
+{
+
+method:"POST",
 
 body:JSON.stringify({
 
 action:
-'CAMBIAR_ESTADO_PERSONA',
+"CAMBIAR_ESTADO_PERSONA",
 
-ID:id,
+ID:
+String(id).trim(),
 
-Activo:nuevoEstado
+Activo:
+nuevoEstado
 
 })
 
-});
+}
+
+);
+
+const resultado=
+await response.json();
+
+console.log(
+resultado
+);
+
+if(
+resultado.success
+){
 
 alert(
 'Estado actualizado'
 );
 
-cargarPersonasTabla();
+await cargarPersonasTabla();
+
+}
+else{
+
+alert(
+resultado.error
+);
+
+}
 
 }
 catch(error){
 
-console.error(error);
+console.error(
+error
+);
 
 }
 
