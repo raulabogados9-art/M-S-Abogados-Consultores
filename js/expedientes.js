@@ -395,7 +395,9 @@ await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
+headers:{
+'Content-Type':'application/json'
+},
 
 body:JSON.stringify({
 
@@ -407,11 +409,13 @@ sheet:'MOVIMIENTOS',
 
 });
 
-await fetch(API_URL,{
+const eliminar=await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
+headers:{
+'Content-Type':'application/json'
+},
 
 body:JSON.stringify({
 
@@ -421,6 +425,10 @@ ID:id
 })
 
 });
+
+console.log(
+await eliminar.text()
+);
 
 alert(
 'Expediente prestado correctamente'
@@ -546,7 +554,9 @@ await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
+headers:{
+'Content-Type':'application/json'
+},
 
 body:JSON.stringify({
 
@@ -558,11 +568,13 @@ sheet:'MOVIMIENTOS',
 
 });
 
-await fetch(API_URL,{
+const eliminar=await fetch(API_URL,{
 
 method:'POST',
 
-mode:'no-cors',
+headers:{
+'Content-Type':'application/json'
+},
 
 body:JSON.stringify({
 
@@ -572,6 +584,10 @@ ID:id
 })
 
 });
+
+console.log(
+await eliminar.text()
+);
 
 alert(
 'Expediente devuelto correctamente'
