@@ -358,11 +358,7 @@ overflow:hidden;
 }
 
 /* ==========================
-LOGO MARCA DE AGUA
-========================== */
-
-/* ==========================
-MARCA DE AGUA LOGIN
+LOGO MARCA DE AGUA LOGIN
 ========================== */
 
 .login-bg .card::before{
@@ -371,24 +367,28 @@ content:"";
 
 position:absolute;
 
-top:50%;
+top:55%;
 left:50%;
 
 transform:translate(-50%,-50%);
 
-/* tamaño del logo */
-width:55%;
-height:55%;
+width:95%;
+height:95%;
 
 background-image:url("../imagenes/logo.png");
+
 background-repeat:no-repeat;
+
 background-position:center;
-background-size:contain;
 
-/* más tenue */
-opacity:.05;
+background-size:70%;
 
-/* enviar detrás de inputs */
+opacity:.18;
+
+filter:grayscale(100%) brightness(120%);
+
+pointer-events:none;
+
 z-index:0;
 
 }
