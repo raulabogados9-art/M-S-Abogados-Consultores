@@ -122,7 +122,7 @@ document.getElementById(
 document.getElementById(
 'lblUsuario'
 ).innerText =
-'Usuario: ' + usuarioValido.NombreCompleto;
+usuarioValido.NombreCompleto;
 
 document.getElementById(
 'lblRol'
