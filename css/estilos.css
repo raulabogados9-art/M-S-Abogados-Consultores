@@ -61,3 +61,47 @@ vertical-align:middle;
 border-color:#0d6efd;
 
 }
+
+/* ==========================
+ENCABEZADO SISTEMA
+========================== */
+
+.encabezado-sistema{
+
+display:flex;
+align-items:center;
+gap:20px;
+
+}
+
+#logoEmpresa{
+
+width:90px;
+height:auto;
+
+}
+
+.titulo-sistema{
+
+display:flex;
+flex-direction:column;
+
+}
+
+.titulo-sistema h1{
+
+margin:0;
+font-size:48px;
+font-weight:bold;
+color:#0b3b82;
+
+}
+
+.version-sistema{
+
+font-size:18px;
+font-weight:600;
+margin-top:-5px;
+color:#0b3b82;
+
+}
