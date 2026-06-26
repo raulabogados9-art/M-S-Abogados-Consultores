@@ -146,21 +146,21 @@ try{
 
 const expediente={
 
-ID:Date.now(),
+ID: Date.now(),
 
 NoExpediente:
 document.getElementById(
 'txtNoExpediente'
 ).value,
 
-NumeroInterno:
+NoInterno:
 document.getElementById(
-'txtNumeroInterno'
+'txtNoInterno'
 ).value,
 
-PersonaResponsable:
+Persona:
 document.getElementById(
-'cmbPersonaResponsable'
+'txtPersona'
 ).value,
 
 Actividad:
@@ -168,21 +168,9 @@ document.getElementById(
 'txtActividad'
 ).value,
 
-Observaciones:
-document.getElementById(
-'txtObservaciones'
-).value,
+Estado:'Disponible'
 
-UsuarioCaptura:
-sessionStorage.getItem(
-'nombre'
-),
-
-Estado:"Disponible",
-
-Activo:"Si"
-
-};
+}
 
 await fetch(API_URL,{
 
