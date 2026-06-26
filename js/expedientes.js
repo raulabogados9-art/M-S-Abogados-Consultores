@@ -710,13 +710,37 @@ document.querySelectorAll(
 
 filas.forEach(fila=>{
 
-const contenido=
+const columnas=
 
-fila.innerText.toLowerCase();
+fila.querySelectorAll('td');
+
+if(columnas.length===0)return;
+
+const expediente=
+columnas[0]?.innerText.toLowerCase() || '';
+
+const interno=
+columnas[1]?.innerText.toLowerCase() || '';
+
+const responsable=
+columnas[2]?.innerText.toLowerCase() || '';
+
+const actividad=
+columnas[3]?.innerText.toLowerCase() || '';
+
+const textoBusqueda=
+
+expediente+
+' '+
+interno+
+' '+
+responsable+
+' '+
+actividad;
 
 fila.style.display=
 
-contenido.includes(texto)
+textoBusqueda.includes(texto)
 ?
 ''
 :
@@ -725,6 +749,5 @@ contenido.includes(texto)
 });
 
 }
-
 window.filtrarExpedientes=
 filtrarExpedientes;
