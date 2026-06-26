@@ -63,20 +63,27 @@ border-color:#0d6efd;
 }
 
 /* ==========================
-ENCABEZADO SISTEMA
+ENCABEZADO PRINCIPAL
 ========================== */
 
-.encabezado-sistema{
+.encabezado-principal{
+
+display:flex;
+align-items:flex-start;
+justify-content:space-between;
+
+}
+
+.logo-sistema{
 
 display:flex;
 align-items:center;
-gap:20px;
 
 }
 
 #logoEmpresa{
 
-width:90px;
+width:100px;
 height:auto;
 
 }
@@ -85,13 +92,15 @@ height:auto;
 
 display:flex;
 flex-direction:column;
+margin-left:15px;
+flex:1;
 
 }
 
 .titulo-sistema h1{
 
 margin:0;
-font-size:48px;
+font-size:52px;
 font-weight:bold;
 color:#0b3b82;
 
@@ -101,7 +110,15 @@ color:#0b3b82;
 
 font-size:18px;
 font-weight:600;
-margin-top:-5px;
 color:#0b3b82;
+
+}
+
+.usuario-sistema{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+min-width:250px;
 
 }
