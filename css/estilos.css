@@ -70,7 +70,6 @@ ENCABEZADO PRINCIPAL
 
 display:flex;
 align-items:flex-start;
-justify-content:space-between;
 width:100%;
 
 }
@@ -79,8 +78,7 @@ width:100%;
 
 .logo-sistema{
 
-display:flex;
-align-items:center;
+margin-right:20px;
 
 }
 
@@ -98,8 +96,6 @@ mix-blend-mode:multiply;
 
 display:flex;
 flex-direction:column;
-margin-left:15px;
-flex-grow:1;
 
 }
 
@@ -116,6 +112,8 @@ color:#0b3b82;
 
 font-size:18px;
 font-weight:600;
+margin-top:-5px;
+margin-left:5px;
 color:#0b3b82;
 
 }
@@ -133,14 +131,17 @@ align-items:flex-end;
 
 text-align:right;
 
-min-width:280px;
+padding-right:20px;
 
 }
 
-/* MENÚ */
+/* ==========================
+MENU
+========================== */
 
 .menu-principal{
 
-margin-top:30px;
+margin-top:40px;
+margin-left:15px;
 
 }
