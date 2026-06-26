@@ -289,7 +289,7 @@ document.getElementById(
 document.getElementById(
 'lblUsuario'
 ).innerText =
-'Usuario: ' + sessionStorage.getItem('nombre');
+sessionStorage.getItem('nombre');
 
 document.getElementById(
 'lblRol'
