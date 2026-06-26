@@ -252,7 +252,7 @@ tbody.innerHTML+=`
 
 <td>${exp.PersonaResponsable||''}</td>
 
-<td>${exp.Estado||''}</td>
+<td>${exp.Actividad||''}</td>
 
 <td>${exp.UsuarioCaptura||''}</td>
 
