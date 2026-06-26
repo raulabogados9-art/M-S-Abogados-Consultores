@@ -268,45 +268,6 @@ overflow:hidden;
 }
 
 
-/* LOGO COMO MARCA DE AGUA */
-
-.logo-watermark{
-
-position:absolute;
-
-top:50%;
-
-left:50%;
-
-transform:
-translate(
--50%,
--50%
-);
-
-width:85%;
-
-height:85%;
-
-background-image:url(
-'imagenes/logo.png'
-);
-
-background-repeat:no-repeat;
-
-background-position:center;
-
-background-size:contain;
-
-opacity:.10;
-
-pointer-events:none;
-
-z-index:0;
-
-}
-
-
 /* CONTROLES ENCIMA DEL LOGO */
 
 .login-body>*{
@@ -396,39 +357,48 @@ overflow:hidden;
 
 }
 
-/* marca de agua */
+/* ==========================
+LOGO MARCA DE AGUA
+========================== */
 
-.login-bg .card::before{
+.login-container .card::before{
 
 content:"";
 
 position:absolute;
 
-top:50%;
+top:0;
 
-left:50%;
+left:0;
 
-transform:
-translate(-50%,-50%);
+width:100%;
 
-width:80%;
+height:100%;
 
-height:80%;
-
-/* RUTA DEL LOGO */
-
-background-image:
-url("imagenes/logo.png");
+background-image:url("./imagenes/logo.png");
 
 background-repeat:no-repeat;
 
 background-position:center;
 
-background-size:contain;
+background-size:65%;
 
-opacity:.10;
+opacity:.08;
 
 z-index:0;
+
+pointer-events:none;
+
+}
+
+/* contenido encima */
+
+.login-container .card-header,
+.login-container .card-body{
+
+position:relative;
+
+z-index:2;
 
 }
 
