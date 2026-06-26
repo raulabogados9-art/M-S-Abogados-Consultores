@@ -71,8 +71,11 @@ ENCABEZADO PRINCIPAL
 display:flex;
 align-items:flex-start;
 justify-content:space-between;
+width:100%;
 
 }
+
+/* LOGO */
 
 .logo-sistema{
 
@@ -85,15 +88,18 @@ align-items:center;
 
 width:100px;
 height:auto;
+mix-blend-mode:multiply;
 
 }
+
+/* TITULO */
 
 .titulo-sistema{
 
 display:flex;
 flex-direction:column;
 margin-left:15px;
-flex:1;
+flex-grow:1;
 
 }
 
@@ -114,11 +120,27 @@ color:#0b3b82;
 
 }
 
+/* USUARIO */
+
 .usuario-sistema{
+
+margin-left:auto;
 
 display:flex;
 flex-direction:column;
-align-items:center;
-min-width:250px;
+
+align-items:flex-end;
+
+text-align:right;
+
+min-width:280px;
+
+}
+
+/* MENÚ */
+
+.menu-principal{
+
+margin-top:30px;
 
 }
