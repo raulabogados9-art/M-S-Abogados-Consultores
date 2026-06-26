@@ -9,9 +9,23 @@
 }
 
 .login-container .card{
+
     width:100%;
     max-width:420px;
-    border-radius:12px;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    border:none;
+
+    position:relative;
+
+    background:rgba(255,255,255,.95);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.20);
+
 }
 
 .login-container .card-header{
@@ -367,5 +381,101 @@ font-size:18px;
 font-weight:bold;
 
 color:#052C65;
+
+}
+
+/* ==========================
+LOGIN MARCA DE AGUA
+========================== */
+
+.login-bg .card{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/* marca de agua */
+
+.login-bg .card::before{
+
+content:"";
+
+position:absolute;
+
+top:50%;
+
+left:50%;
+
+transform:
+translate(-50%,-50%);
+
+width:80%;
+
+height:80%;
+
+/* RUTA DEL LOGO */
+
+background-image:
+url("imagenes/logo.png");
+
+background-repeat:no-repeat;
+
+background-position:center;
+
+background-size:contain;
+
+opacity:.10;
+
+z-index:0;
+
+}
+
+/* contenido por encima */
+
+.login-bg .card-body,
+.login-bg .card-header{
+
+position:relative;
+
+z-index:1;
+
+}
+
+/* cajas más visibles */
+
+.login-container .form-control{
+
+border:3px solid #052C65;
+
+border-radius:15px;
+
+height:55px;
+
+background:rgba(255,255,255,.95);
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.15);
+
+font-size:18px;
+
+}
+
+/* botón */
+
+.login-container .btn{
+
+height:50px;
+
+font-size:18px;
+
+font-weight:bold;
+
+border-radius:14px;
+
+background:#052C65;
+
+border:none;
 
 }
