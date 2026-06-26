@@ -361,36 +361,48 @@ overflow:hidden;
 LOGO MARCA DE AGUA
 ========================== */
 
-.login-container .card::before{
+/* ==========================
+MARCA DE AGUA LOGIN
+========================== */
+
+.login-bg .card::before{
 
 content:"";
 
 position:absolute;
 
-top:0;
+top:50%;
+left:50%;
 
-left:0;
+transform:translate(-50%,-50%);
 
-width:100%;
+/* tamaño del logo */
+width:55%;
+height:55%;
 
-height:100%;
-
-background-image:url("/M-S-Abogados-Consultores/imagenes/logo.png");
-
+background-image:url("../imagenes/logo.png");
 background-repeat:no-repeat;
-
 background-position:center;
+background-size:contain;
 
-background-size:65%;
+/* más tenue */
+opacity:.05;
 
-opacity:.08;
-
+/* enviar detrás de inputs */
 z-index:0;
-
-pointer-events:none;
 
 }
 
+/* Todo el contenido encima */
+
+.login-bg .card-header,
+.login-bg .card-body,
+.login-bg .card-body *{
+
+position:relative;
+z-index:2;
+
+}
 /* contenido encima */
 
 .login-container .card-header,
