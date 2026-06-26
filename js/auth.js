@@ -284,20 +284,16 @@ document.getElementById(
 document.getElementById(
 'lblUsuario'
 ).innerText=
-nombre;
-
-  sessionStorage.getItem(
-'usuarioNombre'
+sessionStorage.getItem(
+'nombre'
 );
 
-  document.getElementById(
+document.getElementById(
 'lblRol'
 ).innerText=
-
 sessionStorage.getItem(
 'rol'
 );
-
 configurarPermisos();
 
 cargarExpedientes();
