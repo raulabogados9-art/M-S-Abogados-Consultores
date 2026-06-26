@@ -65,28 +65,29 @@ href="css/estilos.css">
    <div
 class="alert alert-primary mb-3 p-3">
 
-<div class="row">
-
-<div class="col-md-8">
-
 <div class="header-container">
 
-    <!-- BLOQUE IZQUIERDO -->
+    <!-- IZQUIERDA -->
+
     <div class="header-left">
 
         <img
-            src="imagenes/logo.png"
-            class="logo-empresa"
-            alt="Logo Empresa">
+        src="imagenes/logo.png"
+        class="logo-empresa"
+        alt="Logo Empresa">
 
-        <div>
+        <div class="titulo-container">
 
             <h1 class="titulo-sistema">
+
                 Sistema de Expedientes
+
             </h1>
 
             <div class="version-sistema">
+
                 Versión 1.0
+
             </div>
 
         </div>
@@ -94,25 +95,29 @@ class="alert alert-primary mb-3 p-3">
     </div>
 
 
-    <!-- BLOQUE DERECHO -->
+    <!-- DERECHA -->
+
     <div class="header-right">
 
         <div class="usuario-info">
 
-            <div>
-                <strong>Usuario:</strong>
-                <span id="nombreUsuario"></span>
-            </div>
+            <strong>Usuario:</strong>
 
-            <div id="rolUsuario"></div>
+            <span id="nombreUsuario"></span>
+
+        </div>
+
+        <div
+        id="rolUsuario"
+        class="rol-info">
 
         </div>
 
         <button
-            class="btn btn-danger"
-            onclick="cerrarSesion()">
+        class="btn btn-danger"
+        onclick="cerrarSesion()">
 
-            Cerrar Sesión
+        Cerrar Sesión
 
         </button>
 
@@ -121,43 +126,36 @@ class="alert alert-primary mb-3 p-3">
 </div>
 
 
-<!-- MENU SEPARADO -->
 <nav class="menu-principal">
 
-<button
-class="btn btn-primary btn-sm"
+<button class="btn btn-primary btn-sm"
 onclick="mostrarModulo('expedientes')">
 Expedientes
 </button>
 
-<button
-class="btn btn-primary btn-sm"
+<button class="btn btn-primary btn-sm"
 onclick="mostrarModulo('prestados')">
 Prestados
 </button>
 
-<button
-class="btn btn-primary btn-sm"
+<button class="btn btn-primary btn-sm"
 onclick="mostrarModulo('historico')">
 Histórico
 </button>
 
-<button
-class="btn btn-primary btn-sm"
+<button class="btn btn-primary btn-sm"
 id="menuPersonas"
 onclick="mostrarModulo('personas')">
 Personas
 </button>
 
-<button
-class="btn btn-primary btn-sm"
+<button class="btn btn-primary btn-sm"
 id="menuActividades"
 onclick="mostrarModulo('actividades')">
 Actividades
 </button>
 
-<button
-class="btn btn-primary btn-sm"
+<button class="btn btn-primary btn-sm"
 id="menuUsuarios"
 onclick="mostrarModulo('usuarios')">
 Usuarios
