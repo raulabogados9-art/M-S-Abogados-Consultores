@@ -293,10 +293,9 @@ nombre;
   document.getElementById(
 'lblRol'
 ).innerText=
-usuario.Rol;
 
-  sessionStorage.getItem(
-'usuarioRol'
+sessionStorage.getItem(
+'rol'
 );
 
 configurarPermisos();
