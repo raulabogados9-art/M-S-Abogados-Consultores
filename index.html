@@ -69,107 +69,103 @@ class="alert alert-primary mb-3 p-3">
 
 <div class="col-md-8">
 
-<div class="encabezado-principal">
+<div class="header-container">
 
-<div class="logo-sistema">
+    <!-- BLOQUE IZQUIERDO -->
+    <div class="header-left">
 
-<img
-src="imagenes/logo.png"
-alt="Logo Empresa"
-id="logoEmpresa">
+        <img
+            src="imagenes/logo.png"
+            class="logo-empresa"
+            alt="Logo Empresa">
+
+        <div>
+
+            <h1 class="titulo-sistema">
+                Sistema de Expedientes
+            </h1>
+
+            <div class="version-sistema">
+                Versión 1.0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BLOQUE DERECHO -->
+    <div class="header-right">
+
+        <div class="usuario-info">
+
+            <div>
+                <strong>Usuario:</strong>
+                <span id="nombreUsuario"></span>
+            </div>
+
+            <div id="rolUsuario"></div>
+
+        </div>
+
+        <button
+            class="btn btn-danger"
+            onclick="cerrarSesion()">
+
+            Cerrar Sesión
+
+        </button>
+
+    </div>
 
 </div>
 
 
-<div class="titulo-sistema">
-
-<h1>
-Sistema de Expedientes
-</h1>
-
-<div class="version-sistema">
-
-Versión 1.0
-
-</div>
-
-</div>
-
-
-<div class="usuario-sistema">
-
-<div>
-
-<b>Usuario:</b>
-
-<span id="lblUsuario">
-</span>
-
-</div>
-
-<div
-id="lblRol"
-class="fw-bold mt-1">
-
-</div>
+<!-- MENU SEPARADO -->
+<nav class="menu-principal">
 
 <button
-class="btn btn-danger btn-sm mt-2"
-onclick="cerrarSesion()">
-
-Cerrar Sesión
-
-</button>
-
-</div>
-
-</div>
-
-<nav class="mb-3">
-
-    <button
-        class="btn btn-primary btn-sm"
-        onclick="mostrarModulo('expedientes')">
-        Expedientes
-    </button>
-
-    <button
-    class="btn btn-primary btn-sm"
-    onclick="mostrarModulo('prestados')">
-    Prestados
+class="btn btn-primary btn-sm"
+onclick="mostrarModulo('expedientes')">
+Expedientes
 </button>
 
 <button
-    class="btn btn-primary btn-sm"
-    onclick="mostrarModulo('historico')">
-    Histórico
+class="btn btn-primary btn-sm"
+onclick="mostrarModulo('prestados')">
+Prestados
 </button>
 
-    <button
-        class="btn btn-primary btn-sm"
-        id="menuPersonas"
-        onclick="mostrarModulo('personas')">
-        Personas
-    </button>
+<button
+class="btn btn-primary btn-sm"
+onclick="mostrarModulo('historico')">
+Histórico
+</button>
 
-    <button
-        class="btn btn-primary btn-sm"
-        id="menuActividades"
-        onclick="mostrarModulo('actividades')">
-        Actividades
-    </button>
+<button
+class="btn btn-primary btn-sm"
+id="menuPersonas"
+onclick="mostrarModulo('personas')">
+Personas
+</button>
 
-    <button
-        class="btn btn-primary btn-sm"
-        id="menuUsuarios"
-        onclick="mostrarModulo('usuarios')">
-        Usuarios
-    </button>
+<button
+class="btn btn-primary btn-sm"
+id="menuActividades"
+onclick="mostrarModulo('actividades')">
+Actividades
+</button>
+
+<button
+class="btn btn-primary btn-sm"
+id="menuUsuarios"
+onclick="mostrarModulo('usuarios')">
+Usuarios
+</button>
 
 </nav>
 
 <hr>
-
 <div id="expedientes">
 
    <div class="mb-3">
