@@ -98,12 +98,22 @@ align-items:flex-start;
 gap:25px;
 }
 
+/* LOGO EMPRESA */
+
 .logo-empresa{
 
-width:130px;
+width:140px;
 height:auto;
 
+/* elimina fondo blanco */
 mix-blend-mode:multiply;
+
+/* azul institucional */
+filter:
+contrast(130%)
+saturate(180%)
+brightness(85%);
+
 }
 
 .titulo-container{
@@ -384,7 +394,10 @@ background-color:transparent !important;
 
 opacity:.22;
 
-filter:grayscale(100%);
+filter:
+contrast(140%)
+brightness(70%)
+saturate(180%);
 
 z-index:0;
 
