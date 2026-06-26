@@ -361,6 +361,8 @@ overflow:hidden;
 LOGO MARCA DE AGUA LOGIN
 ========================== */
 
+/* LOGO MARCA DE AGUA MÁS OSCURO */
+
 .login-bg .card::before{
 
 content:"";
@@ -381,11 +383,14 @@ background-repeat:no-repeat;
 
 background-position:center;
 
-background-size:70%;
+background-size:80%;
 
-opacity:.18;
+opacity:.38;
 
-filter:grayscale(100%) brightness(120%);
+filter:
+grayscale(100%)
+brightness(55%)
+contrast(150%);
 
 pointer-events:none;
 
@@ -425,30 +430,34 @@ z-index:1;
 
 }
 
-/* CAJAS TRANSPARENTES LOGIN */
+/* INPUTS COMPLETAMENTE TRANSPARENTES */
 
 .login-container .form-control{
 
 border:3px solid #052C65 !important;
 
-border-radius:15px;
+border-radius:15px !important;
 
 height:55px;
 
-background:rgba(255,255,255,.35) !important;
-
-backdrop-filter:blur(4px);
-
--webkit-backdrop-filter:blur(4px);
+background:transparent !important;
 
 box-shadow:
-0 4px 12px rgba(0,0,0,.15);
+0 4px 12px rgba(0,0,0,.20);
 
 font-size:18px;
 
 font-weight:500;
 
 color:#052C65;
+
+}
+
+/* placeholder */
+
+.login-container .form-control::placeholder{
+
+color:rgba(5,44,101,.75);
 
 }
 
