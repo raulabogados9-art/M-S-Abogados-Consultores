@@ -687,3 +687,44 @@ console.error(error);
 }
 
 }
+
+/* ==========================
+BUSCAR EXPEDIENTES
+========================== */
+
+function filtrarExpedientes(){
+
+const texto=
+
+document.getElementById(
+'txtBuscarExpediente'
+)
+.value
+.toLowerCase();
+
+const filas=
+
+document.querySelectorAll(
+'#tbodyExpedientes tr'
+);
+
+filas.forEach(fila=>{
+
+const contenido=
+
+fila.innerText.toLowerCase();
+
+fila.style.display=
+
+contenido.includes(texto)
+?
+''
+:
+'none';
+
+});
+
+}
+
+window.filtrarExpedientes=
+filtrarExpedientes;
