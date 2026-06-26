@@ -201,3 +201,171 @@ color:white !important;
 font-weight:bold;
 
 }
+
+/* ===================================
+LOGIN NUEVO ESTILO
+=================================== */
+
+.login-card{
+
+border-radius:20px !important;
+
+overflow:hidden;
+
+box-shadow:
+0px 10px 30px rgba(
+0,0,0,.20
+);
+
+border:none;
+
+}
+
+
+/* ENCABEZADO */
+
+.login-header{
+
+background:#052C65 !important;
+
+color:white;
+
+text-align:center;
+
+padding:20px;
+
+font-size:28px;
+
+font-weight:bold;
+
+}
+
+
+/* CUERPO */
+
+.login-body{
+
+position:relative;
+
+padding:30px;
+
+overflow:hidden;
+
+}
+
+
+/* LOGO COMO MARCA DE AGUA */
+
+.logo-watermark{
+
+position:absolute;
+
+top:50%;
+
+left:50%;
+
+transform:
+translate(
+-50%,
+-50%
+);
+
+width:85%;
+
+height:85%;
+
+background-image:url(
+'imagenes/logo.png'
+);
+
+background-repeat:no-repeat;
+
+background-position:center;
+
+background-size:contain;
+
+opacity:.10;
+
+pointer-events:none;
+
+z-index:0;
+
+}
+
+
+/* CONTROLES ENCIMA DEL LOGO */
+
+.login-body>*{
+
+position:relative;
+
+z-index:2;
+
+}
+
+
+/* INPUTS */
+
+.login-input{
+
+height:55px !important;
+
+border:
+
+3px solid #052C65 !important;
+
+border-radius:12px !important;
+
+background:white !important;
+
+font-size:18px !important;
+
+font-weight:500;
+
+box-shadow:
+
+0px 3px 8px rgba(
+0,0,0,.15
+);
+
+}
+
+
+/* BOTON */
+
+.login-button{
+
+height:55px;
+
+background:#052C65 !important;
+
+border:none !important;
+
+color:white !important;
+
+font-size:24px;
+
+font-weight:bold;
+
+border-radius:12px;
+
+box-shadow:
+
+0px 5px 15px rgba(
+0,0,0,.25
+);
+
+}
+
+
+/* LABELS */
+
+.login-body label{
+
+font-size:18px;
+
+font-weight:bold;
+
+color:#052C65;
+
+}
