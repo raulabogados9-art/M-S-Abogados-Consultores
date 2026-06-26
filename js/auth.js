@@ -286,6 +286,19 @@ document.getElementById(
 ).innerText=
 nombre;
 
+  sessionStorage.getItem(
+'usuarioNombre'
+);
+
+  document.getElementById(
+'lblRol'
+).innerText=
+usuario.Rol;
+
+  sessionStorage.getItem(
+'usuarioRol'
+);
+
 configurarPermisos();
 
 cargarExpedientes();
