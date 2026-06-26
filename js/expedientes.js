@@ -247,15 +247,10 @@ tbody.innerHTML+=`
 <tr>
 
 <td>${exp.NoExpediente||''}</td>
-
 <td>${exp.NumeroInterno||''}</td>
-
 <td>${exp.PersonaResponsable||''}</td>
-
 <td>${exp.Actividad||''}</td>
-
 <td>${exp.UsuarioCaptura||''}</td>
-
 <td>
 
 <button
