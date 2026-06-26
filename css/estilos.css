@@ -425,22 +425,38 @@ z-index:1;
 
 }
 
-/* cajas más visibles */
+/* CAJAS TRANSPARENTES LOGIN */
 
 .login-container .form-control{
 
-border:3px solid #052C65;
+border:3px solid #052C65 !important;
 
 border-radius:15px;
 
 height:55px;
 
-background:rgba(255,255,255,.95);
+background:rgba(255,255,255,.35) !important;
+
+backdrop-filter:blur(4px);
+
+-webkit-backdrop-filter:blur(4px);
 
 box-shadow:
 0 4px 12px rgba(0,0,0,.15);
 
 font-size:18px;
+
+font-weight:500;
+
+color:#052C65;
+
+}
+
+/* texto placeholder */
+
+.login-container .form-control::placeholder{
+
+color:rgba(5,44,101,.60);
 
 }
 
