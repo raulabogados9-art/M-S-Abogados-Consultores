@@ -121,8 +121,13 @@ document.getElementById(
 
 document.getElementById(
 'lblUsuario'
-).innerText=
-usuarioValido.NombreCompleto;
+).innerText =
+'Usuario: ' + usuarioValido.NombreCompleto;
+
+document.getElementById(
+'lblRol'
+).innerText =
+usuarioValido.Rol;
 
 
 /* PERMISOS */
@@ -283,17 +288,14 @@ document.getElementById(
 
 document.getElementById(
 'lblUsuario'
-).innerText=
-sessionStorage.getItem(
-'nombre'
-);
+).innerText =
+'Usuario: ' + sessionStorage.getItem('nombre');
 
 document.getElementById(
 'lblRol'
-).innerText=
-sessionStorage.getItem(
-'rol'
-);
+).innerText =
+sessionStorage.getItem('rol');
+  
 configurarPermisos();
 
 cargarExpedientes();
