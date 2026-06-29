@@ -379,8 +379,6 @@ function refrescarVistaExpedientes(){
 /* si no, render normal */
 renderizarExpedientes(cacheSistema.expedientes);
 
-}
-
 function ordenarExpedientes(columna){
 
 const datos =
