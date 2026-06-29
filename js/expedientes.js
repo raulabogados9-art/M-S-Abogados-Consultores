@@ -478,9 +478,9 @@ alert(
 /* limpiar cache */
 window.cacheSistema.expedientes=[];
 
-await cargarExpedientes();
-await cargarPrestados();
-await cargarHistorico();
+await window.cargarExpedientes?.();
+await window.cargarPrestados?.();
+await window.cargarHistorico?.();
 
 }
 catch(error){
@@ -633,9 +633,9 @@ alert(
 /* limpiar cache */
 window.cacheSistema.expedientes=[];
 
-await cargarPrestados();
-await cargarExpedientes();
-await cargarHistorico();
+await window.cargarExpedientes?.();
+await window.cargarPrestados?.();
+await window.cargarHistorico?.();
 
 }
 catch(error){
