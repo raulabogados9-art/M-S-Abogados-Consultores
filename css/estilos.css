@@ -375,6 +375,10 @@ overflow:hidden;
 LOGO LOGIN DEFINITIVO
 ========================== */
 
+/* ==========================
+LOGO LOGIN LIMPIO
+========================== */
+
 .login-bg .card::before{
 
 content:"";
@@ -386,25 +390,26 @@ left:50%;
 
 transform:translate(-50%,-50%);
 
-width:68%;
-height:68%;
+width:65%;
+height:65%;
 
-/* logo */
-background:url("../imagenes/logo.png")
-center center / contain
-no-repeat;
+background-image:url("../imagenes/logo.png");
 
-/* eliminar tonos claros/grises */
-filter:
-grayscale(100%)
-contrast(300%)
-brightness(35%);
+background-repeat:no-repeat;
+background-position:center;
+background-size:contain;
 
-/* intensidad */
-opacity:.22;
+/* mantener transparente */
+background-color:transparent !important;
 
-/* mantener fondo limpio */
-background-color:transparent;
+/* eliminar filtros */
+filter:none !important;
+
+/* eliminar mezclas */
+mix-blend-mode:normal !important;
+
+/* intensidad únicamente */
+opacity:.18;
 
 pointer-events:none;
 
@@ -412,17 +417,17 @@ z-index:0;
 
 }
 
-/* contenido siempre encima */
+/* contenido encima */
 
 .login-bg .card-header,
 .login-bg .card-body,
 .login-bg .card-body *{
 
 position:relative;
+
 z-index:2;
 
-}
-/* asegurar que el cuerpo no agregue fondo */
+}/* asegurar que el cuerpo no agregue fondo */
 
 .login-body{
 
