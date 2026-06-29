@@ -171,7 +171,7 @@ document.getElementById(
 
 NoInterno:
 document.getElementById(
-'txtNoInterno'
+'txtNumeroInterno'
 ).value,
 
 Persona:
