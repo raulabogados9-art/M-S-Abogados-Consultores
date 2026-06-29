@@ -385,10 +385,8 @@ left:50%;
 
 transform:translate(-50%,-50%);
 
-width:65%;
-height:65%;
-
-/* logo */
+width:72%;
+height:72%;
 
 background-image:url("../imagenes/logo.png");
 
@@ -398,24 +396,25 @@ background-position:center center;
 
 background-size:contain;
 
-/* eliminar cualquier fondo gris */
-
 background-color:transparent !important;
 
-/* hacerlo visible pero limpio */
+/* hacer visible el logo */
 
-opacity:.22;
+opacity:.25;
+
+/* M&S y Consultores azul
+   Abogados y línea gris */
 
 filter:
-contrast(130%)
-brightness(80%);
+grayscale(15%)
+contrast(135%)
+brightness(90%);
 
 pointer-events:none;
 
 z-index:0;
 
 }
-
 /* asegurar que el cuerpo no agregue fondo */
 
 .login-body{
