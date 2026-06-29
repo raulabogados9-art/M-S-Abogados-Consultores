@@ -207,7 +207,7 @@ document.getElementById('modalSalida')
 
 window.cacheSistema.expedientes = [];
 
-cargarExpedientes();
+await window.cargarExpedientes();
 
 }
 catch(error){
