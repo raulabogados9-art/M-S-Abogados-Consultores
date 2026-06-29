@@ -105,10 +105,6 @@ gap:25px;
 width:140px;
 height:auto;
 
-/* elimina fondo gris/blanco */
-
-mix-blend-mode:multiply;
-
 /* M&S y Consultores azul */
 filter:
 contrast(140%)
@@ -412,8 +408,13 @@ background-color:transparent !important;
 /* eliminar tonos grises */
 mix-blend-mode:multiply;
 
+filter:
+contrast(180%)
+brightness(65%)
+saturate(180%);    
+
 /* intensidad */
-opacity:.18;
+opacity:.30;
 
 pointer-events:none;
 
