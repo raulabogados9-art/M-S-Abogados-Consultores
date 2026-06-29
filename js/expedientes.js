@@ -147,7 +147,7 @@ document.getElementById(
 
 }
 
-
+async function guardarExpediente(){
 /* =======================
 GUARDAR
 ======================= */
@@ -216,7 +216,8 @@ document.getElementById(
 )
 ).hide();
 
-    window.cacheSistema.expedientes=[];
+    
+window.cacheSistema.expedientes=[];
 
 cargarExpedientes();
 
