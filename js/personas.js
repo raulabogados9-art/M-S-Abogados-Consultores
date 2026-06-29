@@ -1,5 +1,11 @@
 let personasSistema=[];
 let actividadesSistema=[];
+let cacheSistema = {
+    personas: [],
+    actividades: [],
+    expedientes: [],
+    movimientos: []
+};
 
 /* ==========================
 CARGAR ACTIVIDADES COMBO
@@ -66,44 +72,64 @@ async function cargarPersonasTabla(){
 
 try{
 
-const response=
+/* usar cache */
+if(cacheSistema.personas.length > 0){
+
+renderizarPersonas(
+cacheSistema.personas
+);
+
+return;
+}
+
+const response =
 await fetch(
 API_URL+'?sheet=PERSONAS'
 );
 
-personasSistema=
+const datos =
 await response.json();
 
-const tbody=
-document.getElementById(
-'tbodyPersonas'
-);
+/* guardar cache */
+cacheSistema.personas = datos;
+
+/* variable global existente */
+personasSistema = datos;
+
+/* render */
+renderizarPersonas(datos);
+
+}
+catch(error){
+console.error(error);
+}
+
+}
+
+function renderizarPersonas(datos){
+
+const tbody =
+document.getElementById('tbodyPersonas');
 
 if(!tbody)return;
 
 tbody.innerHTML='';
 
-personasSistema.forEach(p=>{
+datos.forEach(p=>{
 
 tbody.innerHTML+=`
 
 <tr>
 
 <td>${p.Nombre||''}</td>
-
 <td>${p.Actividad||''}</td>
-
 <td>${p.Activo||''}</td>
 
 <td>
 
 <button
 class="btn btn-warning btn-sm"
-onclick="editarPersona(
-'${p.ID}',
-'${p.Nombre}',
-'${p.Actividad}'
-)">
+onclick="editarPersona('${p.ID}','${p.Nombre}','${p.Actividad}')">
 
 Editar
 
@@ -111,17 +137,9 @@ Editar
 
 <button
 class="btn btn-danger btn-sm"
-onclick="cambiarEstadoPersona(
-'${p.ID}',
-'${p.Activo}'
-)">
+onclick="cambiarEstadoPersona('${p.ID}','${p.Activo}')">
 
-${p.Activo==='Si'
-?
-'Desactivar'
-:
-'Activar'
-}
+${p.Activo==='Si' ? 'Desactivar' : 'Activar'}
 
 </button>
 
@@ -132,13 +150,6 @@ ${p.Activo==='Si'
 `;
 
 });
-
-}
-catch(error){
-
-console.error(error);
-
-}
 
 }
 
