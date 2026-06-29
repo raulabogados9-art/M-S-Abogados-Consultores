@@ -1,11 +1,5 @@
 let personasSistema=[];
 let actividadesSistema=[];
-let cacheSistema = {
-    personas: [],
-    actividades: [],
-    expedientes: [],
-    movimientos: []
-};
 
 /* ==========================
 CARGAR ACTIVIDADES COMBO
