@@ -290,50 +290,32 @@ id
 }
 
 
-/* ==========================
-VALIDAR SESION AL CARGAR
-========================== */
+window.onload = async function () {
 
-window.onload=function(){
+const nombre = sessionStorage.getItem('nombre');
 
-const nombre=
+if (nombre) {
 
-sessionStorage.getItem(
-'nombre'
-);
+document.getElementById('loginContainer').style.display = 'none';
+document.getElementById('mainContainer').style.display = 'block';
 
-if(nombre){
-
-document.getElementById(
-'loginContainer'
-).style.display='none';
-
-document.getElementById(
-'mainContainer'
-).style.display='block';
-
-document.getElementById(
-'lblUsuario'
-).innerText =
+document.getElementById('lblUsuario').innerText =
 sessionStorage.getItem('nombre');
 
-document.getElementById(
-'lblRol'
-).innerText =
+document.getElementById('lblRol').innerText =
 sessionStorage.getItem('rol');
-  
+
 configurarPermisos();
 
+/* CARGAS SEGURAS */
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
-await window.cargarHistorico?.();;
+await window.cargarHistorico?.();
 
-cargarPersonasTabla();
-
-cargarActividadesTabla();
-
-cargarUsuariosTabla();
+if (typeof cargarPersonasTabla === 'function') cargarPersonasTabla();
+if (typeof cargarActividadesTabla === 'function') cargarActividadesTabla();
+if (typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
 
 }
 
-}
+};
