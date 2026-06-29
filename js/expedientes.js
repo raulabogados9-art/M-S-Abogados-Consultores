@@ -730,10 +730,4 @@ console.error(error);
 
 }
 
-window.cargarExpedientes = cargarExpedientes;
-window.cargarPrestados = cargarPrestados;
-window.cargarHistorico = cargarHistorico;
-window.guardarExpediente = guardarExpediente;
-window.prestarExpediente = prestarExpediente;
-window.devolverExpediente = devolverExpediente;
-window.filtrarExpedientes = filtrarExpedientes;
+
