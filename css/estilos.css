@@ -105,9 +105,17 @@ gap:25px;
 width:140px;
 height:auto;
 
-/* elimina fondo blanco */
+/* elimina fondo gris/blanco */
+
 mix-blend-mode:multiply;
 
+/* M&S y Consultores azul */
+filter:
+contrast(140%)
+saturate(180%)
+brightness(85%);
+
+}
 /* azul institucional */
 filter:
 contrast(130%)
@@ -541,5 +549,43 @@ background:transparent !important;
 background:transparent !important;
 
 backdrop-filter:none !important;
+
+}
+
+/* ==========================
+CORRECCION LOGIN
+========================== */
+
+/* inputs totalmente transparentes */
+
+.login-input,
+.login-container .form-control{
+
+background:transparent !important;
+
+border:3px solid #052C65 !important;
+
+box-shadow:
+0px 4px 10px rgba(
+0,0,0,.15
+);
+
+}
+
+/* asegurar fondo blanco */
+
+.login-bg .card{
+
+background:#ffffff !important;
+
+overflow:hidden;
+
+}
+
+/* quitar fondos heredados */
+
+.login-body{
+
+background:transparent !important;
 
 }
