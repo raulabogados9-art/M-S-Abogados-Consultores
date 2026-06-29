@@ -1,5 +1,3 @@
-console.log("EXPEDIENTES.JS CARGADO");
-
 let guardandoExpediente = false;
 let prestandoExpediente = false;
 let devolviendoExpediente = false;
