@@ -1,12 +1,36 @@
 let usuarios=[];
 
 /* ==========================
+CACHE DEL SISTEMA
+========================== */
+
+let cacheSistema={
+
+usuarios:[],
+personas:[],
+actividades:[],
+expedientes:[],
+prestados:[],
+historico:[]
+
+};
+
+/* ==========================
 CARGAR USUARIOS
 ========================== */
 
 async function cargarUsuariosSistema(){
 
 try{
+
+/* usar cache si ya existe */
+
+if(cacheSistema.usuarios.length>0){
+
+usuarios=cacheSistema.usuarios;
+return;
+
+}
 
 const response=
 await fetch(
@@ -15,6 +39,10 @@ API_URL+'?sheet=USUARIOS'
 
 usuarios=
 await response.json();
+
+/* guardar cache */
+
+cacheSistema.usuarios=usuarios;
 
 }
 catch(error){
