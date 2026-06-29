@@ -117,7 +117,7 @@ actualizarActividadPersona();
 MODAL
 ======================= */
 
-function {
+function abrirModalExpediente(){
 
 document.getElementById(
 'txtNoExpediente'
