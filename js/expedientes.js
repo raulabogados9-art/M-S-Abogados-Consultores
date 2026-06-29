@@ -221,8 +221,7 @@ guardandoExpediente=false;
 
 }
 
-
-async function cargarExpedientes(){
+window.cargarExpedientes = async function () {
 
 try{
 
