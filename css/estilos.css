@@ -382,6 +382,10 @@ overflow:hidden;
 LOGO MARCA DE AGUA LOGIN
 ========================== */
 
+/* ==========================
+LOGO LOGIN LIMPIO
+========================== */
+
 .login-bg .card::before{
 
 content:"";
@@ -393,37 +397,29 @@ left:50%;
 
 transform:translate(-50%,-50%);
 
-width:72%;
-height:72%;
+width:65%;
+height:65%;
 
 background-image:url("../imagenes/logo.png");
 
 background-repeat:no-repeat;
-
-background-position:center center;
-
+background-position:center;
 background-size:contain;
 
+/* eliminar cualquier fondo */
 background-color:transparent !important;
 
-/* hacer visible el logo */
+/* eliminar tonos grises */
+mix-blend-mode:multiply;
 
-opacity:.25;
-
-/* M&S y Consultores azul
-   Abogados y línea gris */
-
-filter:
-grayscale(15%)
-contrast(135%)
-brightness(90%);
+/* intensidad */
+opacity:.18;
 
 pointer-events:none;
 
 z-index:0;
 
-}
-/* asegurar que el cuerpo no agregue fondo */
+}/* asegurar que el cuerpo no agregue fondo */
 
 .login-body{
 
@@ -587,5 +583,29 @@ overflow:hidden;
 .login-body{
 
 background:transparent !important;
+
+}
+
+/* limpiar cualquier cuadro gris heredado */
+
+.login-bg .card::after{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:white;
+
+opacity:.15;
+
+z-index:0;
+
+pointer-events:none;
 
 }
