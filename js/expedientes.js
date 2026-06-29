@@ -1,7 +1,3 @@
-let personas = [];
-
-let expedientesSistema = [];
-
 let guardandoExpediente = false;
 let prestandoExpediente = false;
 let devolviendoExpediente = false;
@@ -11,7 +7,7 @@ let ordenExpedientes = {
     asc: true
 };
 
-/* CACHE GLOBAL DEL SISTEMA */
+/* 🔥 ÚNICA FUENTE DE DATOS DEL SISTEMA */
 let cacheSistema = {
     personas: [],
     actividades: [],
@@ -370,6 +366,63 @@ return ok;
 });
 
 renderizarExpedientes(filtrados);
+
+}
+
+function refrescarVistaExpedientes(){
+
+/* si tienes filtros activos */
+if(typeof filtrarExpedientes === 'function'){
+
+filtrarExpedientes();
+return;
+
+}
+
+/* si no, render normal */
+renderizarExpedientes(cacheSistema.expedientes);
+
+}
+
+function ordenarExpedientes(columna){
+
+const datos =
+cacheSistema.expedientes;
+
+/* cambiar dirección si es la misma columna */
+if(ordenExpedientes.columna === columna){
+ordenExpedientes.asc = !ordenExpedientes.asc;
+}else{
+ordenExpedientes.columna = columna;
+ordenExpedientes.asc = true;
+}
+
+const asc =
+ordenExpedientes.asc;
+
+/* copiar para no modificar original */
+const ordenados = [...datos].sort((a,b)=>{
+
+let valA = a[columna] || '';
+let valB = b[columna] || '';
+
+const numA = parseFloat(valA);
+const numB = parseFloat(valB);
+
+if(!isNaN(numA) && !isNaN(numB)){
+return asc ? numA - numB : numB - numA;
+}
+
+valA = valA.toString().toLowerCase();
+valB = valB.toString().toLowerCase();
+
+if(valA < valB) return asc ? -1 : 1;
+if(valA > valB) return asc ? 1 : -1;
+return 0;
+
+});
+
+renderizarExpedientes(ordenados);
 
 }
 
