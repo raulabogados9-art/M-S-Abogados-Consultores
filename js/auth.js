@@ -165,11 +165,9 @@ configurarPermisos();
 
 /* CARGAS INICIALES */
 
-cargarExpedientes();
-
-cargarPrestados();
-
-cargarHistorico();
+await window.cargarExpedientes?.();
+await window.cargarPrestados?.();
+await window.cargarHistorico?.();
 
 cargarPersonasTabla();
 
@@ -326,11 +324,9 @@ sessionStorage.getItem('rol');
   
 configurarPermisos();
 
-cargarExpedientes();
-
-cargarPrestados();
-
-cargarHistorico();
+await window.cargarExpedientes?.();
+await window.cargarPrestados?.();
+await window.cargarHistorico?.();;
 
 cargarPersonasTabla();
 
