@@ -328,55 +328,52 @@ tbody.appendChild(fragment);
 
 function filtrarExpedientes(){
 
-const datos =
-cacheSistema.expedientes;
+    if(!window.cacheSistema?.expedientes) return;
 
-const texto =
-document.getElementById('filtroTextoExpediente')?.value.toLowerCase() || '';
+    const datos = window.cacheSistema.expedientes;
 
-const responsable =
-document.getElementById('filtroResponsable')?.value || '';
+    const texto =
+        document.getElementById('filtroTextoExpediente')?.value.toLowerCase() || '';
 
-const estado =
-document.getElementById('filtroEstado')?.value || '';
+    const responsable =
+        document.getElementById('filtroResponsable')?.value || '';
 
-const filtrados =
-datos.filter(e=>{
+    const estado =
+        document.getElementById('filtroEstado')?.value || '';
 
-let ok = true;
+    const filtrados = datos.filter(e => {
 
-if(texto){
-ok =
-(e.NoExpediente||'').toLowerCase().includes(texto) ||
-(e.NumeroInterno||'').toLowerCase().includes(texto) ||
-(e.PersonaResponsable||'').toLowerCase().includes(texto) ||
-(e.Actividad||'').toLowerCase().includes(texto);
-}
+        let ok = true;
 
-if(responsable){
-ok = ok && e.PersonaResponsable === responsable;
-}
+        if(texto){
+            ok =
+                (e.NoExpediente||'').toLowerCase().includes(texto) ||
+                (e.NumeroInterno||'').toLowerCase().includes(texto) ||
+                (e.PersonaResponsable||'').toLowerCase().includes(texto) ||
+                (e.Actividad||'').toLowerCase().includes(texto);
+        }
 
-if(estado){
-ok = ok && e.Estado === estado;
-}
+        if(responsable){
+            ok = ok && e.PersonaResponsable === responsable;
+        }
 
-return ok;
+        if(estado){
+            ok = ok && e.Estado === estado;
+        }
 
-});
+        return ok;
+    });
 
-renderizarExpedientes(filtrados);
-
+    renderizarExpedientes(filtrados);
 }
 
 function refrescarVistaExpedientes(){
 
-/* si tienes filtros activos */
-if(typeof filtrarExpedientes === 'function'){
+    if(typeof filtrarExpedientes !== 'function') return;
 
-filtrarExpedientes();
-return;
+    if(!window.cacheSistema?.expedientes) return;
 
+    filtrarExpedientes();
 }
 
 /* si no, render normal */
