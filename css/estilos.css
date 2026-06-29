@@ -371,15 +371,12 @@ overflow:hidden;
 
 }
 
-
-/* LOGO MARCA DE AGUA MÁS OSCURO */
-
 /* ==========================
-LOGO MARCA DE AGUA LOGIN
+LOGO LOGIN LIMPIO
 ========================== */
 
 /* ==========================
-LOGO LOGIN LIMPIO
+LOGO LOGIN DEFINITIVO
 ========================== */
 
 .login-bg .card::before{
@@ -402,24 +399,26 @@ background-repeat:no-repeat;
 background-position:center;
 background-size:contain;
 
-/* eliminar cualquier fondo */
+/* fondo totalmente limpio */
 background-color:transparent !important;
 
-/* eliminar tonos grises */
-mix-blend-mode:multiply;
+/* quitar mezcla que genera fondo gris */
+mix-blend-mode:normal;
 
+/* intensificar letras */
 filter:
-contrast(180%)
-brightness(65%)
-saturate(180%);    
+contrast(200%)
+brightness(70%)
+saturate(180%);
 
-/* intensidad */
-opacity:.30;
+/* visibilidad */
+opacity:.35;
 
 pointer-events:none;
 
 z-index:0;
 
+}
 }/* asegurar que el cuerpo no agregue fondo */
 
 .login-body{
