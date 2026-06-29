@@ -455,7 +455,7 @@ prestandoExpediente=true;
 
 try{
 
-const fecha=new Date().toISOString();
+const fecha = new Date().toISOString();
 
 const prestado={
 
@@ -497,64 +497,37 @@ FechaHora:fecha
 
 };
 
-
-/* guardar prestado */
-
 await fetch(API_URL,{
-
 method:'POST',
-
 headers:{
 'Content-Type':'text/plain;charset=utf-8'
 },
-
 body:JSON.stringify({
-
 sheet:'PRESTADOS',
 ...prestado
-
 })
-
 });
 
-
-/* guardar movimiento */
-
 await fetch(API_URL,{
-
 method:'POST',
-
 headers:{
 'Content-Type':'text/plain;charset=utf-8'
 },
-
 body:JSON.stringify({
-
 sheet:'MOVIMIENTOS',
 ...movimiento
-
 })
-
 });
 
-
-/* eliminar expediente */
-
 await fetch(API_URL,{
-
 method:'POST',
-
 headers:{
 'Content-Type':'text/plain;charset=utf-8'
 },
-
 body:JSON.stringify({
-
 action:'ELIMINAR_EXPEDIENTE',
 ID:id
-
 })
-
 });
 
 alert(
@@ -565,10 +538,9 @@ alert(
 window.cacheSistema.expedientes=[];
 
 await cargarExpedientes();
-
 await cargarPrestados();
-
 await cargarHistorico();
+
 }
 catch(error){
 
@@ -658,7 +630,7 @@ devolviendoExpediente=true;
 
 try{
 
-const fecha=
+const fecha =
 new Date().toISOString();
 
 const movimiento={
@@ -673,9 +645,7 @@ TipoMovimiento:'Devolucion',
 PersonaResponsable:responsable,
 
 UsuarioSistema:
-sessionStorage.getItem(
-'nombre'
-),
+sessionStorage.getItem('nombre'),
 
 FechaHora:fecha
 
@@ -719,10 +689,11 @@ alert(
 'Expediente devuelto correctamente'
 );
 
+/* limpiar cache */
+window.cacheSistema.expedientes=[];
+
 await cargarPrestados();
-
 await cargarExpedientes();
-
 await cargarHistorico();
 
 }
@@ -738,7 +709,6 @@ devolviendoExpediente=false;
 }
 
 }
-
 
 /* ==========================
 HISTORICO
