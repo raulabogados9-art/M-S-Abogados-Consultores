@@ -210,53 +210,85 @@ guardandoExpediente=false;
 }
 
 
-/* =======================
-EXPEDIENTES
-======================= */
-
 async function cargarExpedientes(){
 
 try{
 
-const response=
-await fetch(
-API_URL+'?sheet=EXPEDIENTES'
+/* ======================
+USAR CACHE SI EXISTE
+====================== */
+
+if(cacheSistema.expedientes.length > 0){
+
+renderizarExpedientes(
+cacheSistema.expedientes
 );
 
-const datos=
+return;
+}
+
+/* ======================
+FETCH SOLO UNA VEZ
+====================== */
+
+const response =
+await fetch(API_URL+'?sheet=EXPEDIENTES');
+
+const datos =
 await response.json();
 
-const tbody=
-document.getElementById(
-'tbodyExpedientes'
-);
+/* guardar cache */
+cacheSistema.expedientes = datos;
 
+/* global (si lo usas en otras funciones) */
+expedientesSistema = datos;
+
+/* render */
+renderizarExpedientes(datos);
+
+}
+catch(error){
+console.error(error);
+}
+
+}
+
+function renderizarExpedientes(datos){
+
+const tbody =
+document.getElementById('tbodyExpedientes');
+
+if(!tbody)return;
+
+/* limpiar una sola vez */
 tbody.innerHTML='';
 
-datos
-.filter(e=>
+/* filtrar */
+const activos =
+datos.filter(e => e.Activo === "Si");
 
-e.Activo==="Si"
+/* fragmento DOM (MUCHO más rápido) */
+const fragment =
+document.createDocumentFragment();
 
-)
+activos.forEach(exp=>{
 
-.forEach(exp=>{
+const tr =
+document.createElement('tr');
 
-tbody.innerHTML+=`
-
-<tr>
+tr.innerHTML = `
 
 <td>${exp.NoExpediente||''}</td>
 <td>${exp.NumeroInterno||''}</td>
 <td>${exp.PersonaResponsable||''}</td>
 <td>${exp.Actividad||''}</td>
 <td>${exp.UsuarioCaptura||''}</td>
+
 <td>
 
 <button
 class="btn btn-primary btn-sm"
 onclick="prestarExpediente(
-
 '${exp.ID}',
 '${exp.NoExpediente}',
 '${exp.NumeroInterno}',
@@ -264,7 +296,6 @@ onclick="prestarExpediente(
 '${exp.Actividad}',
 '${exp.Observaciones}',
 '${exp.UsuarioCaptura}'
-
 )">
 
 Prestar
@@ -273,22 +304,15 @@ Prestar
 
 </td>
 
-</tr>
-
 `;
+
+fragment.appendChild(tr);
 
 });
 
-}
-catch(error){
-
-console.error(error);
+tbody.appendChild(fragment);
 
 }
-
-}
-
-
 /* =======================
 PRESTAR
 ======================= */
