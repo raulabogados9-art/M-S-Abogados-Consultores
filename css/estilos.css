@@ -98,25 +98,21 @@ align-items:flex-start;
 gap:25px;
 }
 
-/* LOGO EMPRESA */
+/* ==========================
+LOGO HEADER SISTEMA
+========================== */
 
 .logo-empresa{
 
 width:140px;
 height:auto;
 
-/* M&S y Consultores azul */
-filter:
-contrast(140%)
-saturate(180%)
-brightness(85%);
+/* volver al logo limpio original */
+filter:none !important;
 
-}
-/* azul institucional */
-filter:
-contrast(130%)
-saturate(180%)
-brightness(85%);
+mix-blend-mode:multiply;
+
+opacity:1;
 
 }
 
@@ -615,5 +611,15 @@ opacity:.15;
 z-index:0;
 
 pointer-events:none;
+
+}
+
+/* SOLO LOGIN */
+
+.login-bg .card::before{
+
+filter:none !important;
+
+mix-blend-mode:normal !important;
 
 }
