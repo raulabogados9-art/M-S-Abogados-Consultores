@@ -124,9 +124,9 @@ document.getElementById(
 ).value='';
 
 document.getElementById(
-'txtNoInterno'
+'txtNumeroInterno'
 ).value='';
-    
+
 document.getElementById(
 'txtActividad'
 ).value='';
