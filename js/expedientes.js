@@ -1,7 +1,23 @@
-let personas=[];
-let guardandoExpediente=false;
-let prestandoExpediente=false;
-let devolviendoExpediente=false;
+let personas = [];
+
+let expedientesSistema = [];
+
+let guardandoExpediente = false;
+let prestandoExpediente = false;
+let devolviendoExpediente = false;
+
+let ordenExpedientes = {
+    columna: null,
+    asc: true
+};
+
+/* CACHE GLOBAL DEL SISTEMA */
+let cacheSistema = {
+    personas: [],
+    actividades: [],
+    expedientes: [],
+    movimientos: []
+};
 
 /* =======================
 PERSONAS
@@ -313,6 +329,50 @@ fragment.appendChild(tr);
 tbody.appendChild(fragment);
 
 }
+
+function filtrarExpedientes(){
+
+const datos =
+cacheSistema.expedientes;
+
+const texto =
+document.getElementById('filtroTextoExpediente')?.value.toLowerCase() || '';
+
+const responsable =
+document.getElementById('filtroResponsable')?.value || '';
+
+const estado =
+document.getElementById('filtroEstado')?.value || '';
+
+const filtrados =
+datos.filter(e=>{
+
+let ok = true;
+
+if(texto){
+ok =
+(e.NoExpediente||'').toLowerCase().includes(texto) ||
+(e.NumeroInterno||'').toLowerCase().includes(texto) ||
+(e.PersonaResponsable||'').toLowerCase().includes(texto) ||
+(e.Actividad||'').toLowerCase().includes(texto);
+}
+
+if(responsable){
+ok = ok && e.PersonaResponsable === responsable;
+}
+
+if(estado){
+ok = ok && e.Estado === estado;
+}
+
+return ok;
+
+});
+
+renderizarExpedientes(filtrados);
+
+}
+
 /* =======================
 PRESTAR
 ======================= */
