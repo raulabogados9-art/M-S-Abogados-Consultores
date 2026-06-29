@@ -152,14 +152,6 @@ document.getElementById(
 GUARDAR
 ======================= */
 
-async function guardarExpediente(){
-
-if(guardandoExpediente)return;
-
-guardandoExpediente=true;
-
-try{
-
 const expediente={
 
 ID: Date.now(),
@@ -183,6 +175,16 @@ Actividad:
 document.getElementById(
 'txtActividad'
 ).value,
+
+Observaciones:
+document.getElementById(
+'txtObservaciones'
+).value,
+
+UsuarioCaptura:
+sessionStorage.getItem(
+'nombre'
+),
 
 Estado:'Disponible',
 
@@ -559,12 +561,14 @@ alert(
 'Expediente prestado correctamente'
 );
 
+/* limpiar cache */
+window.cacheSistema.expedientes=[];
+
 await cargarExpedientes();
 
 await cargarPrestados();
 
 await cargarHistorico();
-
 }
 catch(error){
 
