@@ -176,7 +176,7 @@ document.getElementById(
 
 Persona:
 document.getElementById(
-'txtPersona'
+'cmbPersonaResponsable'
 ).value,
 
 Actividad:
