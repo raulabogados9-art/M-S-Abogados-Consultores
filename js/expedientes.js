@@ -169,12 +169,12 @@ document.getElementById(
 'txtNoExpediente'
 ).value,
 
-NoInterno:
+NumeroInterno:
 document.getElementById(
 'txtNumeroInterno'
 ).value,
 
-Persona:
+PersonaResponsable:
 document.getElementById(
 'cmbPersonaResponsable'
 ).value,
@@ -184,9 +184,11 @@ document.getElementById(
 'txtActividad'
 ).value,
 
-Estado:'Disponible'
+Estado:'Disponible',
 
-}
+Activo:'Si'
+
+};
 
 await fetch(API_URL,{
 
@@ -211,6 +213,8 @@ document.getElementById(
 'modalSalida'
 )
 ).hide();
+
+    window.cacheSistema.expedientes=[];
 
 cargarExpedientes();
 
