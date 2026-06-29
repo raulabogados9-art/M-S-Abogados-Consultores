@@ -148,43 +148,34 @@ document.getElementById(
 }
 
 async function guardarExpediente(){
-/* =======================
-GUARDAR
-======================= */
 
-const expediente={
+if(guardandoExpediente) return;
+
+guardandoExpediente = true;
+
+try{
+
+const expediente = {
 
 ID: Date.now(),
 
 NoExpediente:
-document.getElementById(
-'txtNoExpediente'
-).value,
+document.getElementById('txtNoExpediente').value,
 
 NumeroInterno:
-document.getElementById(
-'txtNumeroInterno'
-).value,
+document.getElementById('txtNumeroInterno').value,
 
 PersonaResponsable:
-document.getElementById(
-'cmbPersonaResponsable'
-).value,
+document.getElementById('cmbPersonaResponsable').value,
 
 Actividad:
-document.getElementById(
-'txtActividad'
-).value,
+document.getElementById('txtActividad').value,
 
 Observaciones:
-document.getElementById(
-'txtObservaciones'
-).value,
+document.getElementById('txtObservaciones').value,
 
 UsuarioCaptura:
-sessionStorage.getItem(
-'nombre'
-),
+sessionStorage.getItem('nombre'),
 
 Estado:'Disponible',
 
@@ -205,19 +196,14 @@ sheet:'EXPEDIENTES',
 
 });
 
-alert(
-'Expediente registrado'
-);
+alert('Expediente registrado');
 
 bootstrap.Modal
 .getInstance(
-document.getElementById(
-'modalSalida'
-)
+document.getElementById('modalSalida')
 ).hide();
 
-    
-window.cacheSistema.expedientes=[];
+window.cacheSistema.expedientes = [];
 
 cargarExpedientes();
 
@@ -227,59 +213,13 @@ catch(error){
 console.error(error);
 
 }
+finally{
 
-guardandoExpediente=false;
-
-}
-
-window.cargarExpedientes = async function(){
-
-try{
-
-    /* usar cache si ya existe */
-
-    if(window.cacheSistema.expedientes.length>0){
-
-        renderizarExpedientes(
-            window.cacheSistema.expedientes
-        );
-
-        return;
-    }
-
-    /* traer datos */
-
-    const response=
-    await fetch(
-        API_URL+'?sheet=EXPEDIENTES'
-    );
-
-    const datos=
-    await response.json();
-
-    /* guardar cache */
-
-    window.cacheSistema.expedientes=
-    datos;
-
-    expedientesSistema=
-    datos;
-
-    renderizarExpedientes(
-        datos
-    );
-
-}
-catch(error){
-
-    console.error(
-        'Error cargando expedientes:',
-        error
-    );
+guardandoExpediente = false;
 
 }
 
-};
+}
 
 function renderizarExpedientes(datos){
 
