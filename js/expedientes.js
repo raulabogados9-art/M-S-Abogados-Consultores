@@ -7,8 +7,12 @@ let ordenExpedientes = {
     asc: true
 };
 
+/* VARIABLES GLOBALES NECESARIAS */
+let personas = [];
+let expedientesSistema = [];
+
 /* 🔥 ÚNICA FUENTE DE DATOS DEL SISTEMA */
-let cacheSistema = {
+window.cacheSistema = window.cacheSistema || {
     personas: [],
     actividades: [],
     expedientes: [],
@@ -113,16 +117,16 @@ actualizarActividadPersona();
 MODAL
 ======================= */
 
-function abrirModalExpediente(){
+function {
 
 document.getElementById(
 'txtNoExpediente'
 ).value='';
 
 document.getElementById(
-'txtNumeroInterno'
+'txtNoInterno'
 ).value='';
-
+    
 document.getElementById(
 'txtActividad'
 ).value='';
@@ -221,48 +225,54 @@ guardandoExpediente=false;
 
 }
 
-window.cargarExpedientes = async function () {
+window.cargarExpedientes = async function(){
 
 try{
 
-/* ======================
-USAR CACHE SI EXISTE
-====================== */
+    /* usar cache si ya existe */
 
-if(cacheSistema.expedientes.length > 0){
+    if(window.cacheSistema.expedientes.length>0){
 
-renderizarExpedientes(
-cacheSistema.expedientes
-);
+        renderizarExpedientes(
+            window.cacheSistema.expedientes
+        );
 
-return;
-}
+        return;
+    }
 
-/* ======================
-FETCH SOLO UNA VEZ
-====================== */
+    /* traer datos */
 
-const response =
-await fetch(API_URL+'?sheet=EXPEDIENTES');
+    const response=
+    await fetch(
+        API_URL+'?sheet=EXPEDIENTES'
+    );
 
-const datos =
-await response.json();
+    const datos=
+    await response.json();
 
-/* guardar cache */
-cacheSistema.expedientes = datos;
+    /* guardar cache */
 
-/* global (si lo usas en otras funciones) */
-expedientesSistema = datos;
+    window.cacheSistema.expedientes=
+    datos;
 
-/* render */
-renderizarExpedientes(datos);
+    expedientesSistema=
+    datos;
+
+    renderizarExpedientes(
+        datos
+    );
 
 }
 catch(error){
-console.error(error);
-}
+
+    console.error(
+        'Error cargando expedientes:',
+        error
+    );
 
 }
+
+};
 
 function renderizarExpedientes(datos){
 
@@ -376,7 +386,6 @@ function refrescarVistaExpedientes(){
 }
 
 /* si no, render normal */
-renderizarExpedientes(cacheSistema.expedientes);
 
 function ordenarExpedientes(columna){
 
