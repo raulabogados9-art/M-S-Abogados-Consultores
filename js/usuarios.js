@@ -155,48 +155,48 @@ async function guardarUsuario() {
 
 async function editarUsuario(id){
 
-    const usuarios = await cargarUsuarios();
-
-    const usuario = usuarios.find(
-        u => String(u.ID) === String(id)
-    );
-
-    if(!usuario){
-        alert('Usuario no encontrado');
-        return;
-    }
-
-    const nuevoUsuario = prompt(
-        'Usuario:',
-        usuario.Usuario
-    );
-
-    if(nuevoUsuario === null) return;
-
-    const nuevoNombre = prompt(
-        'Nombre completo:',
-        usuario.NombreCompleto
-    );
-
-    if(nuevoNombre === null) return;
-
-    const nuevoRol = prompt(
-        'Rol:',
-        usuario.Rol
-    );
-
-    if(nuevoRol === null) return;
-
-    const nuevaPassword = prompt(
-        'Password:',
-        usuario.Password
-    );
-
-    if(nuevaPassword === null) return;
-
     try{
 
-        await fetch(API_URL,{
+        const usuario = usuariosSistema.find(
+            u => String(u.ID) === String(id)
+        );
+
+        if(!usuario){
+
+            alert('Usuario no encontrado');
+            return;
+
+        }
+
+        const nuevoUsuario = prompt(
+            'Usuario:',
+            usuario.Usuario
+        );
+
+        if(nuevoUsuario===null)return;
+
+        const nuevoNombre = prompt(
+            'Nombre completo:',
+            usuario.NombreCompleto
+        );
+
+        if(nuevoNombre===null)return;
+
+        const nuevoRol = prompt(
+            'Rol:',
+            usuario.Rol
+        );
+
+        if(nuevoRol===null)return;
+
+        const nuevaPassword = prompt(
+            'Password:',
+            usuario.Password
+        );
+
+        if(nuevaPassword===null)return;
+
+        const response = await fetch(API_URL,{
 
             method:'POST',
 
@@ -219,16 +219,28 @@ async function editarUsuario(id){
 
         });
 
-        alert('Usuario actualizado');
+        const resultado = await response.json();
 
-        await cargarUsuariosTabla();
+        if(resultado.success){
+
+            alert('Usuario actualizado');
+
+            cacheSistema.usuarios=[];
+
+            await cargarUsuariosTabla();
+
+        }else{
+
+            alert(resultado.error);
+
+        }
 
     }
     catch(error){
 
         console.error(error);
 
-        alert('Error al editar');
+        alert('Error al editar usuario');
 
     }
 
