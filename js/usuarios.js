@@ -153,22 +153,85 @@ async function guardarUsuario() {
     }
 }
 
-function editarUsuario(usuario) {
+async function editarUsuario(id){
 
-    const data = usuariosSistema.find(u => u.Usuario === usuario);
+    const usuarios = await cargarUsuarios();
 
-    if (!data) return;
+    const usuario = usuarios.find(
+        u => String(u.ID) === String(id)
+    );
 
-    usuarioEditando = data;
+    if(!usuario){
+        alert('Usuario no encontrado');
+        return;
+    }
 
-    document.getElementById('txtNuevoUsuario').value = data.Usuario;
-    document.getElementById('txtNuevoPassword').value = data.Password;
-    document.getElementById('txtNuevoNombre').value = data.NombreCompleto;
-    document.getElementById('txtNuevoRol').value = data.Rol;
+    const nuevoUsuario = prompt(
+        'Usuario:',
+        usuario.Usuario
+    );
 
-    new bootstrap.Modal(
-        document.getElementById('modalUsuario')
-    ).show();
+    if(nuevoUsuario === null) return;
+
+    const nuevoNombre = prompt(
+        'Nombre completo:',
+        usuario.NombreCompleto
+    );
+
+    if(nuevoNombre === null) return;
+
+    const nuevoRol = prompt(
+        'Rol:',
+        usuario.Rol
+    );
+
+    if(nuevoRol === null) return;
+
+    const nuevaPassword = prompt(
+        'Password:',
+        usuario.Password
+    );
+
+    if(nuevaPassword === null) return;
+
+    try{
+
+        await fetch(API_URL,{
+
+            method:'POST',
+
+            headers:{
+                'Content-Type':'text/plain;charset=utf-8'
+            },
+
+            body:JSON.stringify({
+
+                action:'EDITAR_USUARIO',
+
+                ID:id,
+
+                Usuario:nuevoUsuario,
+                NombreCompleto:nuevoNombre,
+                Rol:nuevoRol,
+                Password:nuevaPassword
+
+            })
+
+        });
+
+        alert('Usuario actualizado');
+
+        await cargarUsuariosTabla();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert('Error al editar');
+
+    }
+
 }
 
 async function cambiarEstadoUsuario(id, estado){
