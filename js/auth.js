@@ -19,40 +19,43 @@ historico:[]
 CARGAR USUARIOS
 ========================== */
 
-async function cargarUsuariosSistema(){
+async function cargarUsuarios(){
 
 try{
 
-/* usar cache si ya existe */
+    /* usar cache si ya existe */
 
-if(cacheSistema.usuarios.length>0){
+    if(cacheSistema.usuarios.length > 0){
 
-usuarios=cacheSistema.usuarios;
-return;
+        usuarios = cacheSistema.usuarios;
 
-}
+        return usuarios;
+    }
 
-const response=
-await fetch(
-API_URL+'?sheet=USUARIOS'
-);
+    const response =
+    await fetch(
+        API_URL + '?sheet=USUARIOS'
+    );
 
-usuarios=
-await response.json();
+    usuarios =
+    await response.json();
 
-/* guardar cache */
+    cacheSistema.usuarios =
+    usuarios;
 
-cacheSistema.usuarios=usuarios;
+    return usuarios;
 
 }
 catch(error){
 
-console.error(
-'Error cargando usuarios:',
-error
-);
+    console.error(
+        'Error cargando usuarios:',
+        error
+    );
 
-usuarios=[];
+    usuarios=[];
+
+    return [];
 
 }
 
@@ -96,16 +99,14 @@ return;
 
 }
 
-await cargarUsuariosSistema();
+const usuarios = await cargarUsuarios();
 
-const usuarioValido=
+const usuarioValido =
 
 usuarios.find(u=>
 
-u.Usuario===usuario &&
-
-u.Password===password &&
-
+String(u.Usuario).trim()===usuario &&
+String(u.Password).trim()===password &&
 u.Activo==="Si"
 
 );
