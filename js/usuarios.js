@@ -61,9 +61,13 @@ async function cargarUsuariosTabla() {
                     Editar
                 </button>
 
-               <button class="btn btn-secondary btn-sm"
-    onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
-    ${u.Activo === 'Si' ? 'Desactivar' : 'Activar'}
+             <button class="btn btn-secondary btn-sm"
+onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
+
+${u.Activo === 'Si'
+? 'Desactivar'
+: 'Activar'}
+
 </button>
             </td>
         `;
@@ -139,31 +143,71 @@ function editarUsuario(usuario) {
     ).show();
 }
 
-async function cambiarEstadoUsuario(usuario, estado) {
+async function cambiarEstadoUsuario(id, estado){
 
-    try {
+try{
 
-        const payload = {
-            action: 'CAMBIAR_ESTADO_USUARIO',
-            Usuario: usuario,
-            Activo: estado === 'Si' ? 'No' : 'Si'
-        };
+const nuevoEstado =
+estado === 'Si'
+? 'No'
+: 'Si';
 
-        await fetch(API_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        });
+const response =
+await fetch(API_URL,{
 
-        cacheSistema.usuarios = [];
+method:'POST',
 
-        await cargarUsuariosTabla();
+headers:{
+'Content-Type':'text/plain;charset=utf-8'
+},
 
-    } catch (error) {
-        console.error(error);
-    }
+body:JSON.stringify({
+
+action:'CAMBIAR_ESTADO_USUARIO',
+ID:id,
+Activo:nuevoEstado
+
+})
+
+});
+
+const resultado =
+await response.json();
+
+console.log(resultado);
+
+if(resultado.success){
+
+alert(
+'Usuario actualizado correctamente'
+);
+
+await cargarUsuariosTabla();
+
+}else{
+
+alert(
+resultado.error ||
+'No se pudo actualizar'
+);
 
 }
 
+}
+catch(error){
+
+console.error(
+'Error:',
+error
+);
+
+alert(
+'Error al cambiar estado'
+);
+
+}
+
+}
 async function resetPassword(usuario) {
 
     await fetch(API_URL, {
