@@ -1,4 +1,5 @@
 let usuariosSistema = [];
+let usuarioEditando = null;
 
 /* usar cache global del sistema */
 window.cacheSistema = window.cacheSistema || {
@@ -13,8 +14,8 @@ async function cargarUsuarios() {
 
     try {
 
-        if (window.cacheSistema.usuarios.length > 0) {
-            usuariosSistema = window.cacheSistema.usuarios;
+        if (cacheSistema.usuarios.length > 0) {
+            usuariosSistema = cacheSistema.usuarios;
             return usuariosSistema;
         }
 
@@ -22,7 +23,7 @@ async function cargarUsuarios() {
         const datos = await response.json();
 
         usuariosSistema = datos;
-        window.cacheSistema.usuarios = datos;
+        cacheSistema.usuarios = datos;
 
         return datos;
 
@@ -30,55 +31,57 @@ async function cargarUsuarios() {
         console.error(error);
         return [];
     }
+
 }
 
 async function cargarUsuariosTabla() {
 
-    await cargarUsuarios();
+    const usuarios = await cargarUsuarios();
 
     const tbody = document.getElementById('tbodyUsuarios');
     if (!tbody) return;
 
     tbody.innerHTML = '';
 
-    usuariosSistema.forEach(usuario => {
+    const fragment = document.createDocumentFragment();
 
-        tbody.innerHTML += `
-            <tr>
-                <td>${usuario.Usuario || ''}</td>
-                <td>${usuario.NombreCompleto || ''}</td>
-                <td>${usuario.Rol || ''}</td>
-                <td>${usuario.Activo || ''}</td>
+    usuarios.forEach(u => {
 
-                <td>
+        const tr = document.createElement('tr');
 
-                    <button class="btn btn-warning btn-sm"
-                        onclick="editarUsuario('${usuario.Usuario}')">
-                        Editar
-                    </button>
+        tr.innerHTML = `
+            <td>${u.Usuario || ''}</td>
+            <td>${u.NombreCompleto || ''}</td>
+            <td>${u.Rol || ''}</td>
+            <td>${u.Activo || ''}</td>
 
-                    <button class="btn btn-secondary btn-sm"
-                        onclick="cambiarEstadoUsuario('${usuario.Usuario}','${usuario.Activo}')">
-                        ${usuario.Activo === 'Si' ? 'Desactivar' : 'Activar'}
-                    </button>
+            <td>
+                <button class="btn btn-warning btn-sm"
+                    onclick="editarUsuario('${u.Usuario}')">
+                    Editar
+                </button>
 
-                    <button class="btn btn-danger btn-sm"
-                        onclick="resetPassword('${usuario.Usuario}')">
-                        Reset Password
-                    </button>
-
-                </td>
-            </tr>
+                <button class="btn btn-secondary btn-sm"
+                    onclick="cambiarEstadoUsuario('${u.Usuario}','${u.Activo}')">
+                    ${u.Activo === 'Si' ? 'Desactivar' : 'Activar'}
+                </button>
+            </td>
         `;
+
+        fragment.appendChild(tr);
     });
+
+    tbody.appendChild(fragment);
 }
 
-function abrirModalUsuario() {
+function abrirModalUsuario(usuario = null) {
 
-    document.getElementById('txtNuevoUsuario').value = '';
+    usuarioEditando = usuario;
+
+    document.getElementById('txtNuevoUsuario').value = usuario?.Usuario || '';
     document.getElementById('txtNuevoPassword').value = '';
-    document.getElementById('txtNuevoNombre').value = '';
-    document.getElementById('txtNuevoRol').selectedIndex = 0;
+    document.getElementById('txtNuevoNombre').value = usuario?.NombreCompleto || '';
+    document.getElementById('txtNuevoRol').value = usuario?.Rol || 'Usuario';
 
     new bootstrap.Modal(
         document.getElementById('modalUsuario')
@@ -90,60 +93,116 @@ async function guardarUsuario() {
     try {
 
         const usuario = {
-
-            ID: Date.now(),
-
             Usuario: document.getElementById('txtNuevoUsuario').value,
             Password: document.getElementById('txtNuevoPassword').value,
             NombreCompleto: document.getElementById('txtNuevoNombre').value,
             Rol: document.getElementById('txtNuevoRol').value,
             Activo: 'Si'
-
         };
 
-        await fetch(API_URL, {
+        let payload;
 
-            method: 'POST',
+        if (usuarioEditando) {
 
-            body: JSON.stringify({
-                sheet: 'USUARIOS',
+            payload = {
+                action: 'EDITAR_USUARIO',
                 ...usuario
-            })
+            };
 
+        } else {
+
+            payload = {
+                sheet: 'USUARIOS',
+                ID: Date.now(),
+                ...usuario
+            };
+
+        }
+
+        await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
         });
 
-        alert('Usuario creado correctamente');
+        alert('Usuario guardado correctamente');
 
-        bootstrap.Modal
-            .getInstance(document.getElementById('modalUsuario'))
-            .hide();
+        bootstrap.Modal.getInstance(
+            document.getElementById('modalUsuario')
+        ).hide();
 
-        window.cacheSistema.usuarios = [];
+        usuarioEditando = null;
+
+        cacheSistema.usuarios = [];
 
         await cargarUsuariosTabla();
 
     } catch (error) {
-
         console.error(error);
-        alert('Error al guardar usuario');
-
     }
 }
-
 function editarUsuario(usuario) {
-    console.log('Editar usuario:', usuario);
+
+    const data = usuariosSistema.find(u => u.Usuario === usuario);
+
+    if (!data) return;
+
+    usuarioEditando = data;
+
+    document.getElementById('txtNuevoUsuario').value = data.Usuario;
+    document.getElementById('txtNuevoPassword').value = data.Password;
+    document.getElementById('txtNuevoNombre').value = data.NombreCompleto;
+    document.getElementById('txtNuevoRol').value = data.Rol;
+
+    new bootstrap.Modal(
+        document.getElementById('modalUsuario')
+    ).show();
 }
 
-function cambiarEstadoUsuario(usuario, estado) {
-    console.log('Cambiar estado:', usuario, estado);
+async function cambiarEstadoUsuario(usuario, estado) {
+
+    const nuevoEstado = estado === 'Si' ? 'No' : 'Si';
+
+    try {
+
+        await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'CAMBIAR_ESTADO_USUARIO',
+                Usuario: usuario,
+                Activo: nuevoEstado
+            })
+        });
+
+        cacheSistema.usuarios = [];
+
+        await cargarUsuariosTabla();
+
+    } catch (error) {
+        console.error(error);
+    }
+
 }
 
-function resetPassword(usuario) {
-    console.log('Reset password:', usuario);
+async function resetPassword(usuario) {
+
+    await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+            action: 'RESET_PASSWORD',
+            Usuario: usuario,
+            Password: '123456'
+        })
+    });
+
+    alert('Password reseteada a 123456');
+
+    cacheSistema.usuarios = [];
+
+    await cargarUsuariosTabla();
 }
 
 window.cargarUsuariosTabla = cargarUsuariosTabla;
 window.guardarUsuario = guardarUsuario;
-window.editarUsuario = editarUsuario;
+window.abrirModalUsuario = abrirModalUsuario;
 window.cambiarEstadoUsuario = cambiarEstadoUsuario;
 window.resetPassword = resetPassword;
