@@ -216,47 +216,114 @@ alert(
 }
 
 
-/* ==========================
-PERMISOS
-========================== */
-
 function configurarPermisos(){
 
-const rol=
+const rol =
+sessionStorage.getItem('rol');
 
-sessionStorage.getItem(
-'rol'
-);
+/* MENUS */
 
-const menuUsuarios=
-document.getElementById(
-'menuUsuarios'
-);
+const menuUsuarios =
+document.getElementById('menuUsuarios');
 
-const menuPersonas=
-document.getElementById(
-'menuPersonas'
-);
+const menuPersonas =
+document.getElementById('menuPersonas');
 
-const menuActividades=
-document.getElementById(
-'menuActividades'
-);
+const menuActividades =
+document.getElementById('menuActividades');
 
-if(
-rol==="Administrador"
-){
+/* MODULOS */
 
-menuUsuarios.style.display='';
-menuPersonas.style.display='';
-menuActividades.style.display='';
+const modulos=[
+
+'expedientes',
+'prestados',
+'historico',
+'personas',
+'actividades',
+'usuarios'
+
+];
+
+/* ocultar todos */
+
+modulos.forEach(id=>{
+
+const elemento=
+document.getElementById(id);
+
+if(elemento){
+
+elemento.style.display='none';
 
 }
+
+});
+
+/* módulos visibles para todos */
+
+document.getElementById('expedientes')?.style.setProperty(
+'display',
+'block'
+);
+
+document.getElementById('prestados')?.style.setProperty(
+'display',
+'block'
+);
+
+document.getElementById('historico')?.style.setProperty(
+'display',
+'block'
+);
+
+/* ADMINISTRADOR */
+
+if(rol==="Administrador"){
+
+if(menuUsuarios)
+menuUsuarios.style.display='';
+
+if(menuPersonas)
+menuPersonas.style.display='';
+
+if(menuActividades)
+menuActividades.style.display='';
+
+document.getElementById('usuarios')?.style.setProperty(
+'display',
+'block'
+);
+
+document.getElementById('personas')?.style.setProperty(
+'display',
+'block'
+);
+
+document.getElementById('actividades')?.style.setProperty(
+'display',
+'block'
+);
+
+}
+
+/* ARCHIVO */
+
 else{
 
+if(menuUsuarios)
 menuUsuarios.style.display='none';
-menuPersonas.style.display='none';
+
+if(menuActividades)
 menuActividades.style.display='none';
+
+if(menuPersonas)
+menuPersonas.style.display='none';
+
+document.getElementById('personas')?.style.setProperty(
+'display',
+'block'
+);
 
 }
 
