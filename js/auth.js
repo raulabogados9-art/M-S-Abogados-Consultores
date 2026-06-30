@@ -101,10 +101,31 @@ return;
 
 const usuarios = await cargarUsuarios();
 
+console.log("Usuarios cargados:", usuarios);
+
+console.log(
+"Input usuario:",
+usuario,
+"| password:",
+password
+);
+
+usuarios.forEach(u => {
+
+console.log({
+usuarioBD: String(u.Usuario || '').trim(),
+passwordBD: String(u.Password || '').trim(),
+activoBD: String(u.Activo || '').trim()
+});
+
+});
+
 const usuarioValido = usuarios.find(u => {
 
 const user = String(u.Usuario || '').trim().toLowerCase();
+
 const pass = String(u.Password || '').trim();
+
 const activo = String(u.Activo || '').trim();
 
 return user === usuario.trim().toLowerCase() &&
@@ -113,6 +134,7 @@ return user === usuario.trim().toLowerCase() &&
 
 });
 
+console.log("Usuario encontrado:", usuarioValido);
 if(!usuarioValido){
 
 alert(
