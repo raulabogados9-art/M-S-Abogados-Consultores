@@ -134,10 +134,17 @@ async function guardarUsuario() {
             Activo: 'Si'
         };
 
-        await fetch(API_URL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        });
+      await fetch(API_URL,{
+
+method:'POST',
+
+headers:{
+'Content-Type':'application/json'
+},
+
+body:JSON.stringify(payload)
+
+});
 
         usuarioEditando = null;
 
@@ -311,22 +318,55 @@ alert(
 }
 
 }
-async function resetPassword(usuario) {
+async function resetPassword(id){
 
-    await fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify({
-            action: 'RESET_PASSWORD',
-            Usuario: usuario,
-            Password: '123456'
-        })
-    });
+try{
 
-    alert('Password reseteada a 123456');
+const response =
+await fetch(API_URL,{
 
-    cacheSistema.usuarios = [];
+method:'POST',
 
-    await cargarUsuariosTabla();
+headers:{
+'Content-Type':'application/json'
+},
+
+body:JSON.stringify({
+
+action:'RESET_PASSWORD',
+Usuario:id,
+Password:'123456'
+
+})
+
+});
+
+const resultado=
+await response.json();
+
+if(resultado.success){
+
+alert(
+'Password reseteada a 123456'
+);
+
+cacheSistema.usuarios=[];
+
+await cargarUsuariosTabla();
+
+}else{
+
+alert(resultado.error);
+
+}
+
+}
+catch(error){
+
+console.error(error);
+
+}
+
 }
 
 window.cargarUsuariosTabla = cargarUsuariosTabla;
