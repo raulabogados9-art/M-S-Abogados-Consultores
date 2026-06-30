@@ -92,7 +92,9 @@ async function guardarUsuario() {
 
     try {
 
-        const usuario = {
+        const payload = {
+            action: usuarioEditando ? 'EDITAR_USUARIO' : 'CREAR_USUARIO',
+            ID: usuarioEditando?.ID || Date.now(),
             Usuario: document.getElementById('txtNuevoUsuario').value,
             Password: document.getElementById('txtNuevoPassword').value,
             NombreCompleto: document.getElementById('txtNuevoNombre').value,
@@ -100,35 +102,10 @@ async function guardarUsuario() {
             Activo: 'Si'
         };
 
-        let payload;
-
-        if (usuarioEditando) {
-
-            payload = {
-                action: 'EDITAR_USUARIO',
-                ...usuario
-            };
-
-        } else {
-
-            payload = {
-                sheet: 'USUARIOS',
-                ID: Date.now(),
-                ...usuario
-            };
-
-        }
-
         await fetch(API_URL, {
             method: 'POST',
             body: JSON.stringify(payload)
         });
-
-        alert('Usuario guardado correctamente');
-
-        bootstrap.Modal.getInstance(
-            document.getElementById('modalUsuario')
-        ).hide();
 
         usuarioEditando = null;
 
@@ -136,10 +113,14 @@ async function guardarUsuario() {
 
         await cargarUsuariosTabla();
 
+        alert('Usuario guardado correctamente');
+
     } catch (error) {
         console.error(error);
+        alert('Error al guardar usuario');
     }
 }
+
 function editarUsuario(usuario) {
 
     const data = usuariosSistema.find(u => u.Usuario === usuario);
@@ -160,17 +141,17 @@ function editarUsuario(usuario) {
 
 async function cambiarEstadoUsuario(usuario, estado) {
 
-    const nuevoEstado = estado === 'Si' ? 'No' : 'Si';
-
     try {
+
+        const payload = {
+            action: 'CAMBIAR_ESTADO_USUARIO',
+            Usuario: usuario,
+            Activo: estado === 'Si' ? 'No' : 'Si'
+        };
 
         await fetch(API_URL, {
             method: 'POST',
-            body: JSON.stringify({
-                action: 'CAMBIAR_ESTADO_USUARIO',
-                Usuario: usuario,
-                Activo: nuevoEstado
-            })
+            body: JSON.stringify(payload)
         });
 
         cacheSistema.usuarios = [];
