@@ -221,6 +221,23 @@ guardandoExpediente = false;
 
 }
 
+window.cargarExpedientes = async function () {
+
+    try {
+
+        const response = await fetch(API_URL + '?sheet=EXPEDIENTES');
+        const datos = await response.json();
+
+        window.cacheSistema.expedientes = datos;
+
+        renderizarExpedientes(datos);
+
+    } catch (error) {
+        console.error('Error cargando expedientes:', error);
+    }
+
+};
+
 function renderizarExpedientes(datos){
 
 const tbody =
