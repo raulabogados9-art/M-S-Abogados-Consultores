@@ -61,10 +61,10 @@ async function cargarUsuariosTabla() {
                     Editar
                 </button>
 
-                <button class="btn btn-secondary btn-sm"
-                    onclick="cambiarEstadoUsuario('${u.Usuario}','${u.Activo}')">
-                    ${u.Activo === 'Si' ? 'Desactivar' : 'Activar'}
-                </button>
+               <button class="btn btn-secondary btn-sm"
+    onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
+    ${u.Activo === 'Si' ? 'Desactivar' : 'Activar'}
+</button>
             </td>
         `;
 
