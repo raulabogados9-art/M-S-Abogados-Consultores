@@ -10,27 +10,39 @@ window.cacheSistema = window.cacheSistema || {
     movimientos: []
 };
 
-async function cargarUsuarios() {
+async function cargarUsuarios(){
 
-    try {
+try{
 
-        if (cacheSistema.usuarios.length > 0) {
-            usuariosSistema = cacheSistema.usuarios;
-            return usuariosSistema;
-        }
+const response=
+await fetch(
+API_URL+'?sheet=USUARIOS'
+);
 
-        const response = await fetch(API_URL + '?sheet=USUARIOS');
-        const datos = await response.json();
+const datos=
+await response.json();
 
-        usuariosSistema = datos;
-        cacheSistema.usuarios = datos;
+/* guardar en memoria */
 
-        return datos;
+usuariosSistema = datos;
 
-    } catch (error) {
-        console.error(error);
-        return [];
-    }
+cacheSistema.usuarios = datos;
+
+return datos;
+
+}
+catch(error){
+
+console.error(
+'Error cargando usuarios:',
+error
+);
+
+usuariosSistema=[];
+
+return [];
+
+}
 
 }
 
@@ -39,6 +51,7 @@ async function cargarUsuariosTabla() {
     const usuarios = await cargarUsuarios();
 
     const tbody = document.getElementById('tbodyUsuarios');
+
     if (!tbody) return;
 
     tbody.innerHTML = '';
@@ -50,32 +63,47 @@ async function cargarUsuariosTabla() {
         const tr = document.createElement('tr');
 
         tr.innerHTML = `
+
             <td>${u.Usuario || ''}</td>
             <td>${u.NombreCompleto || ''}</td>
             <td>${u.Rol || ''}</td>
             <td>${u.Activo || ''}</td>
 
             <td>
+
                 <button class="btn btn-warning btn-sm"
-                    onclick="editarUsuario('${u.Usuario}')">
+                    onclick="editarUsuario('${u.ID}')">
+
                     Editar
+
                 </button>
 
-             <button class="btn btn-secondary btn-sm"
-onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
+                <button class="btn btn-secondary btn-sm"
+                    onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
 
-${u.Activo === 'Si'
-? 'Desactivar'
-: 'Activar'}
+                    ${u.Activo === 'Si'
+                    ? 'Desactivar'
+                    : 'Activar'}
 
-</button>
+                </button>
+
+                <button class="btn btn-danger btn-sm"
+                    onclick="resetPassword('${u.ID}')">
+
+                    Reset Password
+
+                </button>
+
             </td>
+
         `;
 
         fragment.appendChild(tr);
+
     });
 
     tbody.appendChild(fragment);
+
 }
 
 function abrirModalUsuario(usuario = null) {
