@@ -101,15 +101,17 @@ return;
 
 const usuarios = await cargarUsuarios();
 
-const usuarioValido =
+const usuarioValido = usuarios.find(u => {
 
-usuarios.find(u=>
+const user = String(u.Usuario || '').trim().toLowerCase();
+const pass = String(u.Password || '').trim();
+const activo = String(u.Activo || '').trim();
 
-String(u.Usuario).trim()===usuario &&
-String(u.Password).trim()===password &&
-u.Activo==="Si"
+return user === usuario.trim().toLowerCase() &&
+       pass === password.trim() &&
+       activo === "Si";
 
-);
+});
 
 if(!usuarioValido){
 
