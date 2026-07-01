@@ -306,51 +306,23 @@ alert(
 }
 
 }
-async function resetPassword(id){
+async function resetPassword(id) {
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'RESET_PASSWORD',
+        Usuario: id,
+        Password: '123456'
+      })
+    });
 
-try{
+    const data = await response.json();
+    console.log(data);
 
-const response =
-await fetch(API_URL,{
-
-method:'POST',
-
-body:JSON.stringify({
-
-action:'RESET_PASSWORD',
-Usuario:id,
-Password:'123456'
-
-})
-
-});
-
-const resultado=
-await response.json();
-
-if(resultado.success){
-
-alert(
-'Password reseteada a 123456'
-);
-
-cacheSistema.usuarios=[];
-
-await cargarUsuariosTabla();
-
-}else{
-
-alert(resultado.error);
-
-}
-
-}
-catch(error){
-
-console.error(error);
-
-}
-
+  } catch (error) {
+    console.error('Error resetPassword:', error);
+  }
 }
 
 window.cargarUsuariosTabla = cargarUsuariosTabla;
