@@ -11,13 +11,7 @@ let ordenExpedientes = {
 let personas = [];
 let expedientesSistema = [];
 
-/* 🔥 ÚNICA FUENTE DE DATOS DEL SISTEMA */
-window.cacheSistema = window.cacheSistema || {
-    personas: [],
-    actividades: [],
-    expedientes: [],
-    movimientos: []
-};
+
 
 /* =======================
 PERSONAS
@@ -203,7 +197,7 @@ bootstrap.Modal
 document.getElementById('modalSalida')
 ).hide();
 
-window.cacheSistema.expedientes = [];
+cacheSistema.expedientes = [];
 
 await window.cargarExpedientes();
 
@@ -228,7 +222,7 @@ window.cargarExpedientes = async function () {
         const response = await fetch(API_URL + '?sheet=EXPEDIENTES');
         const datos = await response.json();
 
-        window.cacheSistema.expedientes = datos;
+        cacheSistema.expedientes = datos;
 
         renderizarExpedientes(datos);
 
@@ -301,9 +295,9 @@ tbody.appendChild(fragment);
 
 function filtrarExpedientes(){
 
-    if(!window.cacheSistema?.expedientes) return;
+    if(!cacheSistema?.expedientes) return;
 
-    const datos = window.cacheSistema.expedientes;
+    const datos = cacheSistema.expedientes;
 
     const texto =
         document.getElementById('filtroTextoExpediente')?.value.toLowerCase() || '';
@@ -344,7 +338,7 @@ function refrescarVistaExpedientes(){
 
     if(typeof filtrarExpedientes !== 'function') return;
 
-    if(!window.cacheSistema?.expedientes) return;
+    if(!cacheSistema?.expedientes) return;
 
     filtrarExpedientes();
 }
@@ -493,7 +487,7 @@ alert(
 );
 
 /* limpiar cache */
-window.cacheSistema.expedientes=[];
+cacheSistema.expedientes=[];
 
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
@@ -648,7 +642,7 @@ alert(
 );
 
 /* limpiar cache */
-window.cacheSistema.expedientes=[];
+cacheSistema.expedientes=[];
 
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
