@@ -73,12 +73,12 @@ usuariosSistema = usuarios;
 
             <td>
 
-                <button class="btn btn-warning btn-sm"
-                  onclick="editarUsuario('${u.ID}')"
-                  
-                    Editar
+               <button class="btn btn-warning btn-sm"
+onclick="editarUsuario('${u.ID}')">
 
-                </button>
+Editar
+
+</button>
 
                 <button class="btn btn-secondary btn-sm"
                     onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
