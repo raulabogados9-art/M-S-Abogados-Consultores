@@ -223,8 +223,7 @@ alert(
 
 function configurarPermisos(){
 
-const rol =
-sessionStorage.getItem('rol');
+const rol = sessionStorage.getItem('rol') || '';
 
 /* módulos existentes */
 
@@ -319,56 +318,6 @@ document.getElementById(
 
 window.mostrarModulo=mostrarModulo;
     
-/* ADMINISTRADOR */
-
-if(rol==="Administrador"){
-
-if(menuUsuarios)
-menuUsuarios.style.display='';
-
-if(menuPersonas)
-menuPersonas.style.display='';
-
-if(menuActividades)
-menuActividades.style.display='';
-
-document.getElementById('usuarios')?.style.setProperty(
-'display',
-'block'
-);
-
-document.getElementById('personas')?.style.setProperty(
-'display',
-'block'
-);
-
-document.getElementById('actividades')?.style.setProperty(
-'display',
-'block'
-);
-
-}
-
-/* ARCHIVO */
-
-else{
-
-if(menuUsuarios)
-menuUsuarios.style.display='none';
-
-if(menuActividades)
-menuActividades.style.display='none';
-
-if(menuPersonas)
-menuPersonas.style.display='none';
-
-document.getElementById('personas')?.style.setProperty(
-'display',
-'block'
-);
-
-}
-
 /* ==========================
 LOGOUT
 ========================== */
