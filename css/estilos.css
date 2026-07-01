@@ -630,3 +630,8 @@ mix-blend-mode:normal !important;
     font-size: 14px;
     white-space: nowrap;
 }
+
+#menuUsuarios{
+    min-width: 120px;
+    text-align: center;
+}
