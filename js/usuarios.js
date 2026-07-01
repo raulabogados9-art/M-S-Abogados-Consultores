@@ -284,18 +284,7 @@ async function resetPassword(id){
 
 try{
 
-const nuevaPassword = prompt(
-'Ingrese la nueva contraseña:'
-);
-
-if(
-nuevaPassword===null ||
-nuevaPassword.trim()===''
-){
-return;
-}
-
-const response =
+const response=
 await fetch(API_URL,{
 
 method:'POST',
@@ -303,20 +292,19 @@ method:'POST',
 body:JSON.stringify({
 
 action:'RESET_PASSWORD',
-ID:id,
-Password:nuevaPassword.trim()
+ID:id
 
 })
 
 });
 
-const data =
+const data=
 await response.json();
 
 if(data.success){
 
 alert(
-'Contraseña actualizada correctamente'
+'Contraseña temporal asignada:\n\n123456'
 );
 
 cacheSistema.usuarios=[];
@@ -327,7 +315,7 @@ await cargarUsuariosTabla();
 
 alert(
 data.error ||
-'No se pudo actualizar la contraseña'
+'No se pudo restablecer'
 );
 
 }
@@ -335,12 +323,12 @@ data.error ||
 }catch(error){
 
 console.error(
-'Error resetPassword:',
+'Error:',
 error
 );
 
 alert(
-'Error al actualizar contraseña'
+'Error al resetear contraseña'
 );
 
 }
