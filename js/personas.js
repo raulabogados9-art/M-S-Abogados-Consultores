@@ -288,6 +288,8 @@ alert(
 'Persona guardada correctamente'
 );
 
+cacheSistema.personas=[];
+
 bootstrap.Modal
 .getInstance(
 document.getElementById(
@@ -295,7 +297,7 @@ document.getElementById(
 )
 ).hide();
 
-cargarPersonasTabla();
+await cargarPersonasTabla();
 
 }
 catch(error){
@@ -343,7 +345,11 @@ console.log(resultado);
 
 if(resultado.success){
 
-alert("Estado actualizado");
+cacheSistema.personas=[];
+
+alert(
+'Estado actualizado'
+);
 
 await cargarPersonasTabla();
 
