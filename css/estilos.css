@@ -634,7 +634,6 @@ mix-blend-mode:normal !important;
 
 /* MENU SUPERIOR: todos los módulos del mismo tamaño */
 
-.btn.btn-primary.btn-sm{
     width: 120px;
     text-align: center;
 }
@@ -643,9 +642,10 @@ mix-blend-mode:normal !important;
 /* TABLA USUARIOS: botones de acciones */
 
 #tablaUsuarios .btn,
-#tbodyUsuarios .btn{
+#tbodyUsuarios td .btn{
     min-width: 90px;
     padding: 6px 12px;
-    white-space: nowrap;
     text-align: center;
+    white-space: nowrap;
+    display: inline-block;
 }
