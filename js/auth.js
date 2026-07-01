@@ -369,9 +369,6 @@ document.getElementById('personas')?.style.setProperty(
 
 }
 
-}
-
-
 /* ==========================
 LOGOUT
 ========================== */
