@@ -271,8 +271,10 @@ alert(
 'Actividad guardada correctamente'
 );
 
-cargarActividadesTabla();
+cacheSistema.actividades=[];
 
+await cargarActividadesTabla();
+  
 }else{
 
 alert(
@@ -335,6 +337,8 @@ if(resultado.success){
 alert(
 'Estado actualizado correctamente'
 );
+
+cacheSistema.actividades=[];
 
 await cargarActividadesTabla();
 
