@@ -345,11 +345,9 @@ console.log(resultado);
 
 if(resultado.success){
 
-cacheSistema.personas=[];
+alert("Estado actualizado");
 
-alert(
-'Estado actualizado'
-);
+cacheSistema.personas=[];
 
 await cargarPersonasTabla();
 
