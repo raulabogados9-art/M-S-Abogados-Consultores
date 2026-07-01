@@ -186,7 +186,12 @@ usuarioValido.Rol;
 /* PERMISOS */
 
 configurarPermisos();
+    
+/* abrir pantalla inicial */
 
+mostrarModulo(
+'expedientes'
+);
 
 /* CARGAS INICIALES */
 
@@ -232,7 +237,50 @@ document.getElementById('menuPersonas');
 const menuActividades =
 document.getElementById('menuActividades');
 
-/* MODULOS */
+/* MENUS visibles */
+
+document.getElementById('menuExpedientes')?.style.setProperty(
+'display',
+''
+);
+
+document.getElementById('menuPrestados')?.style.setProperty(
+'display',
+''
+);
+
+document.getElementById('menuHistorico')?.style.setProperty(
+'display',
+''
+);
+
+/* ocultar menus administrativos */
+
+menuUsuarios.style.display='none';
+menuPersonas.style.display='none';
+menuActividades.style.display='none';
+
+/* administrador */
+
+if(rol==='Administrador'){
+
+menuUsuarios.style.display='';
+
+menuPersonas.style.display='';
+
+menuActividades.style.display='';
+
+}
+
+/* archivo */
+
+if(rol==='Archivo'){
+
+menuPersonas.style.display='';
+
+}
+
+    function mostrarModulo(idModulo){
 
 const modulos=[
 
@@ -244,8 +292,6 @@ const modulos=[
 'usuarios'
 
 ];
-
-/* ocultar todos */
 
 modulos.forEach(id=>{
 
@@ -260,23 +306,16 @@ elemento.style.display='none';
 
 });
 
-/* módulos visibles para todos */
-
-document.getElementById('expedientes')?.style.setProperty(
+document.getElementById(idModulo)
+?.style.setProperty(
 'display',
 'block'
 );
 
-document.getElementById('prestados')?.style.setProperty(
-'display',
-'block'
-);
+}
 
-document.getElementById('historico')?.style.setProperty(
-'display',
-'block'
-);
-
+window.mostrarModulo=mostrarModulo;
+    
 /* ADMINISTRADOR */
 
 if(rol==="Administrador"){
