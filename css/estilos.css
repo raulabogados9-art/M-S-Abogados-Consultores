@@ -631,7 +631,7 @@ mix-blend-mode:normal !important;
     white-space: nowrap;
 }
 
-#menuUsuarios{
-    min-width: 120px;
+.btn.btn-primary.btn-sm{
+    width: 120px;
     text-align: center;
 }
