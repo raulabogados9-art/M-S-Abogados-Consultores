@@ -624,14 +624,10 @@ mix-blend-mode:normal !important;
 
 }
 
-#menuUsuarios {
-    min-width: 120px;
+#menuUsuarios{
+    width: 120px;
     padding: 6px 12px;
     font-size: 14px;
     white-space: nowrap;
-}
-
-#menuUsuarios{
-    width: 120px;
     text-align: center;
 }
