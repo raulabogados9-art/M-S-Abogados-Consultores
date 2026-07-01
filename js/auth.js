@@ -122,15 +122,26 @@ activoBD: String(u.Activo || '').trim()
 
 const usuarioValido = usuarios.find(u => {
 
-const user = String(u.Usuario || '').trim().toLowerCase();
+    const userBD = String(u.Usuario ?? '').trim().toLowerCase();
+    const passBD = String(u.Password ?? '').trim();
+    const activoBD = String(u.Activo ?? '').trim().toLowerCase();
 
-const pass = String(u.Password || '').trim();
+    const userInput = usuario.trim().toLowerCase();
+    const passInput = password.trim();
 
-const activo = String(u.Activo || '').trim();
+    console.log("DEBUG LOGIN:", {
+        userBD,
+        passBD,
+        activoBD,
+        userInput,
+        passInput
+    });
 
-return user === usuario.trim().toLowerCase() &&
-       pass === password.trim() &&
-       activo === "Si";
+    return (
+        userBD === userInput &&
+        passBD === passInput &&
+        activoBD === "Si"
+    );
 
 });
 
