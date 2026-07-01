@@ -73,30 +73,33 @@ usuariosSistema = usuarios;
 
             <td>
 
-               <button class="btn btn-warning btn-sm"
+<button
+class="btn btn-warning btn-sm"
 onclick="editarUsuario('${u.ID}')">
 
 Editar
 
 </button>
 
-                <button class="btn btn-secondary btn-sm"
-                    onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
+<button
+class="btn btn-secondary btn-sm"
+onclick="cambiarEstadoUsuario('${u.ID}','${u.Activo}')">
 
-                    ${u.Activo === 'Si'
-                    ? 'Desactivar'
-                    : 'Activar'}
+${u.Activo === 'Si'
+? 'Desactivar'
+: 'Activar'}
 
-                </button>
+</button>
 
-                <button class="btn btn-danger btn-sm"
-                    onclick="resetPassword('${u.ID}')">
+<button
+class="btn btn-danger btn-sm"
+onclick="resetPassword('${u.ID}')">
 
-                    Reset Password
+Reset Password
 
-                </button>
+</button>
 
-            </td>
+</td>
 
         `;
 
