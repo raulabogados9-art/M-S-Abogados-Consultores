@@ -635,16 +635,10 @@ mix-blend-mode:normal !important;
 }
 
 
-/* BOTON USUARIOS (opcional, puede quedarse) */
+/* BOTON USUARIOS */
 
 #menuUsuarios{
-
-    width:120px;
-    padding:6px 12px;
-    font-size:14px;
     white-space:nowrap;
-    text-align:center;
-
 }
 
 
@@ -656,6 +650,5 @@ mix-blend-mode:normal !important;
     padding:6px 12px;
     text-align:center;
     white-space:nowrap;
-    display:inline-block;
 
 }
