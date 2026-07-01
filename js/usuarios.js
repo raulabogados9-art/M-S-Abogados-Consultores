@@ -49,6 +49,8 @@ return [];
 async function cargarUsuariosTabla() {
 
     const usuarios = await cargarUsuarios();
+cacheSistema.usuarios = usuarios;
+usuariosSistema = usuarios;
 
     const tbody = document.getElementById('tbodyUsuarios');
 
@@ -72,8 +74,8 @@ async function cargarUsuariosTabla() {
             <td>
 
                 <button class="btn btn-warning btn-sm"
-                    onclick="('${u.ID}')">
-
+                  onclick="editarUsuario('${u.ID}')"
+                  
                     Editar
 
                 </button>
@@ -220,13 +222,15 @@ async function editarUsuario(id){
         
         const resultado = await response.json();
 
-        if(resultado.success){
+       if(resultado.success){
 
-            alert('Usuario actualizado');
+    alert('Usuario actualizado');
 
-            cacheSistema.usuarios=[];
+    cacheSistema.usuarios = [];
+    usuariosSistema = [];
 
-            await cargarUsuariosTabla();
+    await cargarUsuariosTabla();
+}
 
         }else{
 
@@ -312,12 +316,18 @@ async function resetPassword(id) {
       method: 'POST',
       body: JSON.stringify({
         action: 'RESET_PASSWORD',
-        Usuario: id,
+        ID: id,
         Password: '123456'
       })
     });
 
     const data = await response.json();
+
+    if (data.success) {
+      cacheSistema.usuarios = [];
+      await cargarUsuariosTabla();
+    }
+
     console.log(data);
 
   } catch (error) {
