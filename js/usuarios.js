@@ -281,28 +281,57 @@ alert(
 
 }
 async function resetPassword(id) {
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        action: 'RESET_PASSWORD',
-        ID: id,
-        Password: '123456'
-      })
-    });
 
-    const data = await response.json();
+try {
 
-    if (data.success) {
-      cacheSistema.usuarios = [];
-      await cargarUsuariosTabla();
-    }
+const response = await fetch(API_URL, {
 
-    console.log(data);
+method:'POST',
 
-  } catch (error) {
-    console.error('Error resetPassword:', error);
-  }
+body:JSON.stringify({
+
+action:'RESET_PASSWORD',
+ID:id,
+Password:'123456'
+
+})
+
+});
+
+const data = await response.json();
+
+if(data.success){
+
+alert(
+'Contraseña restablecida correctamente.\n\nNueva contraseña: 123456'
+);
+
+cacheSistema.usuarios=[];
+
+await cargarUsuariosTabla();
+
+}else{
+
+alert(
+data.error ||
+'No se pudo restablecer la contraseña'
+);
+
+}
+
+}catch(error){
+
+console.error(
+'Error resetPassword:',
+error
+);
+
+alert(
+'Error al restablecer contraseña'
+);
+
+}
+
 }
 
 window.cargarUsuariosTabla = cargarUsuariosTabla;
