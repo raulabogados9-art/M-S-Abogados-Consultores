@@ -120,16 +120,22 @@ activoBD: String(u.Activo || '').trim()
 
 });
 
+const clean = (v) =>
+  String(v ?? '')
+    .normalize('NFKC')
+    .replace(/\s+/g, '')
+    .toLowerCase();
+
 const usuarioValido = usuarios.find(u => {
 
-    const userBD = String(u.Usuario ?? '').trim().toLowerCase();
-    const passBD = String(u.Password ?? '').trim();
-    const activoBD = String(u.Activo ?? '').trim().toLowerCase();
+    const userBD = clean(u.Usuario);
+    const passBD = clean(u.Password);
+    const activoBD = clean(u.Activo);
 
-    const userInput = usuario.trim().toLowerCase();
-    const passInput = password.trim();
+    const userInput = clean(usuario);
+    const passInput = clean(password);
 
-    console.log("DEBUG LOGIN:", {
+    console.log("DEBUG LOGIN CLEAN:", {
         userBD,
         passBD,
         activoBD,
@@ -140,7 +146,7 @@ const usuarioValido = usuarios.find(u => {
     return (
         userBD === userInput &&
         passBD === passInput &&
-        activoBD === "Si"
+        activoBD === "si"
     );
 
 });
