@@ -72,7 +72,7 @@ async function cargarUsuariosTabla() {
             <td>
 
                 <button class="btn btn-warning btn-sm"
-                    onclick="editarUsuario('${u.ID}')">
+                    onclick="('${u.ID}')">
 
                     Editar
 
@@ -138,10 +138,6 @@ async function guardarUsuario() {
 
 method:'POST',
 
-headers:{
-'Content-Type':'application/json'
-},
-
 body:JSON.stringify(payload)
 
 });
@@ -205,27 +201,23 @@ async function editarUsuario(id){
 
         const response = await fetch(API_URL,{
 
-            method:'POST',
+    method:'POST',
 
-            headers:{
-    'Content-Type':'application/json'
-},
+    body:JSON.stringify({
 
-            body:JSON.stringify({
+        action:'EDITAR_USUARIO',
 
-                action:'EDITAR_USUARIO',
+        ID:id,
 
-                ID:id,
+        Usuario:nuevoUsuario,
+        NombreCompleto:nuevoNombre,
+        Rol:nuevoRol,
+        Password:nuevaPassword
 
-                Usuario:nuevoUsuario,
-                NombreCompleto:nuevoNombre,
-                Rol:nuevoRol,
-                Password:nuevaPassword
+    })
 
-            })
-
-        });
-
+});
+        
         const resultado = await response.json();
 
         if(resultado.success){
@@ -267,10 +259,6 @@ await fetch(API_URL,{
 
 method:'POST',
 
-headers:{
-'Content-Type':'text/plain;charset=utf-8'
-},
-
 body:JSON.stringify({
 
 action:'CAMBIAR_ESTADO_USUARIO',
@@ -280,7 +268,7 @@ Activo:nuevoEstado
 })
 
 });
-
+    
 const resultado =
 await response.json();
 
@@ -326,10 +314,6 @@ const response =
 await fetch(API_URL,{
 
 method:'POST',
-
-headers:{
-'Content-Type':'application/json'
-},
 
 body:JSON.stringify({
 
