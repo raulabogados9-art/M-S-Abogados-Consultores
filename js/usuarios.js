@@ -1,15 +1,6 @@
 let usuariosSistema = [];
 let usuarioEditando = null;
 
-/* usar cache global del sistema */
-window.cacheSistema = window.cacheSistema || {
-    usuarios: [],
-    personas: [],
-    actividades: [],
-    expedientes: [],
-    movimientos: []
-};
-
 async function cargarUsuarios(){
 
 try{
