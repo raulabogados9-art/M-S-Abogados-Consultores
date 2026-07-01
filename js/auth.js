@@ -226,61 +226,7 @@ function configurarPermisos(){
 const rol =
 sessionStorage.getItem('rol');
 
-/* MENUS */
-
-const menuUsuarios =
-document.getElementById('menuUsuarios');
-
-const menuPersonas =
-document.getElementById('menuPersonas');
-
-const menuActividades =
-document.getElementById('menuActividades');
-
-/* MENUS visibles */
-
-document.getElementById('menuExpedientes')?.style.setProperty(
-'display',
-''
-);
-
-document.getElementById('menuPrestados')?.style.setProperty(
-'display',
-''
-);
-
-document.getElementById('menuHistorico')?.style.setProperty(
-'display',
-''
-);
-
-/* ocultar menus administrativos */
-
-menuUsuarios.style.display='none';
-menuPersonas.style.display='none';
-menuActividades.style.display='none';
-
-/* administrador */
-
-if(rol==='Administrador'){
-
-menuUsuarios.style.display='';
-
-menuPersonas.style.display='';
-
-menuActividades.style.display='';
-
-}
-
-/* archivo */
-
-if(rol==='Archivo'){
-
-menuPersonas.style.display='';
-
-}
-
-    function mostrarModulo(idModulo){
+/* módulos existentes */
 
 const modulos=[
 
@@ -292,6 +238,8 @@ const modulos=[
 'usuarios'
 
 ];
+
+/* OCULTAR TODO */
 
 modulos.forEach(id=>{
 
@@ -306,11 +254,66 @@ elemento.style.display='none';
 
 });
 
-document.getElementById(idModulo)
-?.style.setProperty(
+/* SOLO mostrar Expedientes al iniciar */
+
+document.getElementById(
+'expedientes'
+)?.style.setProperty(
 'display',
 'block'
 );
+
+/* mostrar menús según rol */
+
+if(rol==='Administrador'){
+
+document.getElementById(
+'menuUsuarios'
+)?.style.setProperty(
+'display',
+''
+);
+
+document.getElementById(
+'menuPersonas'
+)?.style.setProperty(
+'display',
+''
+);
+
+document.getElementById(
+'menuActividades'
+)?.style.setProperty(
+'display',
+''
+);
+
+}
+
+else{
+
+document.getElementById(
+'menuUsuarios'
+)?.style.setProperty(
+'display',
+'none'
+);
+
+document.getElementById(
+'menuPersonas'
+)?.style.setProperty(
+'display',
+'none'
+);
+
+document.getElementById(
+'menuActividades'
+)?.style.setProperty(
+'display',
+'none'
+);
+
+}
 
 }
 
