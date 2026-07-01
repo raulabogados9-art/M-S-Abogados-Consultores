@@ -158,97 +158,64 @@ body:JSON.stringify(payload)
     }
 }
 
-async function editarUsuario(id){
+async function editarUsuario(id) {
 
-    try{
+    try {
 
         const usuario = usuariosSistema.find(
             u => String(u.ID) === String(id)
         );
 
-        if(!usuario){
-
+        if (!usuario) {
             alert('Usuario no encontrado');
             return;
-
         }
 
-        const nuevoUsuario = prompt(
-            'Usuario:',
-            usuario.Usuario
-        );
+        const nuevoUsuario = prompt('Usuario:', usuario.Usuario);
+        if (nuevoUsuario === null) return;
 
-        if(nuevoUsuario===null)return;
+        const nuevoNombre = prompt('Nombre completo:', usuario.NombreCompleto);
+        if (nuevoNombre === null) return;
 
-        const nuevoNombre = prompt(
-            'Nombre completo:',
-            usuario.NombreCompleto
-        );
+        const nuevoRol = prompt('Rol:', usuario.Rol);
+        if (nuevoRol === null) return;
 
-        if(nuevoNombre===null)return;
+        const nuevaPassword = prompt('Password:', usuario.Password);
+        if (nuevaPassword === null) return;
 
-        const nuevoRol = prompt(
-            'Rol:',
-            usuario.Rol
-        );
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'EDITAR_USUARIO',
+                ID: id,
+                Usuario: nuevoUsuario,
+                NombreCompleto: nuevoNombre,
+                Rol: nuevoRol,
+                Password: nuevaPassword
+            })
+        });
 
-        if(nuevoRol===null)return;
-
-        const nuevaPassword = prompt(
-            'Password:',
-            usuario.Password
-        );
-
-        if(nuevaPassword===null)return;
-
-        const response = await fetch(API_URL,{
-
-    method:'POST',
-
-    body:JSON.stringify({
-
-        action:'EDITAR_USUARIO',
-
-        ID:id,
-
-        Usuario:nuevoUsuario,
-        NombreCompleto:nuevoNombre,
-        Rol:nuevoRol,
-        Password:nuevaPassword
-
-    })
-
-});
-        
         const resultado = await response.json();
 
-       if(resultado.success){
+        if (resultado.success) {
 
-    alert('Usuario actualizado');
+            alert('Usuario actualizado');
 
-    cacheSistema.usuarios = [];
-    usuariosSistema = [];
+            cacheSistema.usuarios = [];
+            usuariosSistema = [];
 
-    await cargarUsuariosTabla();
-}
-
-        }else{
-
-            alert(resultado.error);
-
+            await cargarUsuariosTabla();
+        } else {
+            alert(resultado.error || 'Error al actualizar');
         }
 
-    }
-    catch(error){
+    } catch (error) {
 
         console.error(error);
-
         alert('Error al editar usuario');
 
     }
-
 }
-
 async function cambiarEstadoUsuario(id, estado){
 
 try{
