@@ -624,28 +624,38 @@ mix-blend-mode:normal !important;
 
 }
 
+/* MENU SUPERIOR: todos los módulos mismo tamaño */
+
+.menu-principal .btn{
+
+    width:120px;
+    text-align:center;
+    margin-right:5px;
+
+}
+
+
+/* BOTON USUARIOS (opcional, puede quedarse) */
+
 #menuUsuarios{
-    width: 120px;
-    padding: 6px 12px;
-    font-size: 14px;
-    white-space: nowrap;
-    text-align: center;
-}
 
-/* MENU SUPERIOR: todos los módulos del mismo tamaño */
+    width:120px;
+    padding:6px 12px;
+    font-size:14px;
+    white-space:nowrap;
+    text-align:center;
 
-    width: 120px;
-    text-align: center;
 }
 
 
-/* TABLA USUARIOS: botones de acciones */
+/* TABLA USUARIOS - BOTONES ACCIONES */
 
-#tablaUsuarios .btn,
 #tbodyUsuarios td .btn{
-    min-width: 90px;
-    padding: 6px 12px;
-    text-align: center;
-    white-space: nowrap;
-    display: inline-block;
+
+    min-width:90px;
+    padding:6px 12px;
+    text-align:center;
+    white-space:nowrap;
+    display:inline-block;
+
 }
