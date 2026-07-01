@@ -623,3 +623,10 @@ filter:none !important;
 mix-blend-mode:normal !important;
 
 }
+
+#menuUsuarios {
+    min-width: 120px;
+    padding: 6px 12px;
+    font-size: 14px;
+    white-space: nowrap;
+}
