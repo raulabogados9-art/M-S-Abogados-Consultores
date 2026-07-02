@@ -180,11 +180,31 @@ sessionStorage.setItem(
 usuarioValido.Rol
 );
 
-    sessionStorage.setItem(
+sessionStorage.setItem(
 'DebeCambiarPassword',
 usuarioValido.DebeCambiarPassword || 'No'
 );
 
+/* CAMBIO OBLIGATORIO PASSWORD */
+
+if(
+String(
+usuarioValido.DebeCambiarPassword || ''
+).trim() === 'Si'
+){
+
+setTimeout(()=>{
+
+new bootstrap.Modal(
+document.getElementById(
+'modalCambioPassword'
+)
+).show();
+
+},500);
+
+}
+    
 /* MOSTRAR SISTEMA */
 
 document.getElementById(
@@ -209,19 +229,16 @@ usuarioValido.Rol;
 /* PERMISOS */
 
 configurarPermisos();
-    
-/* abrir pantalla inicial */
 
-mostrarModulo(
-'expedientes'
-);
+/* SI LA SESION TENÍA CAMBIO PENDIENTE */
 
-    const debeCambiar =
+if(
 sessionStorage.getItem(
 'DebeCambiarPassword'
-);
+)==='Si'
+){
 
-if(debeCambiar==='Si'){
+setTimeout(()=>{
 
 new bootstrap.Modal(
 document.getElementById(
@@ -229,20 +246,15 @@ document.getElementById(
 )
 ).show();
 
+},500);
+
 }
+    
+/* abrir pantalla inicial */
 
-/* =========================
-VALIDAR CAMBIO OBLIGATORIO PASSWORD
-========================= */
-
-if (usuarioValido.DebeCambiarPassword === "Si") {
-
-    const modal = new bootstrap.Modal(
-        document.getElementById('modalCambioPassword')
-    );
-
-    modal.show();
-}
+mostrarModulo(
+'expedientes'
+);
 
 /* CARGAS INICIALES */
 
@@ -427,71 +439,66 @@ const nombre = sessionStorage.getItem('nombre');
 
 if (nombre) {
 
-document.getElementById('loginContainer').style.display = 'none';
-document.getElementById('mainContainer').style.display = 'block';
+document.getElementById('loginContainer').style.display='none';
 
-document.getElementById('lblUsuario').innerText =
+document.getElementById('mainContainer').style.display='block';
+
+document.getElementById('lblUsuario').innerText=
 sessionStorage.getItem('nombre');
 
-document.getElementById('lblRol').innerText =
+document.getElementById('lblRol').innerText=
 sessionStorage.getItem('rol');
 
+/* RESTAURAR PERMISOS */
+
+configurarPermisos();
+
+/* RESTAURAR CAMBIO DE PASSWORD PENDIENTE */
+
+if(
+sessionStorage.getItem(
+'DebeCambiarPassword'
+)==='Si'
+){
+
+setTimeout(()=>{
+
+new bootstrap.Modal(
+document.getElementById(
+'modalCambioPassword'
+)
+).show();
+
+},500);
+
+}
+
 /* CARGAS SEGURAS */
+
 await window.cargarExpedientes?.();
+
 await window.cargarPrestados?.();
+
 await window.cargarHistorico?.();
 
-if (typeof cargarPersonasTabla === 'function') cargarPersonasTabla();
-if (typeof cargarActividadesTabla === 'function') cargarActividadesTabla();
-if (typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
+if(
+typeof cargarPersonasTabla==='function'
+){
+cargarPersonasTabla();
+}
+
+if(
+typeof cargarActividadesTabla==='function'
+){
+cargarActividadesTabla();
+}
+
+if(
+typeof cargarUsuariosTabla==='function'
+){
+cargarUsuariosTabla();
+}
 
 }
 
 };
-
-async function guardarCambioPassword() {
-
-    const nuevaPassword = document
-        .getElementById('txtNuevaPassword')
-        .value
-        .trim();
-
-    if (nuevaPassword === "") {
-        alert("Ingrese una contraseña");
-        return;
-    }
-
-    const usuario = sessionStorage.getItem('usuario');
-
-    try {
-
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            body: JSON.stringify({
-                action: 'CAMBIAR_PASSWORD_PROPIO',
-                Usuario: usuario,
-                Password: nuevaPassword
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-
-            alert("Contraseña actualizada correctamente");
-
-            bootstrap.Modal.getInstance(
-                document.getElementById('modalCambioPassword')
-            ).hide();
-
-            document.getElementById('txtNuevaPassword').value = "";
-
-        } else {
-            alert(data.error || "Error al cambiar contraseña");
-        }
-
-    } catch (error) {
-        console.error(error);
-        alert("Error de conexión");
-    }
-}
