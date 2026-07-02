@@ -1,4 +1,5 @@
 let usuarios=[];
+let forzarCambioPassword = false;
 
 /* ==========================
 CACHE DEL SISTEMA
@@ -401,8 +402,6 @@ sessionStorage.getItem('nombre');
 
 document.getElementById('lblRol').innerText =
 sessionStorage.getItem('rol');
-
-configurarPermisos();
 
 /* CARGAS SEGURAS */
 await window.cargarExpedientes?.();
