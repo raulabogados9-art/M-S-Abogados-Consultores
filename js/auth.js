@@ -112,19 +112,22 @@ configurarPermisos();
 await cargarUsuariosTabla();
 
 mostrarModulo('expedientes');
-}
-/* CARGAS INICIALES */
 
+/* CARGAS SEGURAS */
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
+if (typeof cargarPersonasTabla === 'function') {
 cargarPersonasTabla();
+}
 
+if (typeof cargarActividadesTabla === 'function') {
 cargarActividadesTabla();
+}
 
+if (typeof cargarUsuariosTabla === 'function') {
 cargarUsuariosTabla();
-
 }
 catch(error){
 
@@ -329,33 +332,3 @@ document.getElementById(
 },500);
 
 }
-
-/* CARGAS SEGURAS */
-
-await window.cargarExpedientes?.();
-
-await window.cargarPrestados?.();
-
-await window.cargarHistorico?.();
-
-if(
-typeof cargarPersonasTabla==='function'
-){
-cargarPersonasTabla();
-}
-
-if(
-typeof cargarActividadesTabla==='function'
-){
-cargarActividadesTabla();
-}
-
-if(
-typeof cargarUsuariosTabla==='function'
-){
-cargarUsuariosTabla();
-}
-
-}
-
-};
