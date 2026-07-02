@@ -326,8 +326,99 @@ alert(
 
 }
 
+async function guardarCambioPassword(){
+
+try{
+
+const nuevaPassword =
+document.getElementById(
+'txtNuevaPassword'
+).value.trim();
+
+if(
+nuevaPassword.length<6
+){
+
+alert(
+'La contraseña debe tener mínimo 6 caracteres'
+);
+
+return;
+
+}
+
+const response=
+await fetch(
+API_URL,
+{
+
+method:'POST',
+
+body:JSON.stringify({
+
+action:'CAMBIAR_PASSWORD_PROPIO',
+
+Usuario:
+sessionStorage.getItem(
+'usuario'
+),
+
+Password:
+nuevaPassword
+
+})
+
+}
+
+);
+
+const resultado=
+await response.json();
+
+if(resultado.success){
+
+alert(
+'Contraseña actualizada correctamente'
+);
+
+sessionStorage.setItem(
+'DebeCambiarPassword',
+'No'
+);
+
+bootstrap.Modal
+.getInstance(
+document.getElementById(
+'modalCambioPassword'
+)
+)
+.hide();
+
+}
+else{
+
+alert(
+resultado.error ||
+'No se pudo actualizar'
+);
+
+}
+
+}catch(error){
+
+console.error(error);
+
+alert(
+'Error al actualizar contraseña'
+);
+
+}
+
+}
+
 window.cargarUsuariosTabla = cargarUsuariosTabla;
 window.guardarUsuario = guardarUsuario;
 window.abrirModalUsuario = abrirModalUsuario;
 window.cambiarEstadoUsuario = cambiarEstadoUsuario;
 window.resetPassword = resetPassword;
+window.guardarCambioPassword = guardarCambioPassword;
