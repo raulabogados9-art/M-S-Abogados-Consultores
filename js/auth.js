@@ -71,11 +71,8 @@ async function login(){
 
 try{
 
-const usuario =
-document.getElementById('txtUsuario').value.trim();
-
-const password =
-document.getElementById('txtPassword').value.trim();
+const usuario = document.getElementById('txtUsuario').value.trim();
+const password = document.getElementById('txtPassword').value.trim();
 
 if(usuario === '' || password === ''){
 alert('Ingrese usuario y contraseña');
@@ -95,13 +92,12 @@ alert('Usuario o contraseña incorrectos');
 return;
 }
 
-/* SESION SIMPLE */
+/* SESIÓN */
 sessionStorage.setItem('nombre', usuarioValido.NombreCompleto);
 sessionStorage.setItem('usuario', usuarioValido.Usuario);
 sessionStorage.setItem('rol', usuarioValido.Rol);
-sessionStorage.setItem('DebeCambiarPassword', usuarioValido.DebeCambiarPassword || 'No');
 
-/* MOSTRAR SISTEMA */
+/* UI */
 document.getElementById('loginContainer').style.display = 'none';
 document.getElementById('mainContainer').style.display = 'block';
 
@@ -111,32 +107,21 @@ document.getElementById('lblRol').innerText = usuarioValido.Rol;
 /* PERMISOS */
 configurarPermisos();
 
-/* MODULO INICIAL */
+/* INICIAL */
 mostrarModulo('expedientes');
 
-/* CARGAS SEGURAS */
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
-if (typeof cargarPersonasTabla === 'function') {
-cargarPersonasTabla();
-}
-
-if (typeof cargarActividadesTabla === 'function') {
-cargarActividadesTabla();
-}
-
-if (typeof cargarUsuariosTabla === 'function') {
-cargarUsuariosTabla();
-}
+if(typeof cargarPersonasTabla === 'function') cargarPersonasTabla();
+if(typeof cargarActividadesTabla === 'function') cargarActividadesTabla();
+if(typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
 
 }
 catch(error){
-
 console.error(error);
 alert('Error al iniciar sesión');
-
 }
 
 }
