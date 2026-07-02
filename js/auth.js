@@ -71,6 +71,25 @@ sessionStorage.setItem('usuario', usuarioValido.Usuario);
 sessionStorage.setItem('rol', usuarioValido.Rol);
 sessionStorage.setItem('DebeCambiarPassword', usuarioValido.DebeCambiarPassword || 'No');
 
+if (usuarioValido.DebeCambiarPassword === "Si") {
+
+    // ocultar sistema
+    document.getElementById('loginContainer').style.display = 'none';
+    document.getElementById('mainContainer').style.display = 'block';
+
+    // abrir modal obligatorio
+    const modalElement = document.getElementById('modalCambioPassword');
+
+    if (!modalElement) {
+        console.error('No existe modalCambioPassword en HTML');
+        return;
+    }
+
+    new bootstrap.Modal(modalElement).show();
+
+    return; // 🔴 BLOQUEA ACCESO AL SISTEMA
+}
+
 /* UI */
 document.getElementById('loginContainer').style.display = 'none';
 document.getElementById('mainContainer').style.display = 'block';
