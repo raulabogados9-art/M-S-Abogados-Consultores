@@ -69,6 +69,8 @@ LOGIN
 
 async function login(){
 
+try{
+
 const usuario =
 document.getElementById('txtUsuario').value.trim();
 
@@ -108,41 +110,34 @@ document.getElementById('lblRol').innerText = usuarioValido.Rol;
 /* PERMISOS */
 configurarPermisos();
 
-/* CARGA INICIAL */
-await cargarUsuariosTabla();
-
-mostrarModulo('expedientes');
-
 /* CARGAS SEGURAS */
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
-if (typeof cargarPersonasTabla === 'function') {
+if(typeof cargarPersonasTabla === 'function'){
 cargarPersonasTabla();
 }
 
-if (typeof cargarActividadesTabla === 'function') {
+if(typeof cargarActividadesTabla === 'function'){
 cargarActividadesTabla();
 }
 
-if (typeof cargarUsuariosTabla === 'function') {
+if(typeof cargarUsuariosTabla === 'function'){
 cargarUsuariosTabla();
 }
-catch(error){
 
-console.error(
-error
-);
+/* MODULO INICIAL */
+mostrarModulo('expedientes');
 
-alert(
-'Error al iniciar sesión'
-);
+}catch(error){
 
-}
+console.error(error);
+alert('Error al iniciar sesión');
 
 }
 
+}
 
 function configurarPermisos(){
 
