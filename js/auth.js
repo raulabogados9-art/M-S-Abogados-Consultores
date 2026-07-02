@@ -69,193 +69,50 @@ LOGIN
 
 async function login(){
 
-try{
+const usuario =
+document.getElementById('txtUsuario').value.trim();
 
-const usuario=
+const password =
+document.getElementById('txtPassword').value.trim();
 
-document.getElementById(
-'txtUsuario'
-)
-.value
-.trim();
-
-const password=
-
-document.getElementById(
-'txtPassword'
-)
-.value
-.trim();
-
-if(
-usuario==='' ||
-password===''
-){
-
-alert(
-'Ingrese usuario y contraseña'
-);
-
+if(usuario === '' || password === ''){
+alert('Ingrese usuario y contraseña');
 return;
-
 }
 
 const usuarios = await cargarUsuarios();
 
-console.log("Usuarios cargados:", usuarios);
-
-console.log(
-"Input usuario:",
-usuario,
-"| password:",
-password
+const usuarioValido = usuarios.find(u =>
+String(u.Usuario).trim() === usuario &&
+String(u.Password).trim() === password &&
+String(u.Activo).trim() === "Si"
 );
 
-usuarios.forEach(u => {
-
-console.log({
-usuarioBD: String(u.Usuario || '').trim(),
-passwordBD: String(u.Password || '').trim(),
-activoBD: String(u.Activo || '').trim()
-});
-
-});
-
-const clean = (v) =>
-  String(v ?? '')
-    .normalize('NFKC')
-    .replace(/\s+/g, '')
-    .toLowerCase();
-
-const usuarioValido = usuarios.find(u => {
-
-    const userBD = clean(u.Usuario);
-    const passBD = clean(u.Password);
-    const activoBD = clean(u.Activo);
-
-    const userInput = clean(usuario);
-    const passInput = clean(password);
-
-    console.log("DEBUG LOGIN CLEAN:", {
-        userBD,
-        passBD,
-        activoBD,
-        userInput,
-        passInput
-    });
-
-    return (
-        userBD === userInput &&
-        passBD === passInput &&
-        activoBD === "si"
-    );
-
-});
-
-console.log("Usuario encontrado:", usuarioValido);
 if(!usuarioValido){
-
-alert(
-'Usuario o contraseña incorrectos'
-);
-
+alert('Usuario o contraseña incorrectos');
 return;
-
 }
 
-/* GUARDAR SESION */
+/* SESION SIMPLE */
+sessionStorage.setItem('nombre', usuarioValido.NombreCompleto);
+sessionStorage.setItem('usuario', usuarioValido.Usuario);
+sessionStorage.setItem('rol', usuarioValido.Rol);
 
-sessionStorage.setItem(
-'nombre',
-usuarioValido.NombreCompleto
-);
-
-sessionStorage.setItem(
-'usuario',
-usuarioValido.Usuario
-);
-
-sessionStorage.setItem(
-'rol',
-usuarioValido.Rol
-);
-
-sessionStorage.setItem(
-'DebeCambiarPassword',
-usuarioValido.DebeCambiarPassword || 'No'
-);
-
-/* CAMBIO OBLIGATORIO PASSWORD */
-
-if(
-String(
-usuarioValido.DebeCambiarPassword || ''
-).trim() === 'Si'
-){
-
-setTimeout(()=>{
-
-new bootstrap.Modal(
-document.getElementById(
-'modalCambioPassword'
-)
-).show();
-
-},500);
-
-}
-    
 /* MOSTRAR SISTEMA */
+document.getElementById('loginContainer').style.display = 'none';
+document.getElementById('mainContainer').style.display = 'block';
 
-document.getElementById(
-'loginContainer'
-).style.display='none';
-
-document.getElementById(
-'mainContainer'
-).style.display='block';
-
-document.getElementById(
-'lblUsuario'
-).innerText =
-usuarioValido.NombreCompleto;
-
-document.getElementById(
-'lblRol'
-).innerText =
-usuarioValido.Rol;
-
+document.getElementById('lblUsuario').innerText = usuarioValido.NombreCompleto;
+document.getElementById('lblRol').innerText = usuarioValido.Rol;
 
 /* PERMISOS */
-
 configurarPermisos();
 
-/* SI LA SESION TENÍA CAMBIO PENDIENTE */
+/* CARGA INICIAL */
+await cargarUsuariosTabla();
 
-if(
-sessionStorage.getItem(
-'DebeCambiarPassword'
-)==='Si'
-){
-
-setTimeout(()=>{
-
-new bootstrap.Modal(
-document.getElementById(
-'modalCambioPassword'
-)
-).show();
-
-},500);
-
+mostrarModulo('expedientes');
 }
-    
-/* abrir pantalla inicial */
-
-mostrarModulo(
-'expedientes'
-);
-
 /* CARGAS INICIALES */
 
 await window.cargarExpedientes?.();
