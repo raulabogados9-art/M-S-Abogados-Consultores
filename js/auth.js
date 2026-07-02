@@ -1,93 +1,66 @@
-let usuarios=[];
-let forzarCambioPassword = false;
+let usuarios = [];
 
-/* ==========================
-CACHE DEL SISTEMA
-========================== */
-
-let cacheSistema={
-
-usuarios:[],
-personas:[],
-actividades:[],
-expedientes:[],
-prestados:[],
-historico:[]
-
+let cacheSistema = {
+usuarios: [],
+personas: [],
+actividades: [],
+expedientes: [],
+prestados: [],
+historico: []
 };
 
 /* ==========================
 CARGAR USUARIOS
 ========================== */
 
-async function cargarUsuarios(){
+async function cargarUsuarios() {
 
-try{
+try {
 
-    /* usar cache si ya existe */
-
-    if(cacheSistema.usuarios.length > 0){
-
-        usuarios = cacheSistema.usuarios;
-
-        return usuarios;
-    }
-
-    const response =
-    await fetch(
-        API_URL + '?sheet=USUARIOS'
-    );
-
-    usuarios =
-    await response.json();
-
-    cacheSistema.usuarios =
-    usuarios;
-
-    return usuarios;
-
+if (cacheSistema.usuarios.length > 0) {
+usuarios = cacheSistema.usuarios;
+return usuarios;
 }
-catch(error){
 
-    console.error(
-        'Error cargando usuarios:',
-        error
-    );
+const response = await fetch(API_URL + '?sheet=USUARIOS');
+usuarios = await response.json();
 
-    usuarios=[];
+cacheSistema.usuarios = usuarios;
 
-    return [];
+return usuarios;
 
+} catch (error) {
+console.error('Error cargando usuarios:', error);
+return [];
 }
 
 }
-
 
 /* ==========================
 LOGIN
 ========================== */
 
-async function login(){
+async function login() {
 
-try{
+try {
 
-const usuario = document.getElementById('txtUsuario').value.trim();
-const password = document.getElementById('txtPassword').value.trim();
+const usuario = document.getElementById('txtUsuario')?.value.trim() || '';
+const password = document.getElementById('txtPassword')?.value.trim() || '';
 
-if(usuario === '' || password === ''){
+if (usuario === '' || password === '') {
 alert('Ingrese usuario y contraseña');
 return;
 }
 
-const usuarios = await cargarUsuarios();
+const usuariosData = await cargarUsuarios();
 
-const usuarioValido = usuarios.find(u =>
-String(u.Usuario).trim() === usuario &&
-String(u.Password).trim() === password &&
-String(u.Activo).trim() === "Si"
+const usuarioValido = usuariosData.find(u =>
+String(u.Usuario || '').trim() === usuario &&
+String(u.Password || '').trim() === password &&
+String(u.Activo || '').trim() === "Si"
 );
 
-if(!usuarioValido){
+if (!usuarioValido) {
 alert('Usuario o contraseña incorrectos');
 return;
 }
@@ -96,6 +69,7 @@ return;
 sessionStorage.setItem('nombre', usuarioValido.NombreCompleto);
 sessionStorage.setItem('usuario', usuarioValido.Usuario);
 sessionStorage.setItem('rol', usuarioValido.Rol);
+sessionStorage.setItem('DebeCambiarPassword', usuarioValido.DebeCambiarPassword || 'No');
 
 /* UI */
 document.getElementById('loginContainer').style.display = 'none';
@@ -105,224 +79,149 @@ document.getElementById('lblUsuario').innerText = usuarioValido.NombreCompleto;
 document.getElementById('lblRol').innerText = usuarioValido.Rol;
 
 /* PERMISOS */
+if (typeof configurarPermisos === 'function') {
 configurarPermisos();
+}
 
-/* INICIAL */
+/* MODULO INICIAL */
+if (typeof mostrarModulo === 'function') {
 mostrarModulo('expedientes');
+}
+
+/* CARGAS SEGURAS */
+try {
 
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
-if(typeof cargarPersonasTabla === 'function') cargarPersonasTabla();
-if(typeof cargarActividadesTabla === 'function') cargarActividadesTabla();
-if(typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
+if (typeof cargarPersonasTabla === 'function') cargarPersonasTabla();
+if (typeof cargarActividadesTabla === 'function') cargarActividadesTabla();
+if (typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
 
+} catch (e) {
+console.warn('Error cargas iniciales:', e);
 }
-catch(error){
+
+} catch (error) {
 console.error(error);
 alert('Error al iniciar sesión');
 }
 
 }
 
-function configurarPermisos(){
+/* ==========================
+PERMISOS
+========================== */
+
+function configurarPermisos() {
 
 const rol = sessionStorage.getItem('rol') || '';
 
-/* módulos existentes */
-
-const modulos=[
-
+const modulos = [
 'expedientes',
 'prestados',
 'historico',
 'personas',
 'actividades',
 'usuarios'
-
 ];
 
-/* OCULTAR TODO */
-
-modulos.forEach(id=>{
-
-const elemento=
-document.getElementById(id);
-
-if(elemento){
-
-elemento.style.display='none';
-
-}
-
+modulos.forEach(id => {
+document.getElementById(id)?.style.setProperty('display', 'none');
 });
 
-/* SOLO mostrar Expedientes al iniciar */
+document.getElementById('expedientes')?.style.setProperty('display', 'block');
 
-document.getElementById(
-'expedientes'
-)?.style.setProperty(
-'display',
-'block'
-);
+if (rol === 'Administrador') {
 
-/* mostrar menús según rol */
+['menuUsuarios', 'menuPersonas', 'menuActividades'].forEach(id => {
+document.getElementById(id)?.style.setProperty('display', '');
+});
 
-if(rol==='Administrador'){
+} else {
 
-document.getElementById(
-'menuUsuarios'
-)?.style.setProperty(
-'display',
-''
-);
-
-document.getElementById(
-'menuPersonas'
-)?.style.setProperty(
-'display',
-''
-);
-
-document.getElementById(
-'menuActividades'
-)?.style.setProperty(
-'display',
-''
-);
-
-}
-
-else{
-
-document.getElementById(
-'menuUsuarios'
-)?.style.setProperty(
-'display',
-'none'
-);
-
-document.getElementById(
-'menuPersonas'
-)?.style.setProperty(
-'display',
-'none'
-);
-
-document.getElementById(
-'menuActividades'
-)?.style.setProperty(
-'display',
-'none'
-);
+['menuUsuarios', 'menuPersonas', 'menuActividades'].forEach(id => {
+document.getElementById(id)?.style.setProperty('display', 'none');
+});
 
 }
 
 }
 
-window.mostrarModulo=mostrarModulo;
-    
+/* ==========================
+MODULOS
+========================== */
+
+function mostrarModulo(id) {
+
+const modulos = [
+'expedientes',
+'prestados',
+'historico',
+'personas',
+'actividades',
+'usuarios'
+];
+
+modulos.forEach(m => {
+document.getElementById(m)?.style.setProperty('display', 'none');
+});
+
+document.getElementById(id)?.style.setProperty('display', 'block');
+
+}
+
+window.mostrarModulo = mostrarModulo;
+
 /* ==========================
 LOGOUT
 ========================== */
 
-function logout(){
-
+function logout() {
 sessionStorage.clear();
-
 location.reload();
-
 }
-
 
 /* ==========================
-CAMBIAR MODULOS
+ONLOAD SEGURO
 ========================== */
-
-function mostrarModulo(id){
-
-const modulos=[
-
-'expedientes',
-'prestados',
-'historico',
-'personas',
-'actividades',
-'usuarios'
-
-];
-
-modulos.forEach(modulo=>{
-
-const elemento=
-document.getElementById(
-modulo
-);
-
-if(elemento){
-
-elemento.style.display='none';
-
-}
-
-});
-
-document.getElementById(
-id
-).style.display='block';
-
-}
-
 
 window.onload = async function () {
 
+try {
+
 const nombre = sessionStorage.getItem('nombre');
 
-if (nombre) {
+if (!nombre) return;
 
-document.getElementById('loginContainer').style.display='none';
-document.getElementById('mainContainer').style.display='block';
+document.getElementById('loginContainer').style.display = 'none';
+document.getElementById('mainContainer').style.display = 'block';
 
-document.getElementById('lblUsuario').innerText =
-sessionStorage.getItem('nombre');
+document.getElementById('lblUsuario').innerText = sessionStorage.getItem('nombre');
+document.getElementById('lblRol').innerText = sessionStorage.getItem('rol');
 
-document.getElementById('lblRol').innerText =
-sessionStorage.getItem('rol');
-
-/* RESTAURAR PERMISOS */
+if (typeof configurarPermisos === 'function') {
 configurarPermisos();
-
-/* RESTAURAR CAMBIO DE PASSWORD PENDIENTE */
-if(sessionStorage.getItem('DebeCambiarPassword') === 'Si'){
-
-setTimeout(()=>{
-
-new bootstrap.Modal(
-document.getElementById('modalCambioPassword')
-).show();
-
-},500);
-
 }
 
-/* CARGAS SEGURAS */
+if (sessionStorage.getItem('DebeCambiarPassword') === 'Si') {
+setTimeout(() => {
+const modal = document.getElementById('modalCambioPassword');
+if (modal) new bootstrap.Modal(modal).show();
+}, 500);
+}
+
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
-if(typeof cargarPersonasTabla === 'function'){
-cargarPersonasTabla();
-}
+if (typeof cargarPersonasTabla === 'function') cargarPersonasTabla();
+if (typeof cargarActividadesTabla === 'function') cargarActividadesTabla();
+if (typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
 
-if(typeof cargarActividadesTabla === 'function'){
-cargarActividadesTabla();
-}
-
-if(typeof cargarUsuariosTabla === 'function'){
-cargarUsuariosTabla();
-}
-
+} catch (e) {
+console.error('Error onload:', e);
 }
 
 };
