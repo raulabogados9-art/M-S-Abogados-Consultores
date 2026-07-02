@@ -99,6 +99,7 @@ return;
 sessionStorage.setItem('nombre', usuarioValido.NombreCompleto);
 sessionStorage.setItem('usuario', usuarioValido.Usuario);
 sessionStorage.setItem('rol', usuarioValido.Rol);
+sessionStorage.setItem('DebeCambiarPassword', usuarioValido.DebeCambiarPassword || 'No');
 
 /* MOSTRAR SISTEMA */
 document.getElementById('loginContainer').style.display = 'none';
@@ -110,27 +111,28 @@ document.getElementById('lblRol').innerText = usuarioValido.Rol;
 /* PERMISOS */
 configurarPermisos();
 
+/* MODULO INICIAL */
+mostrarModulo('expedientes');
+
 /* CARGAS SEGURAS */
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
-if(typeof cargarPersonasTabla === 'function'){
+if (typeof cargarPersonasTabla === 'function') {
 cargarPersonasTabla();
 }
 
-if(typeof cargarActividadesTabla === 'function'){
+if (typeof cargarActividadesTabla === 'function') {
 cargarActividadesTabla();
 }
 
-if(typeof cargarUsuariosTabla === 'function'){
+if (typeof cargarUsuariosTabla === 'function') {
 cargarUsuariosTabla();
 }
 
-/* MODULO INICIAL */
-mostrarModulo('expedientes');
-
-}catch(error){
+}
+catch(error){
 
 console.error(error);
 alert('Error al iniciar sesión');
