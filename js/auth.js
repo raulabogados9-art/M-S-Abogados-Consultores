@@ -211,6 +211,19 @@ mostrarModulo(
 'expedientes'
 );
 
+/* =========================
+VALIDAR CAMBIO OBLIGATORIO PASSWORD
+========================= */
+
+if (usuarioValido.DebeCambiarPassword === "Si") {
+
+    const modal = new bootstrap.Modal(
+        document.getElementById('modalCambioPassword')
+    );
+
+    modal.show();
+}
+
 /* CARGAS INICIALES */
 
 await window.cargarExpedientes?.();
@@ -415,3 +428,50 @@ if (typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
 }
 
 };
+
+async function guardarCambioPassword() {
+
+    const nuevaPassword = document
+        .getElementById('txtNuevaPassword')
+        .value
+        .trim();
+
+    if (nuevaPassword === "") {
+        alert("Ingrese una contraseña");
+        return;
+    }
+
+    const usuario = sessionStorage.getItem('usuario');
+
+    try {
+
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'CAMBIAR_PASSWORD_PROPIO',
+                Usuario: usuario,
+                Password: nuevaPassword
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            alert("Contraseña actualizada correctamente");
+
+            bootstrap.Modal.getInstance(
+                document.getElementById('modalCambioPassword')
+            ).hide();
+
+            document.getElementById('txtNuevaPassword').value = "";
+
+        } else {
+            alert(data.error || "Error al cambiar contraseña");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Error de conexión");
+    }
+}
