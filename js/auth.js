@@ -47,124 +47,156 @@ try {
 const usuario = document.getElementById('txtUsuario')?.value.trim() || '';
 const password = document.getElementById('txtPassword')?.value.trim() || '';
 
-if (usuario === '' || password === '') {
-alert('Ingrese usuario y contraseña');
+if (usuario === '') {
+alert('Ingrese usuario');
+return;
+}
+
+if (password === '') {
+alert('Ingrese contraseña');
 return;
 }
 
 const usuariosData = await cargarUsuarios();
 
 const usuarioValido = usuariosData.find(u =>
+
 String(u.Usuario || '').trim() === usuario &&
 String(u.Password || '').trim() === password &&
-String(u.Activo || '').trim() === "Si"
+String(u.Activo || '').trim() === 'Si'
+
 );
 
 if (!usuarioValido) {
+
 alert('Usuario o contraseña incorrectos');
 return;
+
 }
 
 /* SESIÓN */
-sessionStorage.setItem('nombre', usuarioValido.NombreCompleto);
-sessionStorage.setItem('usuario', usuarioValido.Usuario);
-sessionStorage.setItem('rol', usuarioValido.Rol);
-sessionStorage.setItem('DebeCambiarPassword', usuarioValido.DebeCambiarPassword || 'No');
 
-if (usuarioValido.DebeCambiarPassword === "Si") {
+sessionStorage.setItem(
+'nombre',
+usuarioValido.NombreCompleto
+);
 
-    // ocultar login
-    document.getElementById('loginContainer').style.display = 'none';
+sessionStorage.setItem(
+'usuario',
+usuarioValido.Usuario
+);
 
-    // mostrar sistema
-    document.getElementById('mainContainer').style.display = 'block';
+sessionStorage.setItem(
+'rol',
+usuarioValido.Rol
+);
 
-    // mostrar usuario
-    document.getElementById('lblUsuario').innerText =
-    usuarioValido.NombreCompleto;
-
-    document.getElementById('lblRol').innerText =
-    usuarioValido.Rol;
-
-    // cargar permisos
-    if(typeof configurarPermisos==='function'){
-        configurarPermisos();
-    }
-
-    // abrir modal después de renderizar pantalla
-    setTimeout(()=>{
-
-        const modalElement =
-        document.getElementById(
-        'modalCambioPassword'
-        );
-
-        if(!modalElement){
-
-            console.error(
-            'No existe modalCambioPassword'
-            );
-
-            return;
-        }
-
-        new bootstrap.Modal(
-            modalElement,
-            {
-                backdrop:'static',
-                keyboard:false
-            }
-        ).show();
-
-    },300);
-
-    return;
-}
-
-    new bootstrap.Modal(modalElement).show();
-
-    return; // 🔴 BLOQUEA ACCESO AL SISTEMA
-}
+sessionStorage.setItem(
+'DebeCambiarPassword',
+usuarioValido.DebeCambiarPassword || 'No'
+);
 
 /* UI */
-document.getElementById('loginContainer').style.display = 'none';
-document.getElementById('mainContainer').style.display = 'block';
 
-document.getElementById('lblUsuario').innerText = usuarioValido.NombreCompleto;
-document.getElementById('lblRol').innerText = usuarioValido.Rol;
+document.getElementById(
+'loginContainer'
+).style.display='none';
 
-/* PERMISOS */
-if (typeof configurarPermisos === 'function') {
+document.getElementById(
+'mainContainer'
+).style.display='block';
+
+document.getElementById(
+'lblUsuario'
+).innerText=
+usuarioValido.NombreCompleto;
+
+document.getElementById(
+'lblRol'
+).innerText=
+usuarioValido.Rol;
+
+/* permisos */
+
+if(typeof configurarPermisos==='function'){
 configurarPermisos();
 }
 
-/* MODULO INICIAL */
-if (typeof mostrarModulo === 'function') {
+/* password obligatorio */
+
+if(usuarioValido.DebeCambiarPassword==='Si'){
+
+setTimeout(()=>{
+
+const modal=
+document.getElementById(
+'modalCambioPassword'
+);
+
+if(modal){
+
+new bootstrap.Modal(
+modal,
+{
+backdrop:'static',
+keyboard:false
+}
+).show();
+
+}
+
+},300);
+
+return;
+
+}
+
+/* modulo inicial */
+
+if(typeof mostrarModulo==='function'){
 mostrarModulo('expedientes');
 }
 
-/* CARGAS SEGURAS */
-try {
+/* cargas */
+
+try{
 
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
-if (typeof cargarPersonasTabla === 'function') cargarPersonasTabla();
-if (typeof cargarActividadesTabla === 'function') cargarActividadesTabla();
-if (typeof cargarUsuariosTabla === 'function') cargarUsuariosTabla();
-
-} catch (e) {
-console.warn('Error cargas iniciales:', e);
+if(typeof cargarPersonasTabla==='function'){
+cargarPersonasTabla();
 }
 
-} catch (error) {
+if(typeof cargarActividadesTabla==='function'){
+cargarActividadesTabla();
+}
+
+if(typeof cargarUsuariosTabla==='function'){
+cargarUsuariosTabla();
+}
+
+}catch(e){
+
+console.warn(
+'Error cargas iniciales:',
+e
+);
+
+}
+
+}catch(error){
+
 console.error(error);
-alert('Error al iniciar sesión');
-}
+
+alert(
+'Error al iniciar sesión'
+);
 
 }
 
+}
 /* ==========================
 PERMISOS
 ========================== */
