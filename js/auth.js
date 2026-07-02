@@ -73,17 +73,53 @@ sessionStorage.setItem('DebeCambiarPassword', usuarioValido.DebeCambiarPassword 
 
 if (usuarioValido.DebeCambiarPassword === "Si") {
 
-    // ocultar sistema
+    // ocultar login
     document.getElementById('loginContainer').style.display = 'none';
+
+    // mostrar sistema
     document.getElementById('mainContainer').style.display = 'block';
 
-    // abrir modal obligatorio
-    const modalElement = document.getElementById('modalCambioPassword');
+    // mostrar usuario
+    document.getElementById('lblUsuario').innerText =
+    usuarioValido.NombreCompleto;
 
-    if (!modalElement) {
-        console.error('No existe modalCambioPassword en HTML');
-        return;
+    document.getElementById('lblRol').innerText =
+    usuarioValido.Rol;
+
+    // cargar permisos
+    if(typeof configurarPermisos==='function'){
+        configurarPermisos();
     }
+
+    // abrir modal después de renderizar pantalla
+    setTimeout(()=>{
+
+        const modalElement =
+        document.getElementById(
+        'modalCambioPassword'
+        );
+
+        if(!modalElement){
+
+            console.error(
+            'No existe modalCambioPassword'
+            );
+
+            return;
+        }
+
+        new bootstrap.Modal(
+            modalElement,
+            {
+                backdrop:'static',
+                keyboard:false
+            }
+        ).show();
+
+    },300);
+
+    return;
+}
 
     new bootstrap.Modal(modalElement).show();
 
