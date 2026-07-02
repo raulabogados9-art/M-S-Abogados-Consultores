@@ -297,35 +297,47 @@ const nombre = sessionStorage.getItem('nombre');
 if (nombre) {
 
 document.getElementById('loginContainer').style.display='none';
-
 document.getElementById('mainContainer').style.display='block';
 
-document.getElementById('lblUsuario').innerText=
+document.getElementById('lblUsuario').innerText =
 sessionStorage.getItem('nombre');
 
-document.getElementById('lblRol').innerText=
+document.getElementById('lblRol').innerText =
 sessionStorage.getItem('rol');
 
 /* RESTAURAR PERMISOS */
-
 configurarPermisos();
 
 /* RESTAURAR CAMBIO DE PASSWORD PENDIENTE */
-
-if(
-sessionStorage.getItem(
-'DebeCambiarPassword'
-)==='Si'
-){
+if(sessionStorage.getItem('DebeCambiarPassword') === 'Si'){
 
 setTimeout(()=>{
 
 new bootstrap.Modal(
-document.getElementById(
-'modalCambioPassword'
-)
+document.getElementById('modalCambioPassword')
 ).show();
 
 },500);
 
 }
+
+/* CARGAS SEGURAS */
+await window.cargarExpedientes?.();
+await window.cargarPrestados?.();
+await window.cargarHistorico?.();
+
+if(typeof cargarPersonasTabla === 'function'){
+cargarPersonasTabla();
+}
+
+if(typeof cargarActividadesTabla === 'function'){
+cargarActividadesTabla();
+}
+
+if(typeof cargarUsuariosTabla === 'function'){
+cargarUsuariosTabla();
+}
+
+}
+
+};
