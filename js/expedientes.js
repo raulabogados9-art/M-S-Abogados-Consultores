@@ -111,34 +111,40 @@ actualizarActividadPersona();
 MODAL
 ======================= */
 
-function abrirModalExpediente(){
+async function abrirModalExpediente() {
 
-document.getElementById(
-'txtNoExpediente'
-).value='';
+    // 1. limpiar campos del formulario
+    const noExp = document.getElementById('txtNoExpediente');
+    const noInt = document.getElementById('txtNumeroInterno');
+    const actividad = document.getElementById('txtActividad');
+    const obs = document.getElementById('txtObservaciones');
 
-document.getElementById(
-'txtNumeroInterno'
-).value='';
+    if (noExp) noExp.value = '';
+    if (noInt) noInt.value = '';
+    if (actividad) actividad.value = '';
+    if (obs) obs.value = '';
 
-document.getElementById(
-'txtActividad'
-).value='';
+    try {
 
-document.getElementById(
-'txtObservaciones'
-).value='';
+        // 2. asegurar que personas estén cargadas en cache
+        await cargarPersonas?.();
 
-cargarPersonas();
+        // 3. llenar el select de personas responsables
+        cargarSelectPersonas();
 
-new bootstrap.Modal(
+    } catch (error) {
+        console.error('Error cargando personas:', error);
+    }
 
-document.getElementById(
-'modalSalida'
-)
+    // 4. abrir modal correcto
+    const modalElement = document.getElementById('modalSalida');
 
-).show();
-
+    if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+    } else {
+        console.error('No se encontró el modal: modalSalida');
+    }
 }
 
 async function guardarExpediente(){
