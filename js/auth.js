@@ -180,6 +180,11 @@ sessionStorage.setItem(
 usuarioValido.Rol
 );
 
+    sessionStorage.setItem(
+'DebeCambiarPassword',
+usuarioValido.DebeCambiarPassword || 'No'
+);
+
 /* MOSTRAR SISTEMA */
 
 document.getElementById(
@@ -210,6 +215,21 @@ configurarPermisos();
 mostrarModulo(
 'expedientes'
 );
+
+    const debeCambiar =
+sessionStorage.getItem(
+'DebeCambiarPassword'
+);
+
+if(debeCambiar==='Si'){
+
+new bootstrap.Modal(
+document.getElementById(
+'modalCambioPassword'
+)
+).show();
+
+}
 
 /* =========================
 VALIDAR CAMBIO OBLIGATORIO PASSWORD
