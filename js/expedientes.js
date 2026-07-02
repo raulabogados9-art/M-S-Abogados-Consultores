@@ -741,4 +741,21 @@ console.error(error);
 
 }
 
+function cargarSelectPersonas() {
 
+    const select = document.getElementById('personaResponsable');
+    if (!select) return;
+
+    select.innerHTML = '<option value="">Seleccione una persona</option>';
+
+    cacheSistema.personas
+        .filter(p => p.Activo === 'Si')
+        .forEach(p => {
+
+            const option = document.createElement('option');
+            option.value = p.ID;
+            option.textContent = p.Nombre;
+
+            select.appendChild(option);
+        });
+}
