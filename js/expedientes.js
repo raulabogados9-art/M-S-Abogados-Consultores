@@ -113,40 +113,58 @@ MODAL
 
 async function abrirModalExpediente() {
 
-    // 1. limpiar campos del formulario
-    const noExp = document.getElementById('txtNoExpediente');
-    const noInt = document.getElementById('txtNumeroInterno');
-    const actividad = document.getElementById('txtActividad');
-    const obs = document.getElementById('txtObservaciones');
-
-    if (noExp) noExp.value = '';
-    if (noInt) noInt.value = '';
-    if (actividad) actividad.value = '';
-    if (obs) obs.value = '';
+    // 1. limpiar campos
+    document.getElementById('txtNoExpediente').value = '';
+    document.getElementById('txtNumeroInterno').value = '';
+    document.getElementById('txtActividad').value = '';
+    document.getElementById('txtObservaciones').value = '';
 
     try {
 
-        // 2. asegurar que personas estén cargadas en cache
-        await cargarPersonas?.();
+        // 2. FORZAR carga real de personas (no cache vieja)
+        cacheSistema.personas = [];
+        await cargarPersonas();
 
-        // 3. llenar el select de personas responsables
-        cargarSelectPersonas();
+        console.log('PERSONAS CARGADAS:', cacheSistema.personas);
+
+        // 3. validar que sí llegaron datos
+        if (!cacheSistema.personas || cacheSistema.personas.length === 0) {
+            console.error('No llegaron personas desde backend');
+            return;
+        }
+
+        // 4. llenar select
+        const select = document.getElementById('personaResponsable');
+
+        if (!select) {
+            console.error('No existe select personaResponsable');
+            return;
+        }
+
+        select.innerHTML = '<option value="">Seleccione una persona</option>';
+
+        cacheSistema.personas
+            .filter(p => p.Activo === 'Si')
+            .forEach(p => {
+
+                const option = document.createElement('option');
+                option.value = p.ID;
+                option.textContent = p.Nombre;
+
+                select.appendChild(option);
+            });
 
     } catch (error) {
-        console.error('Error cargando personas:', error);
+        console.error('Error en abrirModalExpediente:', error);
     }
 
-    // 4. abrir modal correcto
-    const modalElement = document.getElementById('modalSalida');
+    // 5. abrir modal
+    const modal = new bootstrap.Modal(
+        document.getElementById('modalSalida')
+    );
 
-    if (modalElement) {
-        const modal = new bootstrap.Modal(modalElement);
-        modal.show();
-    } else {
-        console.error('No se encontró el modal: modalSalida');
-    }
+    modal.show();
 }
-
 async function guardarExpediente(){
 
 if(guardandoExpediente) return;
