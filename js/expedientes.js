@@ -183,7 +183,14 @@ PersonaResponsable:
 document.getElementById('cmbPersonaResponsable').value,
 
 Actividad:
-document.getElementById('txtActividad').value,
+document.getElementById(
+'cmbPersonaResponsable'
+)
+.options[
+document.getElementById(
+'cmbPersonaResponsable'
+).selectedIndex
+]?.dataset?.actividad || '',
 
 Observaciones:
 document.getElementById('txtObservaciones').value,
@@ -769,13 +776,22 @@ function cargarSelectPersonas() {
     select.innerHTML = '<option value="">Seleccione una persona</option>';
 
     cacheSistema.personas
-        .filter(p => p.Activo === 'Si')
-        .forEach(p => {
+.filter(p => p.Activo === 'Si')
+.forEach(p => {
 
-            const option = document.createElement('option');
-            option.value = p.ID;
-            option.textContent = p.Nombre;
+    const option =
+    document.createElement('option');
 
-            select.appendChild(option);
-        });
+    option.value =
+    p.Nombre;
+
+    option.textContent =
+    p.Nombre;
+
+    option.dataset.actividad =
+    p.Actividad || '';
+
+    select.appendChild(option);
+
+});
 }
