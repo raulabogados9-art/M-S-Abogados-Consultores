@@ -67,15 +67,15 @@ async function cargarPersonasTabla(){
 try{
 
 /* usar cache */
-if(cacheSistema.personas.length > 0){
+if(cacheSistema.personas?.length > 0){
 
-renderizarPersonas(
-cacheSistema.personas
-);
+/* render rápido desde cache */
+renderizarPersonas(cacheSistema.personas);
 
+/* evitar fetch innecesario */
 return;
-}
 
+}
 const response =
 await fetch(
 API_URL+'?sheet=PERSONAS'
@@ -214,59 +214,35 @@ document.getElementById(
 }
 
 /* ==========================
-GUARDAR
+GUARDAR PERSONA
 ========================== */
 
 async function guardarPersona(){
 
 try{
 
-const nombre=
-document.getElementById(
-'txtPersonaNombre'
-)
-.value.trim();
+const nombre =
+document.getElementById('txtPersonaNombre').value.trim();
 
-const actividad=
-document.getElementById(
-'txtPersonaActividad'
-)
-.value.trim();
+const actividad =
+document.getElementById('txtPersonaActividad').value.trim();
 
-if(nombre===''){
-
-alert(
-'Ingrese nombre'
-);
-
+if(nombre === ''){
+alert('Ingrese nombre');
 return;
-
 }
 
-if(actividad===''){
-
-alert(
-'Seleccione actividad'
-);
-
+if(actividad === ''){
+alert('Seleccione actividad');
 return;
-
 }
 
-const persona={
+const persona = {
 
-ID:
-document.getElementById(
-'txtPersonaID'
-).value
-||
-Date.now(),
-
-Nombre:nombre,
-
-Actividad:actividad,
-
-Activo:'Si'
+ID: document.getElementById('txtPersonaID').value || Date.now(),
+Nombre: nombre,
+Actividad: actividad,
+Activo: 'Si'
 
 };
 
@@ -274,40 +250,33 @@ await fetch(API_URL,{
 
 method:'POST',
 
-body:JSON.stringify({
-
+body: JSON.stringify({
 sheet:'PERSONAS',
-
 ...persona
-
 })
 
 });
 
-alert(
-'Persona guardada correctamente'
-);
+alert('Persona guardada correctamente');
 
-cacheSistema.personas=[];
+/* 🔥 LIMPIAR CACHE */
+cacheSistema.personas = [];
 
+/* cerrar modal */
 bootstrap.Modal
-.getInstance(
-document.getElementById(
-'modalPersona'
-)
-).hide();
+.getInstance(document.getElementById('modalPersona'))
+.hide();
 
+/* recargar tabla */
 await cargarPersonasTabla();
 
 }
 catch(error){
-
 console.error(error);
-
+alert('Error al guardar persona');
 }
 
 }
-
 /* ==========================
 CAMBIAR ESTADO PERSONA
 ========================== */
