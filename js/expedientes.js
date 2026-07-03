@@ -242,23 +242,46 @@ guardandoExpediente = false;
 
 }
 
-window.cargarExpedientes = async function () {
+window.cargarExpedientes = async function(){
 
-    try {
+try{
 
-        const response = await fetch(API_URL + '?sheet=EXPEDIENTES');
-        const datos = await response.json();
+const response=
+await fetch(
+API_URL+'?sheet=EXPEDIENTES'
+);
 
-        cacheSistema.expedientes = datos;
+const texto=
+await response.text();
 
-        renderizarExpedientes(datos);
+console.log(
+'RESPUESTA EXPEDIENTES:',
+texto
+);
 
-    } catch (error) {
-        console.error('Error cargando expedientes:', error);
-    }
+/* convertir a JSON */
+
+const datos=
+JSON.parse(texto);
+
+cacheSistema.expedientes=
+datos;
+
+renderizarExpedientes(
+datos
+);
+
+}
+catch(error){
+
+console.error(
+'Error cargando expedientes:',
+error
+);
+
+}
 
 };
-
 function renderizarExpedientes(datos){
 
 const tbody =
