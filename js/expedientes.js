@@ -127,28 +127,28 @@ async function abrirModalExpediente() {
             return;
         }
 
-        // 4. llenar select
-       const select =
-document.getElementById('cmbPersonaResponsable') ||
-document.getElementById('personaResponsable');
+       /* ya cargarPersonas llena el select */
+/* solo actualizar actividad inicial */
 
-        if (!select) {
-            console.error('No existe select personaResponsable');
-            return;
-        }
+const select =
+document.getElementById(
+'cmbPersonaResponsable'
+);
 
-        select.innerHTML = '<option value="">Seleccione una persona</option>';
+if(!select){
 
-        cacheSistema.personas
-            .filter(p => p.Activo === 'Si')
-            .forEach(p => {
+console.error(
+'No existe cmbPersonaResponsable'
+);
 
-                const option = document.createElement('option');
-                option.value = p.ID;
-                option.textContent = p.Nombre;
+return;
 
-                select.appendChild(option);
-            });
+}
+
+select.onchange=
+actualizarActividadPersona;
+
+actualizarActividadPersona();
 
     } catch (error) {
         console.error('Error en abrirModalExpediente:', error);
@@ -768,30 +768,8 @@ console.error(error);
 
 }
 
-function cargarSelectPersonas() {
+function cargarSelectPersonas(){
 
-    const select = document.getElementById('personaResponsable');
-    if (!select) return;
+return;
 
-    select.innerHTML = '<option value="">Seleccione una persona</option>';
-
-    cacheSistema.personas
-.filter(p => p.Activo === 'Si')
-.forEach(p => {
-
-    const option =
-    document.createElement('option');
-
-    option.value =
-    p.Nombre;
-
-    option.textContent =
-    p.Nombre;
-
-    option.dataset.actividad =
-    p.Actividad || '';
-
-    select.appendChild(option);
-
-});
 }
