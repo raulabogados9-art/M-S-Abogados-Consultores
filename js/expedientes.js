@@ -254,9 +254,10 @@ document.getElementById('modalSalida')
 
 cacheSistema.expedientes = [];
 
-await window.cargarExpedientes();
-
-}
+await cacheSmart.get(
+'expedientes',
+window.cargarExpedientes
+);
 catch(error){
 
 console.error(error);
