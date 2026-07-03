@@ -127,6 +127,22 @@ async function abrirModalExpediente() {
             return;
         }
 
+            /* asegurar sincronización del DOM */
+setTimeout(()=>{
+
+const select=
+document.getElementById(
+'cmbPersonaResponsable'
+);
+
+if(select && select.options.length>0){
+
+actualizarActividadPersona();
+
+}
+
+},100);
+
        /* ya cargarPersonas llena el select */
 /* solo actualizar actividad inicial */
 
@@ -145,11 +161,23 @@ return;
 
 }
 
-select.onchange=
-actualizarActividadPersona;
+/* asegurar evento */
+select.removeEventListener(
+'change',
+actualizarActividadPersona
+);
+
+select.addEventListener(
+'change',
+actualizarActividadPersona
+);
+
+/* forzar actualización inicial */
+if(select.value){
 
 actualizarActividadPersona();
 
+}
     } catch (error) {
         console.error('Error en abrirModalExpediente:', error);
     }
