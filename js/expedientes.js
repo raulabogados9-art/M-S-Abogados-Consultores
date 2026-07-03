@@ -128,7 +128,9 @@ async function abrirModalExpediente() {
         }
 
         // 4. llenar select
-        const select = document.getElementById('personaResponsable');
+       const select =
+document.getElementById('cmbPersonaResponsable') ||
+document.getElementById('personaResponsable');
 
         if (!select) {
             console.error('No existe select personaResponsable');
