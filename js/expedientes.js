@@ -21,51 +21,45 @@ async function cargarPersonas(){
 
 try{
 
-const response=
-await fetch(
-API_URL+'?sheet=PERSONAS'
-);
+const response =
+await fetch(API_URL+'?sheet=PERSONAS');
 
-personas=
+personas =
 await response.json();
 
-const combo=
-document.getElementById(
-'cmbPersonaResponsable'
-);
+/* guardar cache */
+cacheSistema.personas = personas;
 
-if(!combo)return;
+const combo =
+document.getElementById('cmbPersonaResponsable');
 
-combo.innerHTML=`
-<option value="">
-Seleccione...
-</option>
+if(!combo) return;
+
+/* limpiar select */
+combo.innerHTML = `
+<option value="">Seleccione...</option>
 `;
 
 personas
-.filter(
-p=>p.Activo==="Si"
-)
-.forEach(persona=>{
+.filter(p => p.Activo === "Si")
+.forEach(persona => {
 
-combo.innerHTML+=`
-
-<option
-value="${persona.Nombre}"
-data-actividad="${persona.Actividad}">
-
+combo.innerHTML += `
+<option value="${persona.Nombre}"
+data-actividad="${persona.Actividad || ''}">
 ${persona.Nombre}
-
 </option>
-
 `;
 
 });
 
+return personas;
+
 }
 catch(error){
 
-console.error(error);
+console.error('Error cargando personas:', error);
+return [];
 
 }
 
