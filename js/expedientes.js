@@ -211,13 +211,9 @@ PersonaResponsable:
 document.getElementById('cmbPersonaResponsable').value,
 
 Actividad:
-document.getElementById(
-'cmbPersonaResponsable'
-)
+document.getElementById('cmbPersonaResponsable')
 .options[
-document.getElementById(
-'cmbPersonaResponsable'
-).selectedIndex
+document.getElementById('cmbPersonaResponsable').selectedIndex
 ]?.dataset?.actividad || '',
 
 Observaciones:
@@ -248,9 +244,8 @@ sheet:'EXPEDIENTES',
 alert('Expediente registrado');
 
 bootstrap.Modal
-.getInstance(
-document.getElementById('modalSalida')
-).hide();
+.getInstance(document.getElementById('modalSalida'))
+.hide();
 
 cacheSistema.expedientes = [];
 
@@ -258,11 +253,15 @@ await cacheSmart.get(
 'expedientes',
 window.cargarExpedientes
 );
+
+} // 🔥 ESTE CIERRE FALTABA
+
 catch(error){
 
 console.error(error);
 
 }
+
 finally{
 
 guardandoExpediente = false;
