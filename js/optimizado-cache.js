@@ -7,12 +7,15 @@ window.cacheSmart = {
 
 memory:{},
 locks:{},
-TTL:300000, // 5 minutos
+TTL: CONFIG_SISTEMA.CACHE.TTL,
 
 async get(key, loader){
 
 // ---------- CACHE EN MEMORIA ----------
-if(this.memory[key]){
+if(
+CONFIG_SISTEMA.CACHE.USAR_MEMORIA &&
+this.memory[key]
+){
 const cache=this.memory[key];
 
 if(Date.now()-cache.time < this.TTL){
@@ -26,6 +29,8 @@ return cache.data;
 }
 
 // ---------- CACHE LOCALSTORAGE ----------
+if(CONFIG_SISTEMA.CACHE.USAR_LOCALSTORAGE){
+
 try{
 
 const local=localStorage.getItem("cache_"+key);
@@ -46,8 +51,12 @@ return cache.data;
 
 }
 
-}catch(e){
+}
+
+catch(e){
 console.warn(e);
+  }
+
 }
 
 // ---------- EVITAR DOBLE FETCH ----------
@@ -88,7 +97,14 @@ time:Date.now()
 
 };
 
-this.memory[key]=cache;
+if(CONFIG_SISTEMA.CACHE.USAR_MEMORIA){
+
+    this.memory[key]=cache;
+
+}
+
+try{
+if(CONFIG_SISTEMA.CACHE.USAR_LOCALSTORAGE){
 
 try{
 
@@ -96,6 +112,10 @@ localStorage.setItem(
 "cache_"+key,
 JSON.stringify(cache)
 );
+
+}catch(e){}
+
+}
 
 }catch(e){}
 
