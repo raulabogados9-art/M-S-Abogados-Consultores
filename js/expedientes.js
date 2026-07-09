@@ -249,10 +249,7 @@ bootstrap.Modal
 
 cacheSistema.expedientes = [];
 
-await cacheSmart.get(
-'expedientes',
-window.cargarExpedientes
-);
+await window.cargarExpedientes();
 
 } // 🔥 ESTE CIERRE FALTABA
 
