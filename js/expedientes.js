@@ -315,6 +315,23 @@ window.cargarExpedientes = async function(){
 
 try{
 
+/* ==========================
+USAR CACHE SI YA EXISTE
+========================== */
+
+if(
+cacheSistema.expedientes &&
+cacheSistema.expedientes.length > 0
+){
+
+renderizarExpedientes(
+cacheSistema.expedientes
+);
+
+return cacheSistema.expedientes;
+
+}
+
 const response=
 await fetch(
 API_URL+'?sheet=EXPEDIENTES'
