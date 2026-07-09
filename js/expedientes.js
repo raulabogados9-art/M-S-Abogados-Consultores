@@ -249,6 +249,10 @@ bootstrap.Modal
 
 cacheSistema.expedientes = [];
 
+/* Elimina el cache del frontend */
+cacheSmart.clear('expedientes');
+
+/* Recargar desde el servidor */
 await window.cargarExpedientes();
 
 } // 🔥 ESTE CIERRE FALTABA
@@ -295,6 +299,8 @@ datos;
 renderizarExpedientes(
 datos
 );
+
+return datos;
 
 }
 catch(error){
