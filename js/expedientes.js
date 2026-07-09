@@ -21,6 +21,47 @@ async function cargarPersonas(){
 
 try{
 
+/* ==========================
+USAR CACHE SI YA EXISTE
+========================== */
+
+if(
+cacheSistema.personas &&
+cacheSistema.personas.length > 0
+){
+
+personas = cacheSistema.personas;
+
+const combo =
+document.getElementById(
+'cmbPersonaResponsable'
+);
+
+if(combo){
+
+combo.innerHTML =
+'<option value="">Seleccione...</option>';
+
+personas
+.filter(p=>p.Activo==="Si")
+.forEach(persona=>{
+
+combo.innerHTML += `
+<option
+value="${persona.Nombre}"
+data-actividad="${persona.Actividad||''}">
+${persona.Nombre}
+</option>
+`;
+
+});
+
+}
+
+return personas;
+
+}
+
 const response =
 await fetch(API_URL+'?sheet=PERSONAS');
 
@@ -116,7 +157,6 @@ async function abrirModalExpediente() {
     try {
 
         // 2. FORZAR carga real de personas (no cache vieja)
-        cacheSistema.personas = [];
         await cargarPersonas();
 
         console.log('PERSONAS CARGADAS:', cacheSistema.personas);
