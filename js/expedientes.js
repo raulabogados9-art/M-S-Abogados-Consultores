@@ -593,33 +593,36 @@ headers:{
 'Content-Type':'text/plain;charset=utf-8'
 },
 body:JSON.stringify({
-sheet:'PRESTADOS',
-...prestado
-})
-});
 
-await fetch(API_URL,{
-method:'POST',
-headers:{
-'Content-Type':'text/plain;charset=utf-8'
-},
-body:JSON.stringify({
-sheet:'MOVIMIENTOS',
-...movimiento
-})
-});
+action:'PRESTAR_EXPEDIENTE',
 
-await fetch(API_URL,{
-method:'POST',
-headers:{
-'Content-Type':'text/plain;charset=utf-8'
-},
-body:JSON.stringify({
-action:'ELIMINAR_EXPEDIENTE',
-ID:id
-})
-});
+IDExpediente:id,
 
+ID:prestado.ID,
+
+IDMovimiento:movimiento.ID,
+
+NoExpediente:expediente,
+NumeroInterno:interno,
+
+PersonaResponsable:responsable,
+Actividad:actividad,
+
+FechaPrimerSalida:fecha,
+FechaUltimoMovimiento:fecha,
+
+Observaciones:observaciones,
+
+UsuarioCaptura:usuarioCaptura,
+
+UsuarioSistema:
+sessionStorage.getItem('nombre'),
+
+FechaHora:fecha
+
+})
+
+});
 alert(
 'Expediente prestado correctamente'
 );
