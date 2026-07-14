@@ -2,67 +2,70 @@
    📂 CORE DE OPERACIONES: GESTIÓN DE EXPEDIENTES Y MOVIMIENTOS
    M&S ABOGADOS CONSULTORES — MÁXIMO RENDIMIENTO DE TABLAS
    ========================================================== */
+let personasSistema = [];
+let actividadesSistema = [];
 
-let expedientesSistema = [];
-
-// Escucha activa en tiempo real para el input de búsqueda (Optimizado)
-document.addEventListener('DOMContentLoaded', () => {
-    const inputBuscar = document.getElementById('txtBuscarExpediente');
-    if (inputBuscar) {
-        inputBuscar.addEventListener('input', (e) => {
-            const termino = e.target.value.toLowerCase().trim();
-            filtrarTablaExpedientesEnPantalla(termino);
-        });
-    }
-});
-
-/* ==========================================================
-   📊 CARGAR Y RENDERIZAR TABLA PRINCIPAL DE EXPEDIENTES
-   ========================================================== */
-async function cargarExpedientesTabla() {
+async function cargarActividadesCombo() {
     try {
-        const userArea = sessionStorage.getItem('area') || 'General';
-
-        // Descarga fluida protegida bajo el Request Locking del iPhone
-        const datos = await cacheSmart.get('expedientes', async () => {
-            const response = await fetch(${API_URL}?sheet=EXPEDIENTES);
+        actividadesSistema = await cacheSmart.get('actividades', async () => {
+            const response = await fetch(${API_URL}?sheet=ACTIVIDADES_CATALOGO);
             return await response.json();
         });
 
-        expedientesSistema = datos;
+        const combo = document.getElementById('txtPersonaActividad');
+        if (!combo) return;
 
-        const tbody = document.getElementById('tbodyExpedientes');
+        combo.innerHTML = '<option value="">Seleccione...</option>';
+        
+        const fragment = document.createDocumentFragment();
+        actividadesSistema.filter(a => a.Activo === "Si").forEach(a => {
+            const option = document.createElement('option');
+            option.value = a.Actividad;
+            option.textContent = a.Actividad;
+            fragment.appendChild(option);
+        });
+        combo.appendChild(fragment);
+
+    } catch (error) {
+        console.error('Error cargando actividades para el combo:', error);
+    }
+}
+
+async function cargarPersonasTabla() {
+    try {
+        const userArea = sessionStorage.getItem('area') || 'General';
+
+        const datos = await cacheSmart.get('personas', async () => {
+            const response = await fetch(${API_URL}?sheet=PERSONAS);
+            return await response.json();
+        });
+
+        cacheSistema.personas = datos;
+        personasSistema = datos;
+
+        const tbody = document.getElementById('tbodyPersonas');
         if (!tbody) return;
 
         tbody.innerHTML = '';
-        
-        // DocumentFragment: Evita el Reflow masivo en Safari/Chrome de iOS
         const fragment = document.createDocumentFragment();
 
-        // Aplicamos el filtro de seguridad de departamento
-        const datosFiltrados = expedientesSistema.filter(exp => {
+        // Filtro estricto departamental
+        const datosFiltrados = datos.filter(p => {
             if (userArea === 'General' || userArea === 'Administrador') return true;
-            return String(exp.Area || '').trim().toLowerCase() === userArea.toLowerCase();
+            return String(p.Area || '').trim().toLowerCase() === userArea.toLowerCase();
         });
 
-        datosFiltrados.forEach(exp => {
+        datosFiltrados.forEach(p => {
             const tr = document.createElement('tr');
-            // Clase CSS para el estatus de disponibilidad del expediente
-            const badgeEstado = exp.Estado === 'Disponible' ? 'bg-success' : 'bg-warning text-dark';
-
+            const badgeClass = p.Activo === 'Si' ? 'bg-success' : 'bg-danger';
+            
             tr.innerHTML = `
-                <td><strong>${exp.NoExpediente || ''}</strong></td>
-                <td>${exp.NumeroInterno || ''}</td>
-                <td><span class="badge ${badgeEstado}">${exp.Estado || 'Disponible'}</span></td>
-                <td>${exp.PersonaResponsable || 'Ninguno'}</td>
-                <td>${exp.Actividad || 'Ninguna'}</td>
-                <td><small class="text-muted">${exp.Observaciones || ''}</small></td>
+                <td><strong>${p.Nombre || ''}</strong></td>
+                <td><span class="badge bg-secondary">${p.Actividad || ''}</span></td>
+                <td><span class="badge ${badgeClass}">${p.Activo || ''}</span></td>
                 <td class="text-center">
-                    <button class="btn btn-primary btn-sm" 
-                            onclick="abrirModalPrestamo('${exp.ID}', '${exp.NoExpediente}', '${exp.NumeroInterno}')"
-                            ${exp.Estado === 'Prestado' ? 'disabled' : ''}>
-                        📋 Prestar
-                    </button>
+                    <button class="btn btn-warning btn-sm text-dark" onclick="editarPersona('${p.ID}', '${p.Nombre}', '${p.Actividad}')">Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="cambiarEstadoPersona('${p.ID}', '${p.Activo}')">${p.Activo === 'Si' ? 'Desactivar' : 'Activar'}</button>
                 </td>
             `;
             fragment.appendChild(tr);
@@ -71,18 +74,90 @@ async function cargarExpedientesTabla() {
         tbody.appendChild(fragment);
 
     } catch (error) {
-        console.error('Error cargando la tabla de expedientes:', error);
+        console.error('Error al poblar la tabla de personas:', error);
     }
 }
 
-/* ==========================================================
-   🔍 MOTOR DE FILTRADO ULTRA RÁPIDO EN CLIENTE (SIN FETCH)
-   ========================================================== */
-function filtrarTablaExpedientesEnPantalla(termino) {
-    const tbody = document.getElementById('tbodyExpedientes');
-    if (!tbody) return;
+async function abrirModalPersona() {
+    document.getElementById('txtPersonaID').value = '';
+    document.getElementById('txtPersonaNombre').value = '';
+    await cargarActividadesCombo();
+    document.getElementById('txtPersonaActividad').value = '';
 
-    const filas = tbody.getElementsByTagName('tr');
-    
-    for (let i = 0; i < filas.length; i++) {
-        const textoFila = filas
+    const modal = new bootstrap.Modal(document.getElementById('modalPersona'));
+    modal.show();
+}
+
+async function editarPersona(id, nombre, actividad) {
+    document.getElementById('txtPersonaID').value = id;
+    document.getElementById('txtPersonaNombre').value = nombre;
+    await cargarActividadesCombo();
+    document.getElementById('txtPersonaActividad').value = actividad;
+
+    const modal = new bootstrap.Modal(document.getElementById('modalPersona'));
+    modal.show();
+}
+
+async function guardarPersona() {
+    try {
+        const idElement = document.getElementById('txtPersonaID').value;
+        const nombre = document.getElementById('txtPersonaNombre').value.trim();
+        const actividad = document.getElementById('txtPersonaActividad').value.trim();
+        const userArea = sessionStorage.getItem('area') || 'General';
+
+        if (!nombre || !actividad) {
+            alert('Por favor, complete todos los campos obligatorios.');
+            return;
+        }
+
+        const persona = {
+            ID: idElement || Date.now(),
+            Nombre: nombre,
+            Actividad: actividad,
+            Area: userArea, 
+            Activo: 'Si'
+        };
+
+        await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({ sheet: 'PERSONAS', ...persona })
+        });
+
+        alert('Registro de personal guardado con éxito.');
+        cacheSmart.clear('personas');
+
+        const modalElement = document.getElementById('modalPersona');
+        const instanciaModal = bootstrap.Modal.getInstance(modalElement);
+        if (instanciaModal) instanciaModal.hide();
+
+        await cargarPersonasTabla();
+
+    } catch (error) {
+        console.error('Error al guardar la persona:', error);
+    }
+}
+
+async function cambiarEstadoPersona(id, estadoActual) {
+    try {
+        const nuevoEstado = estadoActual === "Si" ? "No" : "Si";
+        const respuesta = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({ action: "CAMBIAR_ESTADO_PERSONA", ID: id, Activo: nuevoEstado })
+        });
+
+        const resultado = await respuesta.json();
+        if (resultado.success) {
+            alert("Estatus de personal modificado.");
+            cacheSmart.clear('personas');
+            await cargarPersonasTabla();
+        }
+    } catch (error) {
+        console.error('Error al cambiar el estado del personal:', error);
+    }
+}
+
+window.cambiarEstadoPersona = cambiarEstadoPersona;
+window.editarPersona = editarPersona;
+window.guardarPersona = guardarPersona;
+window.cargarPersonasTabla = cargarPersonasTabla;
+window.abrirModalPersona = abrirModalPersona;
