@@ -241,11 +241,11 @@ const expediente = {
 
 ID: Date.now(),
 
-NoExpediente:
-document.getElementById('txtNoExpediente').value,
-
 NumeroInterno:
 document.getElementById('txtNumeroInterno').value,
+    
+NoExpediente:
+document.getElementById('txtNoExpediente').value,
 
 PersonaResponsable:
 document.getElementById('cmbPersonaResponsable').value,
