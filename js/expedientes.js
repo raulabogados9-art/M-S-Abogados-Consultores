@@ -708,6 +708,8 @@ Devolver
 
 });
 
+}
+
 async function devolverExpediente(
 id,
 expediente,
