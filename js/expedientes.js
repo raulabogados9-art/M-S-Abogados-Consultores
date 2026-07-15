@@ -704,9 +704,9 @@ Devolver
 
 </tr>
 
-});
+`;
 
-}
+});
 
 async function devolverExpediente(
 id,
