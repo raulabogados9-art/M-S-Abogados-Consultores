@@ -679,9 +679,9 @@ tbody.innerHTML+=`
 
 <tr>
 
-<td>${exp.NoExpediente}</td>
-<td>${exp.NumeroInterno}</td>
-<td>${exp.PersonaResponsable}</td>
+<td>${exp.NumeroInterno || ''}</td>
+<td>${exp.NoExpediente || ''}</td>
+<td>${exp.PersonaResponsable || ''}</td>
 
 <td>
 
@@ -703,8 +703,6 @@ Devolver
 </td>
 
 </tr>
-
-`;
 
 });
 
