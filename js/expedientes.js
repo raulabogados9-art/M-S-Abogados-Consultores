@@ -395,8 +395,8 @@ document.createElement('tr');
 
 tr.innerHTML = `
 
-<td>${exp.NoExpediente||''}</td>
 <td>${exp.NumeroInterno||''}</td>
+<td>${exp.NoExpediente||''}</td>
 <td>${exp.PersonaResponsable||''}</td>
 <td>${exp.Actividad||''}</td>
 <td>${exp.UsuarioCaptura||''}</td>
@@ -407,8 +407,8 @@ tr.innerHTML = `
 class="btn btn-primary btn-sm"
 onclick="prestarExpediente(
 '${exp.ID}',
-'${exp.NoExpediente}',
 '${exp.NumeroInterno}',
+'${exp.NoExpediente}',
 '${exp.PersonaResponsable}',
 '${exp.Actividad}',
 '${exp.Observaciones}',
@@ -452,8 +452,8 @@ function filtrarExpedientes(){
 
         if(texto){
             ok =
-                (e.NoExpediente||'').toLowerCase().includes(texto) ||
                 (e.NumeroInterno||'').toLowerCase().includes(texto) ||
+                (e.NoExpediente||'').toLowerCase().includes(texto) ||
                 (e.PersonaResponsable||'').toLowerCase().includes(texto) ||
                 (e.Actividad||'').toLowerCase().includes(texto);
         }
@@ -551,8 +551,8 @@ const prestado={
 
 ID:Date.now(),
 
-NoExpediente:expediente,
 NumeroInterno:interno,
+NoExpediente:expediente,
 PersonaResponsable:responsable,
 Actividad:actividad,
 
@@ -572,8 +572,8 @@ const movimiento={
 
 ID:Date.now(),
 
-NoExpediente:expediente,
 NumeroInterno:interno,
+NoExpediente:expediente,
 
 TipoMovimiento:'Salida',
 
@@ -602,9 +602,9 @@ ID:prestado.ID,
 
 IDMovimiento:movimiento.ID,
 
-NoExpediente:expediente,
 NumeroInterno:interno,
-
+NoExpediente:expediente,
+    
 PersonaResponsable:responsable,
 Actividad:actividad,
 
@@ -690,8 +690,8 @@ class="btn btn-warning btn-sm"
 onclick="devolverExpediente(
 
 '${exp.ID}',
-'${exp.NoExpediente}',
 '${exp.NumeroInterno}',
+'${exp.NoExpediente}',
 '${exp.PersonaResponsable}'
 
 )">
@@ -730,8 +730,8 @@ const movimiento={
 
 ID:Date.now(),
 
-NoExpediente:expediente,
 NumeroInterno:interno,
+NoExpediente:expediente,
 
 TipoMovimiento:'Devolucion',
 
@@ -859,9 +859,9 @@ tbody.innerHTML+=`
 
 <td>${fecha}</td>
 
-<td>${mov.NoExpediente||''}</td>
-
 <td>${mov.NumeroInterno||''}</td>
+
+<td>${mov.NoExpediente||''}</td>
 
 <td>${mov.TipoMovimiento||''}</td>
 
