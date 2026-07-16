@@ -803,6 +803,17 @@ devolviendoExpediente=false;
 
 }
 
+// ===============================
+// CONTROL ORDEN HISTÓRICO
+// ===============================
+
+let historicoDatos = [];
+
+let ordenHistorico = {
+    columna: null,
+    direccion: "asc"
+};
+
 /* ==========================
 HISTORICO
 ========================== */
@@ -817,10 +828,12 @@ API_URL+
 '?sheet=MOVIMIENTOS'
 );
 
-const datos=
+const datos =
 await response.json();
 
-const tbody=
+historicoDatos = datos;
+
+const tbody =
 document.getElementById(
 'tbodyHistorico'
 );
