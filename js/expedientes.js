@@ -712,8 +712,8 @@ Devolver
 
 async function devolverExpediente(
 id,
-expediente,
 interno,
+expediente,
 responsable
 ){
 
