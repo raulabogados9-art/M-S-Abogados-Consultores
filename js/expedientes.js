@@ -531,8 +531,8 @@ PRESTAR
 
 async function prestarExpediente(
 id,
-expediente,
 interno,
+expediente,
 responsable,
 actividad,
 observaciones,
