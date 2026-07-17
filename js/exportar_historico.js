@@ -1,9 +1,8 @@
 // ==========================================
 // EXPORTAR HISTÓRICO
 // M&S ABOGADOS CONSULTORES
-// REPORTE PROFESIONAL XLSX
+// REPORTE PROFESIONAL XLSX V2
 // ==========================================
-
 
 
 // ==========================================
@@ -56,7 +55,6 @@ async function cargarLogo(){
     }
     catch(error){
 
-
         console.error(
             "Error cargando logo:",
             error
@@ -65,18 +63,16 @@ async function cargarLogo(){
 
         return null;
 
-
     }
-
 
 }
 
 
 
 
-
 // ==========================================
-// CREAR ENCABEZADO DEL REPORTE
+// CREAR ENCABEZADO DEL REPORTE V2
+// IDENTIDAD VISUAL M&S
 // ==========================================
 
 function crearEncabezadoReporte(
@@ -86,13 +82,26 @@ function crearEncabezadoReporte(
 ){
 
 
+    // Espacio para logo
+
+    worksheet.getRow(1).height = 35;
+    worksheet.getRow(2).height = 22;
+    worksheet.getRow(3).height = 28;
+
+
+
+    // ======================================
+    // TITULO PRINCIPAL
+    // ======================================
+
+
     worksheet.mergeCells(
-        "A1:E1"
+        "B1:E1"
     );
 
 
     const titulo =
-    worksheet.getCell("A1");
+    worksheet.getCell("B1");
 
 
     titulo.value =
@@ -103,7 +112,10 @@ function crearEncabezadoReporte(
 
         name:"Calibri",
         size:18,
-        bold:true
+        bold:true,
+        color:{
+            argb:"1F4E79"
+        }
 
     };
 
@@ -116,18 +128,21 @@ function crearEncabezadoReporte(
     };
 
 
-    worksheet.getRow(1).height=30;
 
 
+
+    // ======================================
+    // SISTEMA
+    // ======================================
 
 
     worksheet.mergeCells(
-        "A2:E2"
+        "B2:E2"
     );
 
 
     const sistema =
-    worksheet.getCell("A2");
+    worksheet.getCell("B2");
 
 
     sistema.value =
@@ -136,20 +151,30 @@ function crearEncabezadoReporte(
 
     sistema.font={
 
+        name:"Calibri",
         size:12,
-        italic:true
+        italic:true,
+        color:{
+            argb:"666666"
+        }
 
     };
 
 
     sistema.alignment={
 
-        horizontal:"center"
+        horizontal:"center",
+        vertical:"middle"
 
     };
 
 
 
+
+
+    // ======================================
+    // NOMBRE DEL REPORTE
+    // ======================================
 
 
     worksheet.mergeCells(
@@ -167,22 +192,44 @@ function crearEncabezadoReporte(
 
     reporte.font={
 
+        name:"Calibri",
         size:15,
-        bold:true
+        bold:true,
+        color:{
+            argb:"17365D"
+        }
 
     };
 
 
     reporte.alignment={
 
-        horizontal:"center"
+        horizontal:"center",
+        vertical:"middle"
 
     };
 
 
-    worksheet.getRow(3).height=25;
+
+    reporte.border={
+
+        bottom:{
+            style:"medium",
+            color:{
+                argb:"1F4E79"
+            }
+        }
+
+    };
 
 
+
+
+
+
+    // ======================================
+    // INFORMACIÓN DEL REPORTE
+    // ======================================
 
 
     worksheet.getCell("A5").value =
@@ -191,7 +238,6 @@ function crearEncabezadoReporte(
 
     worksheet.getCell("B5").value =
     usuario || "";
-
 
 
 
@@ -208,7 +254,6 @@ function crearEncabezadoReporte(
 
 
 
-
     worksheet.getCell("A7").value =
     "Total movimientos:";
 
@@ -219,9 +264,50 @@ function crearEncabezadoReporte(
 
 
 
-    worksheet.getRow(5).height=20;
-    worksheet.getRow(6).height=20;
-    worksheet.getRow(7).height=20;
+
+    // Estilo etiquetas
+
+    [
+        "A5",
+        "A6",
+        "A7"
+    ]
+    .forEach(function(celda){
+
+
+        worksheet.getCell(celda).font={
+
+            bold:true,
+            color:{
+                argb:"666666"
+            }
+
+        };
+
+
+    });
+
+
+
+
+    [
+        "B5",
+        "B6",
+        "B7"
+    ]
+    .forEach(function(celda){
+
+
+        worksheet.getCell(celda).font={
+
+            color:{
+                argb:"000000"
+            }
+
+        };
+
+
+    });
 
 
 
@@ -229,6 +315,9 @@ function crearEncabezadoReporte(
     worksheet.addRow([]);
 
 
+
+
+    // Encabezados tabla
 
     worksheet.addRow([
 
@@ -257,12 +346,7 @@ function ajustarColumnas(
 
 
         {
-            width:15
-        },
-
-
-        {
-            width:18
+            width:16
         },
 
 
@@ -272,12 +356,17 @@ function ajustarColumnas(
 
 
         {
-            width:25
+            width:22
         },
 
 
         {
-            width:35
+            width:28
+        },
+
+
+        {
+            width:38
         }
 
 
@@ -291,7 +380,8 @@ function ajustarColumnas(
 
 
 // ==========================================
-// FORMATO DE TABLA
+// FORMATO DE TABLA V2
+// IDENTIDAD VISUAL M&S
 // ==========================================
 
 function aplicarFormatoTabla(
@@ -299,7 +389,8 @@ function aplicarFormatoTabla(
 ){
 
 
-    const filaInicio = 9;
+    const filaEncabezado = 9;
+
 
     const ultimaFila =
     worksheet.lastRow.number;
@@ -307,8 +398,108 @@ function aplicarFormatoTabla(
 
 
 
+    // ======================================
+    // FORMATO ENCABEZADO TABLA
+    // ======================================
+
+
+    const encabezado =
+    worksheet.getRow(
+        filaEncabezado
+    );
+
+
+
+    encabezado.font={
+
+        name:"Calibri",
+        size:11,
+        bold:true,
+        color:{
+            argb:"FFFFFF"
+        }
+
+    };
+
+
+
+    encabezado.fill={
+
+        type:"pattern",
+
+        pattern:"solid",
+
+        fgColor:{
+            argb:"1F4E79"
+        }
+
+    };
+
+
+
+    encabezado.alignment={
+
+        horizontal:"center",
+        vertical:"middle",
+        wrapText:true
+
+    };
+
+
+
+    encabezado.height=28;
+
+
+
+
+
+    encabezado.eachCell(
+        function(cell){
+
+
+            cell.border={
+
+
+                top:{
+                    style:"thin"
+                },
+
+
+                left:{
+                    style:"thin"
+                },
+
+
+                bottom:{
+                    style:"thin"
+                },
+
+
+                right:{
+                    style:"thin"
+                }
+
+
+            };
+
+
+        }
+
+    );
+
+
+
+
+
+
+
+    // ======================================
+    // FORMATO DE DATOS
+    // ======================================
+
+
     for(
-        let i=filaInicio;
+        let i=filaEncabezado+1;
         i<=ultimaFila;
         i++
     ){
@@ -319,6 +510,10 @@ function aplicarFormatoTabla(
 
 
 
+        fila.height=22;
+
+
+
         fila.alignment={
 
             vertical:"middle",
@@ -326,9 +521,6 @@ function aplicarFormatoTabla(
 
         };
 
-
-
-        fila.height=22;
 
 
 
@@ -363,35 +555,42 @@ function aplicarFormatoTabla(
                 };
 
 
+
             }
+
         );
+
+
+
+        // Centrar columnas clave
+
+
+        fila.getCell(1).alignment={
+
+            horizontal:"center",
+            vertical:"middle"
+
+        };
+
+
+        fila.getCell(2).alignment={
+
+            horizontal:"center",
+            vertical:"middle"
+
+        };
+
+
+        fila.getCell(3).alignment={
+
+            horizontal:"center",
+            vertical:"middle"
+
+        };
 
 
     }
 
-
-
-
-
-    const encabezado =
-    worksheet.getRow(9);
-
-
-
-    encabezado.font={
-
-        bold:true
-
-    };
-
-
-
-    encabezado.alignment={
-
-        horizontal:"center",
-        vertical:"middle"
-
-    };
 
 
 
@@ -400,9 +599,8 @@ function aplicarFormatoTabla(
 
 
 
-
 // ==========================================
-// CONFIGURAR IMPRESIÓN
+// CONFIGURAR IMPRESIÓN V2
 // ==========================================
 
 function configurarImpresion(
@@ -410,30 +608,22 @@ function configurarImpresion(
 ){
 
 
-
     worksheet.pageSetup={
-
 
         orientation:
         "landscape",
 
-
         fitToPage:true,
-
 
         fitToWidth:1,
 
-
         fitToHeight:0
-
 
     };
 
 
 
-
     worksheet.pageMargins={
-
 
         left:0.25,
 
@@ -447,23 +637,24 @@ function configurarImpresion(
 
         footer:0.20
 
-
     };
 
 
 }
 
+
+
+
+
+
 // ==========================================
-// EXPORTAR HISTÓRICO
+// EXPORTAR HISTÓRICO V2
 // ==========================================
 
 async function exportarHistorico(){
 
 
 try{
-
-
-    // Validar información
 
 
     if(
@@ -496,6 +687,402 @@ try{
     workbook.addWorksheet(
         "HISTÓRICO"
     );
+
+
+
+
+
+    // ======================================
+    // INSERTAR LOGO
+    // ======================================
+
+
+    const logo =
+    await cargarLogo();
+
+
+
+    if(logo){
+
+
+        const logoId =
+        workbook.addImage({
+
+            base64:logo,
+
+            extension:"png"
+
+        });
+
+
+
+
+        worksheet.addImage(
+
+            logoId,
+
+            {
+
+                tl:{
+
+                    col:0,
+
+                    row:0
+
+                },
+
+
+                ext:{
+
+                    width:120,
+
+                    height:60
+
+                }
+
+            }
+
+        );
+
+
+    }
+
+
+
+
+
+    // ======================================
+    // ENCABEZADO
+    // ======================================
+
+
+    crearEncabezadoReporte(
+
+        worksheet,
+
+        sessionStorage.getItem(
+            "nombre"
+        ),
+
+        historicoDatos.length
+
+    );
+
+
+
+
+
+
+
+    // ======================================
+    // CARGAR MOVIMIENTOS
+    // ======================================
+
+
+    historicoDatos.forEach(
+
+        function(mov){
+
+
+            let fecha="";
+
+
+
+            if(mov.FechaHora){
+
+
+                const fechaObj =
+                new Date(
+                    mov.FechaHora
+                );
+
+
+
+                fecha =
+                fechaObj.toLocaleDateString(
+
+                    "es-MX",
+
+                    {
+
+                        timeZone:
+                        "America/Mexico_City"
+
+                    }
+
+                );
+
+
+            }
+
+
+
+
+
+            worksheet.addRow([
+
+
+                fecha,
+
+
+                mov.NumeroInterno || "",
+
+
+                mov.NoExpediente || "",
+
+
+                mov.TipoMovimiento || "",
+
+
+                mov.PersonaResponsable || ""
+
+
+            ]);
+
+
+
+        }
+
+    );
+
+
+
+
+
+
+
+    // ======================================
+    // FORMATO FINAL
+    // ======================================
+
+
+    ajustarColumnas(
+        worksheet
+    );
+
+
+
+    aplicarFormatoTabla(
+        worksheet
+    );
+
+
+
+    configurarImpresion(
+        worksheet
+    );
+
+
+
+
+
+
+
+    // ======================================
+    // CONGELAR ENCABEZADO
+    // ======================================
+
+
+    worksheet.views=[
+
+
+        {
+
+            state:"frozen",
+
+            ySplit:9
+
+        }
+
+
+    ];
+
+
+
+
+
+
+    // ======================================
+    // FILTRO
+    // ======================================
+
+
+    worksheet.autoFilter={
+
+
+        from:"A9",
+
+        to:"E9"
+
+
+    };
+
+
+
+
+
+
+
+
+    // ======================================
+    // GENERAR ARCHIVO
+    // ======================================
+
+
+    const buffer =
+    await workbook.xlsx.writeBuffer();
+
+
+
+
+    const blob =
+    new Blob(
+
+        [
+
+            buffer
+
+        ],
+
+        {
+
+            type:
+
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+        }
+
+    );
+
+
+
+
+
+
+    const url =
+    URL.createObjectURL(
+        blob
+    );
+
+
+
+
+
+
+    const enlace =
+    document.createElement(
+        "a"
+    );
+
+
+
+
+
+
+    const fechaArchivo =
+
+    new Date()
+
+    .toISOString()
+
+    .substring(
+
+        0,
+
+        10
+
+    );
+
+
+
+
+
+
+
+    enlace.href=url;
+
+
+
+    enlace.download =
+
+    `Historico_Expedientes_${fechaArchivo}.xlsx`;
+
+
+
+
+
+
+
+    document.body.appendChild(
+        enlace
+    );
+
+
+
+    enlace.click();
+
+
+
+
+
+    document.body.removeChild(
+        enlace
+    );
+
+
+
+
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+
+
+
+
+
+    alert(
+
+        "Histórico exportado correctamente."
+
+    );
+
+
+
+
+}
+catch(error){
+
+
+
+    console.error(
+
+        "Error exportando histórico:",
+
+        error
+
+    );
+
+
+
+    alert(
+
+        "Error exportando histórico: " +
+
+        error.message
+
+    );
+
+
+
+}
+
+
+
+}
 
 
 
