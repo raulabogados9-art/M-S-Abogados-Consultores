@@ -166,48 +166,74 @@ function ajustarColumnas(){
 
 async function exportarHistorico(){
 
-    if(
-        !historicoDatos ||
-        historicoDatos.length===0
-    ){
+try{
 
-        alert(
-            "No existen registros para exportar."
-        );
+    // Validar datos disponibles
+    if(!historicoDatos || historicoDatos.length===0){
 
+        alert("No hay datos históricos para exportar.");
         return;
 
     }
 
 
-    const workbook =
-        new ExcelJS.Workbook();
-
-    const worksheet =
-        workbook.addWorksheet(
-            "Histórico"
-        );
+    // Crear libro Excel
+    const workbook = new ExcelJS.Workbook();
 
 
-    const usuario =
-        sessionStorage.getItem(
-            "nombre"
-        ) || "Usuario";
+    // Crear hoja
+    const worksheet = workbook.addWorksheet(
+        "HISTÓRICO"
+    );
 
 
+    // Crear encabezados
     crearEncabezadoReporte(
+        worksheet
+    );
 
-        worksheet,
 
-        usuario,
-
-        historicoDatos.length
-
+    console.log(
+        "Libro creado:",
+        workbook
     );
 
 
     alert(
-        "Bloque 1 completado correctamente."
+        "Bloque 2 completado correctamente."
     );
+
+
+}catch(error){
+
+    console.error(
+        "Error exportando histórico:",
+        error
+    );
+
+    alert(
+        "Error en Bloque 2: "+
+        error.message
+    );
+
+}
+
+}
+
+function crearEncabezadoReporte(worksheet){
+
+
+    worksheet.addRow([
+
+        "ID",
+        "Número Interno",
+        "Número Expediente",
+        "Cliente",
+        "Actividad",
+        "Fecha",
+        "Estado"
+
+    ]);
+
 
 }
