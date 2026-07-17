@@ -416,20 +416,33 @@ Nuevo Expediente
 
     <table class="table table-bordered">
 
-        <thead>
+       <thead>
 
-            <tr>
+<tr>
 
-                <th>Fecha</th>
-                <th>Expediente</th>
-                <th>Interno</th>
-                <th>Movimiento</th>
-                <th>Responsable</th>
+<th onclick="ordenarHistorico('FechaHora')">
+Fecha
+</th>
 
-            </tr>
+<th onclick="ordenarHistorico('NoExpediente')">
+Expediente
+</th>
 
-        </thead>
+<th onclick="ordenarHistorico('NumeroInterno')">
+Interno
+</th>
 
+<th onclick="ordenarHistorico('TipoMovimiento')">
+Movimiento
+</th>
+
+<th onclick="ordenarHistorico('PersonaResponsable')">
+Responsable
+</th>
+
+</tr>
+
+</thead>
         <tbody id="tbodyHistorico">
 
         </tbody>
