@@ -1023,6 +1023,66 @@ tbody.innerHTML+=`
 });
 
 }
+
+// ===============================
+// FILTRO HISTÓRICO
+// ===============================
+
+document.addEventListener(
+"input",
+function(e){
+
+if(!e.target.classList.contains("filtroHistorico")){
+return;
+}
+
+
+let filtros =
+document.querySelectorAll(
+".filtroHistorico"
+);
+
+
+let datosFiltrados =
+historicoDatos.filter(mov=>{
+
+
+return [...filtros].every(f=>{
+
+
+let texto =
+f.value
+.toLowerCase()
+.trim();
+
+
+if(texto===""){
+return true;
+}
+
+
+let campo =
+f.dataset.columna;
+
+
+return String(
+mov[campo] || ""
+)
+.toLowerCase()
+.includes(texto);
+
+
+});
+
+
+});
+
+
+mostrarHistorico(datosFiltrados);
+
+
+});
+
 function cargarSelectPersonas(){
 
 return;
