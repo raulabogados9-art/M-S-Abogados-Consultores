@@ -59,6 +59,81 @@ function crearEncabezadoReporte(
     totalRegistros
 ){
 
+
+    worksheet.addRow([
+
+        "Fecha y Hora",
+        "Número Interno",
+        "No. Expediente",
+        "Tipo Movimiento",
+        "Persona Responsable"
+
+    ]);
+
+
+    worksheet.mergeCells("A2:E2");
+
+    worksheet.getCell("A2").value =
+    "M&S ABOGADOS CONSULTORES";
+
+
+    worksheet.getCell("A2").font={
+        size:18,
+        bold:true
+    };
+
+
+    worksheet.getCell("A2").alignment={
+        horizontal:"center"
+    };
+
+
+
+    worksheet.mergeCells("A3:E3");
+
+    worksheet.getCell("A3").value =
+    "Sistema de Gestión de Expedientes";
+
+
+    worksheet.getCell("A3").alignment={
+        horizontal:"center"
+    };
+
+
+
+    worksheet.getCell("A5").value =
+    "Generado por:";
+
+
+    worksheet.getCell("B5").value =
+    usuario || "";
+
+
+
+    worksheet.getCell("A6").value =
+    "Fecha:";
+
+
+    worksheet.getCell("B6").value =
+    new Date();
+
+
+
+    worksheet.getCell("B6").numFmt =
+    "dd/mm/yyyy hh:mm:ss";
+
+
+
+    worksheet.getCell("A7").value =
+    "Total movimientos:";
+
+
+    worksheet.getCell("B7").value =
+    totalRegistros || 0;
+
+
+}
+
     // Agregar registros del histórico
 
 historicoDatos.forEach(mov=>{
@@ -361,9 +436,10 @@ try{
 
     // Crear encabezados
     crearEncabezadoReporte(
-        worksheet
-    );
-
+    worksheet,
+    sessionStorage.getItem("nombre"),
+    historicoDatos.length
+);
 
     console.log(
         "Libro creado:",
@@ -389,23 +465,5 @@ try{
     );
 
 }
-
-}
-
-function crearEncabezadoReporte(worksheet){
-
-
-    worksheet.addRow([
-
-        "ID",
-        "Número Interno",
-        "Número Expediente",
-        "Cliente",
-        "Actividad",
-        "Fecha",
-        "Estado"
-
-    ]);
-
 
 }
