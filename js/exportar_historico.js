@@ -113,6 +113,124 @@ console.log(
     historicoDatos.length
 );
 
+    // ===============================
+// FORMATO DEL REPORTE
+// ===============================
+
+
+// Congelar encabezado
+worksheet.views = [
+    {
+        state:'frozen',
+        ySplit:1
+    }
+];
+
+
+// Ajustar ancho de columnas
+worksheet.columns = [
+
+    {
+        width:22
+    },
+
+    {
+        width:18
+    },
+
+    {
+        width:22
+    },
+
+    {
+        width:22
+    },
+
+    {
+        width:30
+    }
+
+];
+
+
+// Aplicar filtro
+worksheet.autoFilter = {
+    from:'A1',
+    to:'E1'
+};
+
+
+// Formato encabezados
+const encabezado =
+worksheet.getRow(1);
+
+
+encabezado.font = {
+    bold:true
+};
+
+
+encabezado.alignment = {
+    horizontal:'center'
+};
+
+
+encabezado.height = 25;
+
+
+    // ===============================
+// CREAR ARCHIVO XLSX
+// ===============================
+
+
+const buffer =
+await workbook.xlsx.writeBuffer();
+
+
+const blob =
+new Blob(
+    [
+        buffer
+    ],
+    {
+        type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    }
+);
+
+
+const url =
+URL.createObjectURL(blob);
+
+
+const enlace =
+document.createElement('a');
+
+
+const fechaArchivo =
+new Date()
+.toISOString()
+.substring(0,10);
+
+
+enlace.href=url;
+
+
+enlace.download =
+`Historico_Expedientes_${fechaArchivo}.xlsx`;
+
+
+document.body.appendChild(enlace);
+
+
+enlace.click();
+
+
+document.body.removeChild(enlace);
+
+
+URL.revokeObjectURL(url);
+
     // Título principal
     worksheet.mergeCells("C2:G2");
 
@@ -254,7 +372,7 @@ try{
 
 
     alert(
-"Bloque 3 completado correctamente."
+"Bloque 4 completado correctamente."
 );
 
 
