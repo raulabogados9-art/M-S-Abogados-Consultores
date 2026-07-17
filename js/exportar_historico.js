@@ -59,6 +59,60 @@ function crearEncabezadoReporte(
     totalRegistros
 ){
 
+    // Agregar registros del histórico
+
+historicoDatos.forEach(mov=>{
+
+
+    let fecha='';
+
+
+    if(mov.FechaHora){
+
+        fecha=
+        new Date(
+            mov.FechaHora
+        )
+        .toLocaleString(
+            'es-MX',
+            {
+                timeZone:'America/Mexico_City',
+                day:'2-digit',
+                month:'2-digit',
+                year:'numeric',
+                hour:'2-digit',
+                minute:'2-digit',
+                second:'2-digit',
+                hour12:true
+            }
+        );
+
+    }
+
+
+    worksheet.addRow([
+
+        fecha,
+
+        mov.NumeroInterno || '',
+
+        mov.NoExpediente || '',
+
+        mov.TipoMovimiento || '',
+
+        mov.PersonaResponsable || ''
+
+    ]);
+
+
+});
+
+
+console.log(
+    "Registros agregados:",
+    historicoDatos.length
+);
+
     // Título principal
     worksheet.mergeCells("C2:G2");
 
@@ -200,8 +254,8 @@ try{
 
 
     alert(
-        "Bloque 2 completado correctamente."
-    );
+"Bloque 3 completado correctamente."
+);
 
 
 }catch(error){
