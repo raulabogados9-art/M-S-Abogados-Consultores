@@ -895,6 +895,134 @@ console.error(error);
 
 }
 
+// ===============================
+// ===============================
+// ORDENAR HISTÓRICO
+// ===============================
+
+function ordenarHistorico(columna){
+
+if(!historicoDatos || historicoDatos.length===0){
+return;
+}
+
+
+if(ordenHistorico.columna===columna){
+
+ordenHistorico.direccion =
+ordenHistorico.direccion==="asc"
+? "desc"
+: "asc";
+
+}else{
+
+ordenHistorico.columna=columna;
+ordenHistorico.direccion="asc";
+
+}
+
+
+let datosOrdenados=[...historicoDatos];
+
+
+datosOrdenados.sort((a,b)=>{
+
+let valorA=a[columna] || "";
+let valorB=b[columna] || "";
+
+
+valorA=valorA.toString().toLowerCase();
+valorB=valorB.toString().toLowerCase();
+
+
+if(valorA<valorB){
+
+return ordenHistorico.direccion==="asc"
+? -1
+: 1;
+
+}
+
+
+if(valorA>valorB){
+
+return ordenHistorico.direccion==="asc"
+? 1
+: -1;
+
+}
+
+
+return 0;
+
+});
+
+
+mostrarHistorico(datosOrdenados);
+
+}
+
+function mostrarHistorico(datos){
+
+const tbody=
+document.getElementById(
+'tbodyHistorico'
+);
+
+
+tbody.innerHTML='';
+
+
+datos.forEach(mov=>{
+
+
+let fecha='';
+
+
+if(mov.FechaHora){
+
+fecha=
+new Date(
+mov.FechaHora
+)
+.toLocaleString(
+'es-MX',
+{
+timeZone:'America/Mexico_City',
+day:'2-digit',
+month:'2-digit',
+year:'numeric',
+hour:'2-digit',
+minute:'2-digit',
+second:'2-digit',
+hour12:true
+}
+);
+
+}
+
+
+tbody.innerHTML+=`
+
+<tr>
+
+<td>${fecha}</td>
+
+<td>${mov.NumeroInterno||''}</td>
+
+<td>${mov.NoExpediente||''}</td>
+
+<td>${mov.TipoMovimiento||''}</td>
+
+<td>${mov.PersonaResponsable||''}</td>
+
+</tr>
+
+`;
+
+});
+
+}
 function cargarSelectPersonas(){
 
 return;
