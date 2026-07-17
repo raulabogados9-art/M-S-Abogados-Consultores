@@ -1,8 +1,9 @@
 // ==========================================
 // EXPORTAR HISTÓRICO
 // M&S ABOGADOS CONSULTORES
-// REPORTE PROFESIONAL XLSX V2
+// REPORTE PROFESIONAL XLSX V2 FINAL
 // ==========================================
+
 
 
 // ==========================================
@@ -55,6 +56,7 @@ async function cargarLogo(){
     }
     catch(error){
 
+
         console.error(
             "Error cargando logo:",
             error
@@ -63,7 +65,9 @@ async function cargarLogo(){
 
         return null;
 
+
     }
+
 
 }
 
@@ -71,7 +75,7 @@ async function cargarLogo(){
 
 
 // ==========================================
-// CREAR ENCABEZADO DEL REPORTE V2
+// CREAR ENCABEZADO DEL REPORTE
 // IDENTIDAD VISUAL M&S
 // ==========================================
 
@@ -82,11 +86,11 @@ function crearEncabezadoReporte(
 ){
 
 
-    // Espacio para logo
 
     worksheet.getRow(1).height = 35;
     worksheet.getRow(2).height = 22;
     worksheet.getRow(3).height = 28;
+
 
 
 
@@ -104,15 +108,20 @@ function crearEncabezadoReporte(
     worksheet.getCell("B1");
 
 
+
     titulo.value =
     "M&S ABOGADOS CONSULTORES";
+
 
 
     titulo.font={
 
         name:"Calibri",
+
         size:18,
+
         bold:true,
+
         color:{
             argb:"1F4E79"
         }
@@ -120,12 +129,16 @@ function crearEncabezadoReporte(
     };
 
 
+
     titulo.alignment={
 
         horizontal:"center",
+
         vertical:"middle"
 
     };
+
+
 
 
 
@@ -145,15 +158,20 @@ function crearEncabezadoReporte(
     worksheet.getCell("B2");
 
 
+
     sistema.value =
     "Sistema de Gestión de Expedientes V2";
+
 
 
     sistema.font={
 
         name:"Calibri",
+
         size:12,
+
         italic:true,
+
         color:{
             argb:"666666"
         }
@@ -161,9 +179,11 @@ function crearEncabezadoReporte(
     };
 
 
+
     sistema.alignment={
 
         horizontal:"center",
+
         vertical:"middle"
 
     };
@@ -172,8 +192,10 @@ function crearEncabezadoReporte(
 
 
 
+
+
     // ======================================
-    // NOMBRE DEL REPORTE
+    // TITULO REPORTE
     // ======================================
 
 
@@ -182,19 +204,25 @@ function crearEncabezadoReporte(
     );
 
 
+
     const reporte =
     worksheet.getCell("A3");
+
 
 
     reporte.value =
     "HISTÓRICO DE EXPEDIENTES";
 
 
+
     reporte.font={
 
         name:"Calibri",
+
         size:15,
+
         bold:true,
+
         color:{
             argb:"17365D"
         }
@@ -202,9 +230,11 @@ function crearEncabezadoReporte(
     };
 
 
+
     reporte.alignment={
 
         horizontal:"center",
+
         vertical:"middle"
 
     };
@@ -214,10 +244,13 @@ function crearEncabezadoReporte(
     reporte.border={
 
         bottom:{
+
             style:"medium",
+
             color:{
                 argb:"1F4E79"
             }
+
         }
 
     };
@@ -227,8 +260,9 @@ function crearEncabezadoReporte(
 
 
 
+
     // ======================================
-    // INFORMACIÓN DEL REPORTE
+    // INFORMACIÓN REPORTE
     // ======================================
 
 
@@ -245,8 +279,10 @@ function crearEncabezadoReporte(
     "Fecha del reporte:";
 
 
+
     worksheet.getCell("B6").value =
     new Date();
+
 
 
     worksheet.getCell("B6").numFmt =
@@ -254,8 +290,10 @@ function crearEncabezadoReporte(
 
 
 
+
     worksheet.getCell("A7").value =
     "Total movimientos:";
+
 
 
     worksheet.getCell("B7").value =
@@ -265,7 +303,6 @@ function crearEncabezadoReporte(
 
 
 
-    // Estilo etiquetas
 
     [
         "A5",
@@ -278,30 +315,9 @@ function crearEncabezadoReporte(
         worksheet.getCell(celda).font={
 
             bold:true,
+
             color:{
                 argb:"666666"
-            }
-
-        };
-
-
-    });
-
-
-
-
-    [
-        "B5",
-        "B6",
-        "B7"
-    ]
-    .forEach(function(celda){
-
-
-        worksheet.getCell(celda).font={
-
-            color:{
-                argb:"000000"
             }
 
         };
@@ -317,14 +333,16 @@ function crearEncabezadoReporte(
 
 
 
-    // Encabezados tabla
-
     worksheet.addRow([
 
         "Fecha",
+
         "Número Interno",
+
         "No. Expediente",
+
         "Tipo Movimiento",
+
         "Persona Responsable"
 
     ]);
@@ -379,8 +397,9 @@ function ajustarColumnas(
 
 
 
+
 // ==========================================
-// FORMATO DE TABLA V2
+// FORMATO DE TABLA
 // IDENTIDAD VISUAL M&S
 // ==========================================
 
@@ -399,7 +418,7 @@ function aplicarFormatoTabla(
 
 
     // ======================================
-    // FORMATO ENCABEZADO TABLA
+    // ENCABEZADO TABLA
     // ======================================
 
 
@@ -413,8 +432,11 @@ function aplicarFormatoTabla(
     encabezado.font={
 
         name:"Calibri",
+
         size:11,
+
         bold:true,
+
         color:{
             argb:"FFFFFF"
         }
@@ -440,7 +462,9 @@ function aplicarFormatoTabla(
     encabezado.alignment={
 
         horizontal:"center",
+
         vertical:"middle",
+
         wrapText:true
 
     };
@@ -458,7 +482,6 @@ function aplicarFormatoTabla(
 
 
             cell.border={
-
 
                 top:{
                     style:"thin"
@@ -479,7 +502,6 @@ function aplicarFormatoTabla(
                     style:"thin"
                 }
 
-
             };
 
 
@@ -494,7 +516,7 @@ function aplicarFormatoTabla(
 
 
     // ======================================
-    // FORMATO DE DATOS
+    // DATOS
     // ======================================
 
 
@@ -517,6 +539,7 @@ function aplicarFormatoTabla(
         fila.alignment={
 
             vertical:"middle",
+
             wrapText:true
 
         };
@@ -530,7 +553,6 @@ function aplicarFormatoTabla(
 
 
                 cell.border={
-
 
                     top:{
                         style:"thin"
@@ -551,9 +573,7 @@ function aplicarFormatoTabla(
                         style:"thin"
                     }
 
-
                 };
-
 
 
             }
@@ -562,28 +582,32 @@ function aplicarFormatoTabla(
 
 
 
-        // Centrar columnas clave
 
 
         fila.getCell(1).alignment={
 
             horizontal:"center",
+
             vertical:"middle"
 
         };
+
 
 
         fila.getCell(2).alignment={
 
             horizontal:"center",
+
             vertical:"middle"
 
         };
 
 
+
         fila.getCell(3).alignment={
 
             horizontal:"center",
+
             vertical:"middle"
 
         };
@@ -593,14 +617,15 @@ function aplicarFormatoTabla(
 
 
 
-
 }
 
 
 
 
+
+
 // ==========================================
-// CONFIGURAR IMPRESIÓN V2
+// CONFIGURAR IMPRESIÓN
 // ==========================================
 
 function configurarImpresion(
@@ -610,20 +635,27 @@ function configurarImpresion(
 
     worksheet.pageSetup={
 
+
         orientation:
         "landscape",
 
+
         fitToPage:true,
+
 
         fitToWidth:1,
 
+
         fitToHeight:0
+
 
     };
 
 
 
+
     worksheet.pageMargins={
+
 
         left:0.25,
 
@@ -637,18 +669,15 @@ function configurarImpresion(
 
         footer:0.20
 
+
     };
 
 
 }
 
-
-
-
-
-
 // ==========================================
-// EXPORTAR HISTÓRICO V2
+// EXPORTAR HISTÓRICO
+// FUNCIÓN PRINCIPAL
 // ==========================================
 
 async function exportarHistorico(){
@@ -687,6 +716,7 @@ try{
     workbook.addWorksheet(
         "HISTÓRICO"
     );
+
 
 
 
@@ -740,6 +770,7 @@ try{
 
                 }
 
+
             }
 
         );
@@ -751,8 +782,10 @@ try{
 
 
 
+
+
     // ======================================
-    // ENCABEZADO
+    // CREAR ENCABEZADO
     // ======================================
 
 
@@ -775,7 +808,7 @@ try{
 
 
     // ======================================
-    // CARGAR MOVIMIENTOS
+    // AGREGAR MOVIMIENTOS
     // ======================================
 
 
@@ -824,18 +857,13 @@ try{
 
                 fecha,
 
-
                 mov.NumeroInterno || "",
-
 
                 mov.NoExpediente || "",
 
-
                 mov.TipoMovimiento || "",
 
-
                 mov.PersonaResponsable || ""
-
 
             ]);
 
@@ -844,6 +872,7 @@ try{
         }
 
     );
+
 
 
 
@@ -923,7 +952,6 @@ try{
 
 
 
-
     // ======================================
     // GENERAR ARCHIVO
     // ======================================
@@ -959,6 +987,7 @@ try{
 
 
 
+
     const url =
     URL.createObjectURL(
         blob
@@ -968,12 +997,10 @@ try{
 
 
 
-
     const enlace =
     document.createElement(
         "a"
     );
-
 
 
 
@@ -998,7 +1025,6 @@ try{
 
 
 
-
     enlace.href=url;
 
 
@@ -1006,7 +1032,6 @@ try{
     enlace.download =
 
     `Historico_Expedientes_${fechaArchivo}.xlsx`;
-
 
 
 
@@ -1033,11 +1058,9 @@ try{
 
 
 
-
     URL.revokeObjectURL(
         url
     );
-
 
 
 
@@ -1049,7 +1072,6 @@ try{
         "Histórico exportado correctamente."
 
     );
-
 
 
 
@@ -1076,312 +1098,6 @@ catch(error){
 
     );
 
-}
-
-}
-
-
-    // ======================================
-    // ENCABEZADO
-    // ======================================
-
-
-    crearEncabezadoReporte(
-
-
-        worksheet,
-
-
-        sessionStorage.getItem(
-            "nombre"
-        ),
-
-
-        historicoDatos.length
-
-
-    );
-
-
-
-
-
-
-
-    // ======================================
-    // AGREGAR DATOS
-    // ======================================
-
-
-    historicoDatos.forEach(
-        function(mov){
-
-
-
-            let fecha="";
-
-
-
-            if(mov.FechaHora){
-
-
-                const fechaObj =
-                new Date(
-                    mov.FechaHora
-                );
-
-
-
-                fecha =
-                fechaObj.toLocaleDateString(
-                    "es-MX",
-                    {
-
-                        timeZone:
-                        "America/Mexico_City"
-
-
-                    }
-
-                );
-
-
-            }
-
-
-
-
-
-            worksheet.addRow([
-
-
-
-                fecha,
-
-
-                mov.NumeroInterno || "",
-
-
-                mov.NoExpediente || "",
-
-
-                mov.TipoMovimiento || "",
-
-
-                mov.PersonaResponsable || ""
-
-
-
-            ]);
-
-
-
-        }
-
-    );
-
-
-
-
-
-
-
-
-    // ======================================
-    // FORMATO FINAL
-    // ======================================
-
-
-    ajustarColumnas(
-        worksheet
-    );
-
-
-
-    aplicarFormatoTabla(
-        worksheet
-    );
-
-
-
-    configurarImpresion(
-        worksheet
-    );
-
-
-
-
-
-
-    // Congelar encabezado
-
-
-    worksheet.views=[
-
-
-        {
-
-
-            state:"frozen",
-
-
-            ySplit:9
-
-
-        }
-
-
-    ];
-
-
-    // Filtro tabla
-
-
-    worksheet.autoFilter={
-
-
-        from:"A9",
-
-
-        to:"E9"
-
-
-    };
-
-
-    // ======================================
-    // GENERAR ARCHIVO
-    // ======================================
-
-
-    const buffer =
-    await workbook.xlsx.writeBuffer();
-
-
-
-
-
-    const blob =
-    new Blob(
-
-        [
-
-            buffer
-
-        ],
-
-
-        {
-
-
-            type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-
-
-        }
-
-
-    );
-
-
-
-
-
-    const url =
-    URL.createObjectURL(
-        blob
-    );
-
-
-
-
-
-    const enlace =
-    document.createElement(
-        "a"
-    );
-
-
-
-
-
-    const fechaArchivo =
-    new Date()
-    .toISOString()
-    .substring(
-        0,
-        10
-    );
-
-
-
-
-
-    enlace.href=url;
-
-
-
-    enlace.download =
-    `Historico_Expedientes_${fechaArchivo}.xlsx`;
-
-
-
-
-
-    document.body.appendChild(
-        enlace
-    );
-
-
-
-    enlace.click();
-
-
-
-
-    document.body.removeChild(
-        enlace
-    );
-
-
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
-
-
-
-
-    alert(
-
-        "Histórico exportado correctamente."
-
-    );
-
-
-
-
-}
-catch(error){
-
-
-    console.error(
-
-        "Error exportando histórico:",
-
-        error
-
-    );
-
-
-    alert(
-
-        "Error exportando histórico: "+
-        error.message
-
-    );
 
 
 }
