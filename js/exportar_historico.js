@@ -469,58 +469,35 @@ encabezado.alignment={
 
 };
 
-        horizontal:"center",
 
-        vertical:"middle",
+encabezado.height=28;
 
-        wrapText:true
+   encabezado.eachCell(
+    function(cell){
 
-    };
+        cell.border={
 
+            top:{
+                style:"thin"
+            },
 
+            left:{
+                style:"thin"
+            },
 
-    encabezado.height=28;
+            bottom:{
+                style:"thin"
+            },
 
+            right:{
+                style:"thin"
+            }
 
+        };
 
+    }
 
-
-    encabezado.eachCell(
-        function(cell){
-
-
-            cell.border={
-
-                top:{
-                    style:"thin"
-                },
-
-
-                left:{
-                    style:"thin"
-                },
-
-
-                bottom:{
-                    style:"thin"
-                },
-
-
-                right:{
-                    style:"thin"
-                }
-
-            };
-
-
-        }
-
-    );
-
-
-
-
-
+);
 
 
     // ======================================
