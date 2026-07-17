@@ -1083,6 +1083,28 @@ mostrarHistorico(datosFiltrados);
 
 });
 
+// ===============================
+// EXPORTAR HISTÓRICO
+// ===============================
+
+function exportarHistorico(){
+
+    if(!historicoDatos || historicoDatos.length===0){
+
+        alert(
+            "No existen registros para exportar."
+        );
+
+        return;
+
+    }
+
+    alert(
+        "Exportación en construcción."
+    );
+
+}
+
 function cargarSelectPersonas(){
 
 return;
