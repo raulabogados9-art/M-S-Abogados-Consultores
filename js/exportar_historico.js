@@ -447,8 +447,6 @@ function aplicarFormatoTabla(
 
     encabezado.fill={
 
-
-
     encabezado.alignment={
 
         horizontal:"center",
