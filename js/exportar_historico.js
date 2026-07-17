@@ -1234,9 +1234,6 @@ catch(error){
     ];
 
 
-
-
-
     // Filtro tabla
 
 
@@ -1250,12 +1247,6 @@ catch(error){
 
 
     };
-
-
-
-
-
-
 
 
     // ======================================
@@ -1376,7 +1367,6 @@ catch(error){
 catch(error){
 
 
-
     console.error(
 
         "Error exportando histórico:",
@@ -1384,7 +1374,6 @@ catch(error){
         error
 
     );
-
 
 
     alert(
@@ -1395,9 +1384,7 @@ catch(error){
     );
 
 
-
 }
-
 
 
 }
