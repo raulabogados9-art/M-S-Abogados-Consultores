@@ -1,7 +1,9 @@
 // ==========================================
 // EXPORTAR HISTÓRICO
 // M&S ABOGADOS CONSULTORES
+// REPORTE PROFESIONAL XLSX
 // ==========================================
+
 
 
 // ==========================================
@@ -54,6 +56,7 @@ async function cargarLogo(){
     }
     catch(error){
 
+
         console.error(
             "Error cargando logo:",
             error
@@ -62,9 +65,12 @@ async function cargarLogo(){
 
         return null;
 
+
     }
 
+
 }
+
 
 
 
@@ -80,19 +86,20 @@ function crearEncabezadoReporte(
 ){
 
 
-
-    // Título principal
-
     worksheet.mergeCells(
         "A1:E1"
     );
 
 
-    worksheet.getCell("A1").value =
+    const titulo =
+    worksheet.getCell("A1");
+
+
+    titulo.value =
     "M&S ABOGADOS CONSULTORES";
 
 
-    worksheet.getCell("A1").font={
+    titulo.font={
 
         name:"Calibri",
         size:18,
@@ -101,27 +108,41 @@ function crearEncabezadoReporte(
     };
 
 
-    worksheet.getCell("A1").alignment={
+    titulo.alignment={
 
-        horizontal:"center"
+        horizontal:"center",
+        vertical:"middle"
 
     };
 
 
+    worksheet.getRow(1).height=30;
 
 
-    // Subtítulo
+
 
     worksheet.mergeCells(
         "A2:E2"
     );
 
 
-    worksheet.getCell("A2").value =
-    "Sistema de Gestión de Expedientes";
+    const sistema =
+    worksheet.getCell("A2");
 
 
-    worksheet.getCell("A2").alignment={
+    sistema.value =
+    "Sistema de Gestión de Expedientes V2";
+
+
+    sistema.font={
+
+        size:12,
+        italic:true
+
+    };
+
+
+    sistema.alignment={
 
         horizontal:"center"
 
@@ -130,18 +151,21 @@ function crearEncabezadoReporte(
 
 
 
-    // Nombre reporte
 
     worksheet.mergeCells(
         "A3:E3"
     );
 
 
-    worksheet.getCell("A3").value =
-    "HISTÓRICO DE MOVIMIENTOS";
+    const reporte =
+    worksheet.getCell("A3");
 
 
-    worksheet.getCell("A3").font={
+    reporte.value =
+    "HISTÓRICO DE EXPEDIENTES";
+
+
+    reporte.font={
 
         size:15,
         bold:true
@@ -149,16 +173,16 @@ function crearEncabezadoReporte(
     };
 
 
-    worksheet.getCell("A3").alignment={
+    reporte.alignment={
 
         horizontal:"center"
 
     };
 
 
+    worksheet.getRow(3).height=25;
 
 
-    // Información del reporte
 
 
     worksheet.getCell("A5").value =
@@ -170,22 +194,23 @@ function crearEncabezadoReporte(
 
 
 
+
     worksheet.getCell("A6").value =
-    "Fecha:";
+    "Fecha del reporte:";
 
 
-   worksheet.getCell("B6").value =
-new Date();
+    worksheet.getCell("B6").value =
+    new Date();
 
 
-worksheet.getCell("B6").numFmt =
-"dd/mm/yyyy";
+    worksheet.getCell("B6").numFmt =
+    "dd/mm/yyyy";
+
 
 
 
     worksheet.getCell("A7").value =
     "Total movimientos:";
-
 
 
     worksheet.getCell("B7").value =
@@ -194,7 +219,11 @@ worksheet.getCell("B6").numFmt =
 
 
 
-    // Encabezados tabla
+    worksheet.getRow(5).height=20;
+    worksheet.getRow(6).height=20;
+    worksheet.getRow(7).height=20;
+
+
 
 
     worksheet.addRow([]);
@@ -203,27 +232,17 @@ worksheet.getCell("B6").numFmt =
 
     worksheet.addRow([
 
-
         "Fecha",
-
         "Número Interno",
-
         "No. Expediente",
-
         "Tipo Movimiento",
-
         "Persona Responsable"
-
 
     ]);
 
 
 
 }
-
-
-
-
 
 // ==========================================
 // AJUSTAR COLUMNAS
@@ -236,25 +255,31 @@ function ajustarColumnas(
 
     worksheet.columns=[
 
+
         {
-            width:25
+            width:15
         },
+
 
         {
             width:18
         },
 
-        {
-            width:22
-        },
 
         {
-            width:22
+            width:20
         },
 
+
         {
-            width:30
+            width:25
+        },
+
+
+        {
+            width:35
         }
+
 
     ];
 
@@ -266,234 +291,84 @@ function ajustarColumnas(
 
 
 // ==========================================
-// EXPORTAR HISTÓRICO
+// FORMATO DE TABLA
 // ==========================================
 
-
-async function exportarHistorico(){
-
-
-try{
-
-const logoPrueba = await cargarLogo();
-
-console.log("Logo cargado:", logoPrueba);
+function aplicarFormatoTabla(
+    worksheet
+){
 
 
-    // Validar información
+    const filaInicio = 9;
+
+    const ultimaFila =
+    worksheet.lastRow.number;
 
 
-    if(
-        !historicoDatos ||
-        historicoDatos.length===0
+
+
+    for(
+        let i=filaInicio;
+        i<=ultimaFila;
+        i++
     ){
 
-        alert(
-            "No hay datos históricos para exportar."
+
+        const fila =
+        worksheet.getRow(i);
+
+
+
+        fila.alignment={
+
+            vertical:"middle",
+            wrapText:true
+
+        };
+
+
+
+        fila.height=22;
+
+
+
+
+        fila.eachCell(
+            function(cell){
+
+
+                cell.border={
+
+
+                    top:{
+                        style:"thin"
+                    },
+
+
+                    left:{
+                        style:"thin"
+                    },
+
+
+                    bottom:{
+                        style:"thin"
+                    },
+
+
+                    right:{
+                        style:"thin"
+                    }
+
+
+                };
+
+
+            }
         );
 
-        return;
 
     }
 
-
-
-
-    // Crear libro
-
-
-    const workbook =
-    new ExcelJS.Workbook();
-
-
-
-
-    const worksheet =
-    workbook.addWorksheet(
-        "HISTÓRICO"
-    );
-
-// Cargar logo
-const logo = await cargarLogo();
-
-if(logo){
-
-    const logoId =
-    workbook.addImage({
-
-        base64: logo,
-
-        extension:"png"
-
-    });
-
-
-    worksheet.addImage(
-
-        logoId,
-
-        {
-
-            tl:{
-                col:0,
-                row:0
-            },
-
-            ext:{
-                width:120,
-                height:60
-            }
-
-        }
-
-    );
-
-}
-
-    // Crear encabezado
-
-
-    crearEncabezadoReporte(
-
-        worksheet,
-
-        sessionStorage.getItem("nombre"),
-
-        historicoDatos.length
-
-    );
-
-
-
-
-
-    // ======================================
-    // AGREGAR DATOS HISTÓRICOS
-    // ======================================
-
-
-    historicoDatos.forEach(mov=>{
-
-
-        let fecha="";
-
-
-
-        if(mov.FechaHora){
-
-
-            fecha =
-            new Date(
-                mov.FechaHora
-            )
-            .toLocaleString(
-
-                "es-MX",
-
-                {
-
-                    timeZone:
-                    "America/Mexico_City",
-
-                    day:"2-digit",
-
-                    month:"2-digit",
-
-                    year:"numeric",
-
-                    hour:"2-digit",
-
-                    minute:"2-digit",
-
-                    second:"2-digit",
-
-                    hour12:true
-
-                }
-
-            );
-
-
-        }
-
-
-
-        worksheet.addRow([
-
-
-            fecha,
-
-
-            mov.NumeroInterno || "",
-
-
-            mov.NoExpediente || "",
-
-
-            mov.TipoMovimiento || "",
-
-
-            mov.PersonaResponsable || ""
-
-
-
-        ]);
-
-
-
-    });
-
-
-
-
-
-    console.log(
-
-        "Registros agregados:",
-
-        historicoDatos.length
-
-    );
-
-
-
-
-
-
-    // ======================================
-    // FORMATO
-    // ======================================
-
-
-
-    ajustarColumnas(
-        worksheet
-    );
-
-
-
-    worksheet.views=[
-
-        {
-
-            state:"frozen",
-
-            ySplit:9
-
-        }
-
-    ];
-
-
-
-
-    worksheet.autoFilter={
-
-        from:"A9",
-
-        to:"E9"
-
-    };
 
 
 
@@ -513,13 +388,204 @@ if(logo){
 
     encabezado.alignment={
 
-        horizontal:"center"
+        horizontal:"center",
+        vertical:"middle"
 
     };
 
 
 
-    encabezado.height=25;
+}
+
+
+
+
+
+// ==========================================
+// CONFIGURAR IMPRESIÓN
+// ==========================================
+
+function configurarImpresion(
+    worksheet
+){
+
+
+
+    worksheet.pageSetup={
+
+
+        orientation:
+        "landscape",
+
+
+        fitToPage:true,
+
+
+        fitToWidth:1,
+
+
+        fitToHeight:0
+
+
+    };
+
+
+
+
+    worksheet.pageMargins={
+
+
+        left:0.25,
+
+        right:0.25,
+
+        top:0.50,
+
+        bottom:0.50,
+
+        header:0.20,
+
+        footer:0.20
+
+
+    };
+
+
+}
+
+// ==========================================
+// EXPORTAR HISTÓRICO
+// ==========================================
+
+async function exportarHistorico(){
+
+
+try{
+
+
+    // Validar información
+
+
+    if(
+        !historicoDatos ||
+        historicoDatos.length===0
+    ){
+
+
+        alert(
+            "No hay datos históricos para exportar."
+        );
+
+
+        return;
+
+
+    }
+
+
+
+
+
+    const workbook =
+    new ExcelJS.Workbook();
+
+
+
+
+    const worksheet =
+    workbook.addWorksheet(
+        "HISTÓRICO"
+    );
+
+
+
+
+
+    // ======================================
+    // INSERTAR LOGO
+    // ======================================
+
+
+    const logo =
+    await cargarLogo();
+
+
+
+    if(logo){
+
+
+        const logoId =
+        workbook.addImage({
+
+
+            base64:logo,
+
+
+            extension:"png"
+
+
+        });
+
+
+
+
+        worksheet.addImage(
+
+            logoId,
+
+            {
+
+
+                tl:{
+
+                    col:0,
+
+                    row:0
+
+                },
+
+
+                ext:{
+
+                    width:120,
+
+                    height:60
+
+                }
+
+
+            }
+
+        );
+
+
+    }
+
+
+
+
+
+    // ======================================
+    // ENCABEZADO
+    // ======================================
+
+
+    crearEncabezadoReporte(
+
+
+        worksheet,
+
+
+        sessionStorage.getItem(
+            "nombre"
+        ),
+
+
+        historicoDatos.length
+
+
+    );
+
 
 
 
@@ -527,9 +593,158 @@ if(logo){
 
 
     // ======================================
-    // CREAR ARCHIVO XLSX
+    // AGREGAR DATOS
     // ======================================
 
+
+    historicoDatos.forEach(
+        function(mov){
+
+
+
+            let fecha="";
+
+
+
+            if(mov.FechaHora){
+
+
+                const fechaObj =
+                new Date(
+                    mov.FechaHora
+                );
+
+
+
+                fecha =
+                fechaObj.toLocaleDateString(
+                    "es-MX",
+                    {
+
+                        timeZone:
+                        "America/Mexico_City"
+
+
+                    }
+
+                );
+
+
+            }
+
+
+
+
+
+            worksheet.addRow([
+
+
+
+                fecha,
+
+
+                mov.NumeroInterno || "",
+
+
+                mov.NoExpediente || "",
+
+
+                mov.TipoMovimiento || "",
+
+
+                mov.PersonaResponsable || ""
+
+
+
+            ]);
+
+
+
+        }
+
+    );
+
+
+
+
+
+
+
+
+    // ======================================
+    // FORMATO FINAL
+    // ======================================
+
+
+    ajustarColumnas(
+        worksheet
+    );
+
+
+
+    aplicarFormatoTabla(
+        worksheet
+    );
+
+
+
+    configurarImpresion(
+        worksheet
+    );
+
+
+
+
+
+
+    // Congelar encabezado
+
+
+    worksheet.views=[
+
+
+        {
+
+
+            state:"frozen",
+
+
+            ySplit:9
+
+
+        }
+
+
+    ];
+
+
+
+
+
+    // Filtro tabla
+
+
+    worksheet.autoFilter={
+
+
+        from:"A9",
+
+
+        to:"E9"
+
+
+    };
+
+
+
+
+
+
+
+
+    // ======================================
+    // GENERAR ARCHIVO
+    // ======================================
 
 
     const buffer =
@@ -548,12 +763,16 @@ if(logo){
 
         ],
 
+
         {
+
 
             type:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
+
         }
+
 
     );
 
@@ -562,14 +781,18 @@ if(logo){
 
 
     const url =
-    URL.createObjectURL(blob);
+    URL.createObjectURL(
+        blob
+    );
 
 
 
 
 
     const enlace =
-    document.createElement("a");
+    document.createElement(
+        "a"
+    );
 
 
 
@@ -578,7 +801,10 @@ if(logo){
     const fechaArchivo =
     new Date()
     .toISOString()
-    .substring(0,10);
+    .substring(
+        0,
+        10
+    );
 
 
 
@@ -605,9 +831,11 @@ if(logo){
 
 
 
+
     document.body.removeChild(
         enlace
     );
+
 
 
 
@@ -621,16 +849,16 @@ if(logo){
 
     alert(
 
-        "Bloque 4 completado correctamente."
+        "Histórico exportado correctamente."
 
     );
 
 
 
 
-
 }
 catch(error){
+
 
 
     console.error(
@@ -651,7 +879,9 @@ catch(error){
     );
 
 
+
 }
+
 
 
 }
