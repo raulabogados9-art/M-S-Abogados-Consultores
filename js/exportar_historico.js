@@ -314,9 +314,42 @@ console.log("Logo cargado:", logoPrueba);
         "HISTÓRICO"
     );
 
+// Cargar logo
+const logo = await cargarLogo();
+
+if(logo){
+
+    const logoId =
+    workbook.addImage({
+
+        base64: logo,
+
+        extension:"png"
+
+    });
 
 
+    worksheet.addImage(
 
+        logoId,
+
+        {
+
+            tl:{
+                col:0,
+                row:0
+            },
+
+            ext:{
+                width:120,
+                height:60
+            }
+
+        }
+
+    );
+
+}
 
     // Crear encabezado
 
