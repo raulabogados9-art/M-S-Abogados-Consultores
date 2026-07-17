@@ -652,3 +652,23 @@ mix-blend-mode:normal !important;
     white-space:nowrap;
 
 }
+
+/* ===============================
+   HISTORICO - ORDEN Y FILTROS
+================================ */
+
+.iconoOrden{
+
+font-size:14px;
+margin-left:5px;
+cursor:pointer;
+
+}
+
+
+.filtroHistorico{
+
+font-size:12px;
+padding:3px;
+
+}
