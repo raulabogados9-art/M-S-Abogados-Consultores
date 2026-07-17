@@ -445,9 +445,29 @@ function aplicarFormatoTabla(
 
 
 
-    encabezado.fill={
+   encabezado.fill={
 
-    encabezado.alignment={
+    type:"pattern",
+
+    pattern:"solid",
+
+    fgColor:{
+        argb:"1F4E79"
+    }
+
+};
+
+
+
+encabezado.alignment={
+
+    horizontal:"center",
+
+    vertical:"middle",
+
+    wrapText:true
+
+};
 
         horizontal:"center",
 
