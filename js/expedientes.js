@@ -653,6 +653,115 @@ prestandoExpediente=false;
 }
 
 /* =======================
+PRESTAR TODOS
+======================= */
+
+async function prestarTodosExpedientes(){
+
+if(prestandoExpediente) return;
+
+
+const expedientes =
+cacheSistema.expedientes || [];
+
+
+const disponibles =
+expedientes.filter(e =>
+    e.Activo === "Si"
+);
+
+
+if(disponibles.length===0){
+
+    alert(
+        "No existen expedientes disponibles para prestar."
+    );
+
+    return;
+
+}
+
+
+const confirmar =
+confirm(
+    "¿Desea prestar todos los expedientes disponibles?\n\nTotal: "
+    + disponibles.length
+);
+
+
+if(!confirmar){
+
+    return;
+
+}
+
+
+prestandoExpediente=true;
+
+
+try{
+
+
+for(const exp of disponibles){
+
+
+    await prestarExpediente(
+
+        exp.ID,
+
+        exp.NumeroInterno,
+
+        exp.NoExpediente,
+
+        exp.PersonaResponsable,
+
+        exp.Actividad,
+
+        exp.Observaciones,
+
+        exp.UsuarioCaptura
+
+    );
+
+
+}
+
+
+
+alert(
+    "Proceso terminado. Expedientes prestados: "
+    + disponibles.length
+);
+
+
+
+}
+catch(error){
+
+console.error(
+"Error prestando todos:",
+error
+);
+
+
+alert(
+"Error al prestar todos los expedientes."
+);
+
+
+}
+finally{
+
+
+prestandoExpediente=false;
+
+
+}
+
+
+}
+
+/* =======================
 PRESTADOS
 ======================= */
 
