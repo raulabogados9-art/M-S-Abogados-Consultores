@@ -174,13 +174,12 @@ function crearEncabezadoReporte(
     "Fecha:";
 
 
-    worksheet.getCell("B6").value =
-    new Date();
+   worksheet.getCell("B6").value =
+new Date();
 
 
-
-    worksheet.getCell("B6").numFmt =
-    "dd/mm/yyyy hh:mm:ss";
+worksheet.getCell("B6").numFmt =
+"dd/mm/yyyy";
 
 
 
@@ -205,7 +204,7 @@ function crearEncabezadoReporte(
     worksheet.addRow([
 
 
-        "Fecha y Hora",
+        "Fecha",
 
         "Número Interno",
 
