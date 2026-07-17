@@ -276,6 +276,10 @@ async function exportarHistorico(){
 
 try{
 
+const logoPrueba = await cargarLogo();
+
+console.log("Logo cargado:", logoPrueba);
+
 
     // Validar información
 
