@@ -416,33 +416,69 @@ Nuevo Expediente
 
     <table class="table table-bordered">
 
-       <thead>
+<thead>
 
 <tr>
 
-<th onclick="ordenarHistorico('FechaHora')">
+<th>
 Fecha
+<br>
+<input 
+type="text"
+class="form-control filtroHistorico"
+data-columna="FechaHora"
+placeholder="🔎">
 </th>
 
-<th onclick="ordenarHistorico('NumeroInterno')">
-Interno
-</th>
 
-<th onclick="ordenarHistorico('NoExpediente')">
+<th>
 Expediente
-</th>   
+<br>
+<input 
+type="text"
+class="form-control filtroHistorico"
+data-columna="NoExpediente"
+placeholder="🔎">
+</th>
 
-<th onclick="ordenarHistorico('TipoMovimiento')">
+
+<th>
+Interno
+<br>
+<input 
+type="text"
+class="form-control filtroHistorico"
+data-columna="NumeroInterno"
+placeholder="🔎">
+</th>
+
+
+<th>
 Movimiento
+<br>
+<input 
+type="text"
+class="form-control filtroHistorico"
+data-columna="TipoMovimiento"
+placeholder="🔎">
 </th>
 
-<th onclick="ordenarHistorico('PersonaResponsable')">
+
+<th>
 Responsable
+<br>
+<input 
+type="text"
+class="form-control filtroHistorico"
+data-columna="PersonaResponsable"
+placeholder="🔎">
 </th>
+
 
 </tr>
 
 </thead>
+       
         <tbody id="tbodyHistorico">
 
         </tbody>
