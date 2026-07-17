@@ -429,7 +429,17 @@ function aplicarFormatoTabla(
 
 
 
-    encabezado.font={
+    for(
+    let c=1;
+    c<=5;
+    c++
+){
+
+    const celda =
+    encabezado.getCell(c);
+
+
+    celda.font={
 
         name:"Calibri",
 
@@ -444,31 +454,31 @@ function aplicarFormatoTabla(
     };
 
 
+    celda.fill={
 
-   encabezado.fill={
+        type:"pattern",
 
-    type:"pattern",
+        pattern:"solid",
 
-    pattern:"solid",
+        fgColor:{
+            argb:"1F4E79"
+        }
 
-    fgColor:{
-        argb:"1F4E79"
-    }
-
-};
-
+    };
 
 
-encabezado.alignment={
+    celda.alignment={
 
-    horizontal:"center",
+        horizontal:"center",
 
-    vertical:"middle",
+        vertical:"middle",
 
-    wrapText:true
+        wrapText:true
 
-};
+    };
 
+
+}
 
 encabezado.height=28;
 
