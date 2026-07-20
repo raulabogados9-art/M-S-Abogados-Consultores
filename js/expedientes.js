@@ -250,11 +250,17 @@ actualizarActividadPersona();
     }
 
     // 5. abrir modal
-    const modal = new bootstrap.Modal(
-        document.getElementById('modalSalida')
-    );
+   const modalElement =
+document.getElementById('modalSalida');
 
-    modal.show();
+
+const modal =
+bootstrap.Modal.getInstance(modalElement)
+||
+new bootstrap.Modal(modalElement);
+
+
+modal.show();
 }
 
 async function buscarNumeroExpediente(){
