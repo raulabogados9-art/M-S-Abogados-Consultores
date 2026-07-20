@@ -712,10 +712,17 @@ const response = await fetch(API_URL,{
     })
 });
 
-const resultado = await response.json();
+const textoRespuesta = await response.text();
 
 console.log(
-    "Respuesta PRESTAR TODOS:",
+    "Respuesta RAW PRESTAR TODOS:",
+    textoRespuesta
+);
+
+const resultado = JSON.parse(textoRespuesta);
+
+console.log(
+    "Respuesta JSON PRESTAR TODOS:",
     resultado
 );
 
