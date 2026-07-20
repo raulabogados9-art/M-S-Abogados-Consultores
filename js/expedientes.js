@@ -723,7 +723,11 @@ const response = await fetch(API_URL,{
 const resultado =
 await response.json();
 
+console.log("Respuesta backend:", resultado);
+
 if(!resultado.success){
+
+    alert(JSON.stringify(resultado));
 
     throw new Error(
         resultado.error ||
