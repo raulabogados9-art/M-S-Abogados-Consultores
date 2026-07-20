@@ -1296,14 +1296,14 @@ async function prestarTodosExpedientes(){
         const resultado =
         await response.json();
 
-        if(!resultado.ok){
+       if(!resultado.success){
 
-            throw new Error(
-                resultado.message ||
-                "No fue posible prestar los expedientes."
-            );
+    throw new Error(
+        resultado.message ||
+        "No fue posible prestar los expedientes."
+    );
 
-        }
+}
 
         cacheSistema.expedientes = [];
         cacheSistema.prestados = [];
@@ -1314,9 +1314,10 @@ async function prestarTodosExpedientes(){
         await window.cargarHistorico?.();
 
         alert(
-            resultado.message ||
-            "Todos los expedientes fueron prestados correctamente."
-        );
+    "Proceso terminado correctamente.\n\n" +
+    "Expedientes prestados: " +
+    (resultado.total || 0)
+);
 
     }
     catch(error){
