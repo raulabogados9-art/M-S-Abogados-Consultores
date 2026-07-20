@@ -702,39 +702,23 @@ prestandoExpediente=true;
 try{
 
 const response = await fetch(API_URL,{
-
     method:"POST",
-
     headers:{
         "Content-Type":"text/plain;charset=utf-8"
     },
-
     body:JSON.stringify({
-
         action:"PRESTAR_TODOS_EXPEDIENTES",
-
-        UsuarioSistema:
-        sessionStorage.getItem("nombre")
-
+        UsuarioSistema:sessionStorage.getItem("nombre")
     })
-
 });
 
-const resultado =
-await response.json();
+const texto = await response.text();
 
-console.log("Respuesta backend:", resultado);
+console.log("Respuesta RAW:", texto);
 
-if(!resultado.success){
+alert(texto);
 
-    alert(JSON.stringify(resultado));
-
-    throw new Error(
-        resultado.error ||
-        "No fue posible prestar los expedientes."
-    );
-
-}
+return;
 
 /* limpiar cache */
 
