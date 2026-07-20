@@ -1219,3 +1219,87 @@ function cargarSelectPersonas(){
 return;
 
 }
+
+// ==========================================
+// PRESTAR TODOS LOS EXPEDIENTES
+// ==========================================
+
+let prestandoTodos = false;
+
+async function prestarTodosExpedientes(){
+
+    if(prestandoTodos) return;
+
+    if(
+        !confirm(
+            "¿Desea prestar TODOS los expedientes disponibles?"
+        )
+    ){
+        return;
+    }
+
+    prestandoTodos = true;
+
+    try{
+
+        const response = await fetch(API_URL,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"text/plain;charset=utf-8"
+            },
+
+            body:JSON.stringify({
+
+                action:"PRESTAR_TODOS_EXPEDIENTES",
+
+                UsuarioSistema:
+                sessionStorage.getItem("nombre")
+
+            })
+
+        });
+
+        const resultado =
+        await response.json();
+
+        if(!resultado.ok){
+
+            throw new Error(
+                resultado.message ||
+                "No fue posible prestar los expedientes."
+            );
+
+        }
+
+        cacheSistema.expedientes = [];
+        cacheSistema.prestados = [];
+        cacheSistema.movimientos = [];
+
+        await window.cargarExpedientes?.();
+        await window.cargarPrestados?.();
+        await window.cargarHistorico?.();
+
+        alert(
+            resultado.message ||
+            "Todos los expedientes fueron prestados correctamente."
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            error.message
+        );
+
+    }
+    finally{
+
+        prestandoTodos = false;
+
+    }
+
+}
