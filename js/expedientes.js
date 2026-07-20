@@ -1350,3 +1350,166 @@ async function prestarTodosExpedientes(){
     }
 
 }
+
+// ==========================================
+// BUSCAR CONTROL EXPEDIENTE POR NUMERO INTERNO
+// ==========================================
+
+async function buscarControlExpediente(){
+
+    const numeroInterno =
+    document.getElementById(
+        "txtNumeroInterno"
+    ).value.trim();
+
+
+    if(!numeroInterno){
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const response =
+        await fetch(API_URL,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"text/plain;charset=utf-8"
+            },
+
+            body:JSON.stringify({
+
+                action:"BUSCAR_CONTROL_EXPEDIENTE",
+
+                NumeroInterno:numeroInterno
+
+            })
+
+        });
+
+
+
+        const resultado =
+        await response.json();
+
+
+
+        console.log(
+            "Respuesta CONTROL EXPEDIENTE:",
+            resultado
+        );
+
+
+
+        if(resultado.success){
+
+
+            document.getElementById(
+                "txtNoExpediente"
+            ).value =
+            resultado.NoExpediente;
+
+
+
+            mostrarEstadoExpediente(
+                resultado.Estado
+            );
+
+
+        }
+        else{
+
+
+            mostrarEstadoExpediente(
+                "NO ENCONTRADO"
+            );
+
+
+        }
+
+
+
+    }
+    catch(error){
+
+
+        console.error(
+            "Error buscando control expediente:",
+            error
+        );
+
+
+    }
+
+
+}
+
+// ==========================================
+// MOSTRAR ESTADO EXPEDIENTE
+// ==========================================
+
+function mostrarEstadoExpediente(estado){
+
+
+    const alerta =
+    document.getElementById(
+        "alertaEstadoExpediente"
+    );
+
+
+    if(!alerta){
+
+        return;
+
+    }
+
+
+    alerta.style.display="block";
+
+
+    const estadoTexto =
+    String(estado).toUpperCase();
+
+
+
+    if(estadoTexto==="ACTIVO"){
+
+
+        alerta.style.background="#d4edda";
+        alerta.style.color="#155724";
+
+        alerta.innerHTML=
+        "✔ EXPEDIENTE ACTIVO";
+
+
+    }
+    else if(estadoTexto==="CONCLUIDO"){
+
+
+        alerta.style.background="#f8d7da";
+        alerta.style.color="#721c24";
+
+        alerta.innerHTML=
+        "⚠ EXPEDIENTE CONCLUIDO";
+
+
+    }
+    else{
+
+
+        alerta.style.background="#fff3cd";
+        alerta.style.color="#856404";
+
+        alerta.innerHTML=
+        "⚠ EXPEDIENTE NO ENCONTRADO";
+
+
+    }
+
+
+}
