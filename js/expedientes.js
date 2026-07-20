@@ -701,38 +701,58 @@ prestandoExpediente=true;
 
 try{
 
+const response = await fetch(API_URL,{
 
-for(const exp of disponibles){
+    method:"POST",
 
+    headers:{
+        "Content-Type":"text/plain;charset=utf-8"
+    },
 
-    await prestarExpediente(
+    body:JSON.stringify({
 
-        exp.ID,
+        action:"PRESTAR_TODOS_EXPEDIENTES",
 
-        exp.NumeroInterno,
+        UsuarioSistema:
+        sessionStorage.getItem("nombre")
 
-        exp.NoExpediente,
+    })
 
-        exp.PersonaResponsable,
+});
 
-        exp.Actividad,
+const resultado =
+await response.json();
 
-        exp.Observaciones,
+if(!resultado.success){
 
-        exp.UsuarioCaptura
-
+    throw new Error(
+        resultado.error ||
+        "No fue posible prestar los expedientes."
     );
-
 
 }
 
+/* limpiar cache */
 
+cacheSistema.expedientes=[];
+
+cacheSmart.clear("expedientes");
+
+/* recargar módulos */
+
+await window.cargarExpedientes?.();
+
+await window.cargarPrestados?.();
+
+await window.cargarHistorico?.();
 
 alert(
-    "Proceso terminado. Expedientes prestados: "
-    + disponibles.length
-);
 
+"Proceso terminado.\n\nExpedientes prestados: " +
+
+(resultado.total || disponibles.length)
+
+);
 
 
 }
