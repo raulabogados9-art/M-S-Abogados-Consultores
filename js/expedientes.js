@@ -712,38 +712,53 @@ const response = await fetch(API_URL,{
     })
 });
 
-const texto = await response.text();
+const resultado = await response.json();
 
-console.log("Respuesta RAW:", texto);
-
-alert(texto);
-
-return;
-
-/* limpiar cache */
-
-cacheSistema.expedientes=[];
-
-cacheSmart.clear("expedientes");
-
-/* recargar módulos */
-
-await window.cargarExpedientes?.();
-
-await window.cargarPrestados?.();
-
-await window.cargarHistorico?.();
-
-alert(
-
-"Proceso terminado.\n\nExpedientes prestados: " +
-
-(resultado.total || disponibles.length)
-
+console.log(
+    "Respuesta PRESTAR TODOS:",
+    resultado
 );
 
 
+if(resultado.success){
+
+
+    /* limpiar cache */
+
+    cacheSistema.expedientes=[];
+
+    cacheSmart.clear("expedientes");
+
+
+    /* recargar módulos */
+
+    await window.cargarExpedientes?.();
+
+    await window.cargarPrestados?.();
+
+    await window.cargarHistorico?.();
+
+
+    alert(
+
+        "Proceso terminado.\n\nExpedientes prestados: " +
+
+        (resultado.total || disponibles.length)
+
+    );
+
+
 }
+else{
+
+
+    alert(
+        "No fue posible completar el proceso."
+    );
+
+
+}
+    
 catch(error){
 
 console.error(
