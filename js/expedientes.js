@@ -226,6 +226,19 @@ select.addEventListener(
 actualizarActividadPersona
 );
 
+const numeroInterno =
+document.getElementById('txtNumeroInterno');
+
+
+if(numeroInterno){
+
+numeroInterno.addEventListener(
+'change',
+buscarNumeroExpediente
+);
+
+}
+
 /* forzar actualización inicial */
 if(select.value){
 
@@ -243,6 +256,54 @@ actualizarActividadPersona();
 
     modal.show();
 }
+
+async function buscarNumeroExpediente(){
+
+const interno =
+document.getElementById('txtNumeroInterno').value.trim();
+
+
+if(!interno)return;
+
+
+const response =
+await fetch(
+API_URL+'?sheet=CONTROL_EXPEDIENTES'
+);
+
+
+const datos =
+await response.json();
+
+
+const encontrado =
+datos.find(
+(x)=>x.NumeroInterno===interno
+);
+
+
+const campo =
+document.getElementById('txtNoExpediente');
+
+
+if(encontrado){
+
+campo.value =
+encontrado.NoExpediente;
+
+campo.readOnly = true;
+
+}
+else{
+
+campo.value='';
+
+campo.readOnly = false;
+
+}
+
+}
+
 async function guardarExpediente(){
 
 if(guardandoExpediente) return;
