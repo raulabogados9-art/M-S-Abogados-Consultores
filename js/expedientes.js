@@ -881,14 +881,24 @@ try{
 const fecha =
 new Date().toISOString();
 
-const movimiento={
 
-ID:Date.now(),
+await fetch(API_URL,{
+
+method:'POST',
+
+headers:{
+'Content-Type':'text/plain;charset=utf-8'
+},
+
+body:JSON.stringify({
+
+action:'DEVOLVER_EXPEDIENTE',
+
+ID:id,
 
 NumeroInterno:interno,
-NoExpediente:expediente,
 
-TipoMovimiento:'Devolucion',
+NoExpediente:expediente,
 
 PersonaResponsable:responsable,
 
@@ -897,59 +907,36 @@ sessionStorage.getItem('nombre'),
 
 FechaHora:fecha
 
-};
-
-await fetch(API_URL,{
-
-method:'POST',
-
-headers:{
-'Content-Type':'text/plain;charset=utf-8'
-},
-
-body:JSON.stringify({
-
-sheet:'MOVIMIENTOS',
-...movimiento
-
 })
 
 });
 
-await fetch(API_URL,{
-
-method:'POST',
-
-headers:{
-'Content-Type':'text/plain;charset=utf-8'
-},
-
-body:JSON.stringify({
-
-action:'ELIMINAR_PRESTADO',
-ID:id
-
-})
-
-});
 
 alert(
 'Expediente devuelto correctamente'
 );
 
+
 /* limpiar cache */
+
 cacheSistema.expedientes=[];
 
 await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
+
 }
 catch(error){
 
 console.error(error);
 
+alert(
+'No fue posible devolver el expediente'
+);
+
 }
+
 finally{
 
 devolviendoExpediente=false;
