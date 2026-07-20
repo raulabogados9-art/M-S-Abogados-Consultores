@@ -154,6 +154,20 @@ async function abrirModalExpediente() {
     document.getElementById('txtActividad').value = '';
     document.getElementById('txtObservaciones').value = '';
 
+    // limpiar alerta estado expediente
+
+const alertaEstado =
+document.getElementById(
+    "alertaEstadoExpediente"
+);
+
+if(alertaEstado){
+
+    alertaEstado.style.display="none";
+    alertaEstado.innerHTML="";
+
+}
+
     try {
 
         // 2. FORZAR carga real de personas (no cache vieja)
