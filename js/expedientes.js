@@ -358,9 +358,26 @@ sheet:'EXPEDIENTES',
 
 alert('Expediente registrado');
 
-bootstrap.Modal
-.getInstance(document.getElementById('modalSalida'))
-.hide();
+const modalElement =
+document.getElementById('modalSalida');
+
+const modal =
+bootstrap.Modal.getInstance(modalElement);
+
+if(modal){
+    modal.hide();
+}
+
+
+// limpiar backdrop si quedó bloqueado
+
+document
+.querySelectorAll('.modal-backdrop')
+.forEach(el=>el.remove());
+
+document.body.classList.remove('modal-open');
+document.body.style.overflow='';
+document.body.style.paddingRight='';
 
 cacheSistema.expedientes = [];
 
