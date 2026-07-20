@@ -642,9 +642,20 @@ alert(
 );
 
 /* limpiar cache */
-cacheSistema.expedientes=[];
+alert(
+'Expediente devuelto correctamente'
+);
 
-await window.cargarExpedientes?.();
+
+/* limpiar cache */
+
+cacheSistema.expedientes=[];
+cacheSistema.prestados=[];
+cacheSistema.historico=[];
+
+
+/* actualizar solo módulos necesarios */
+
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
@@ -843,6 +854,7 @@ tbody.innerHTML+=`
 <button
 class="btn btn-warning btn-sm"
 onclick="devolverExpediente(
+this,
 
 '${exp.ID}',
 '${exp.NumeroInterno}',
@@ -866,6 +878,7 @@ Devolver
 }
 
 async function devolverExpediente(
+btn,
 id,
 interno,
 expediente,
@@ -875,6 +888,8 @@ responsable
 if(devolviendoExpediente)return;
 
 devolviendoExpediente=true;
+btn.disabled=true;
+btn.innerHTML="Procesando...";
 
 try{
 
