@@ -948,8 +948,10 @@ this,
 '${exp.ID}',
 '${exp.NumeroInterno}',
 '${exp.NoExpediente}',
-'${exp.PersonaResponsable}'
-
+'${exp.PersonaResponsable}',
+'${exp.Actividad}',
+'${exp.Portal}',
+'${exp.Observaciones || ""}'
 )">
 
 Devolver
@@ -971,7 +973,10 @@ btn,
 id,
 interno,
 expediente,
-responsable
+responsable,
+actividad,
+portal,
+observaciones
 ){
 
 if(devolviendoExpediente)return;
@@ -1006,10 +1011,20 @@ NoExpediente:expediente,
 
 PersonaResponsable:responsable,
 
+Actividad:actividad,
+
+Portal:portal,
+
+IDMovimiento:
+Date.now(),
+
 UsuarioSistema:
 sessionStorage.getItem('nombre'),
 
-FechaHora:fecha
+FechaHora:fecha,
+
+Observaciones:
+observaciones || ""
 
 })
 
