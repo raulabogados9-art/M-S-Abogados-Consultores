@@ -297,32 +297,78 @@ onkeyup="filtrarExpedientes()">
 
                 <br>
 
-                <label>Persona Responsable</label>
+               <label>Portal</label>
 
-                <select
-                    id="cmbPersonaResponsable"
-                    class="form-control">
-                </select>
+<div class="mt-2">
 
-                <br>
+    <div class="form-check form-check-inline">
 
-                <label>Actividad</label>
+        <input
+            class="form-check-input"
+            type="radio"
+            name="portal"
+            id="portalGerardo"
+            value="Gerardo"
+            checked>
 
-                <input
-                    type="text"
-                    id="txtActividad"
-                    class="form-control"
-                    readonly>
+        <label
+            class="form-check-label"
+            for="portalGerardo">
 
-                <br>
+            Gerardo
 
-                <label>Observaciones</label>
+        </label>
 
-                <textarea
-                    id="txtObservaciones"
-                    class="form-control">
-                </textarea>
+    </div>
 
+    <div class="form-check form-check-inline">
+
+        <input
+            class="form-check-input"
+            type="radio"
+            name="portal"
+            id="portalJoseLuis"
+            value="Jose Luis">
+
+        <label
+            class="form-check-label"
+            for="portalJoseLuis">
+
+            José Luis
+
+        </label>
+
+    </div>
+
+    <div class="form-check form-check-inline">
+
+        <input
+            class="form-check-input"
+            type="radio"
+            name="portal"
+            id="portalBlanca"
+            value="Blanca">
+
+        <label
+            class="form-check-label"
+            for="portalBlanca">
+
+            Blanca
+
+        </label>
+
+    </div>
+
+</div>
+
+<br>
+
+<label>Observaciones</label>
+
+<textarea
+    id="txtObservaciones"
+    class="form-control">
+</textarea>
             </div>
 
             <div class="modal-footer">
