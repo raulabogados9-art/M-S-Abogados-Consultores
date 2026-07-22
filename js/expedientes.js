@@ -149,12 +149,26 @@ MODAL
 async function abrirModalExpediente() {
 
     // 1. limpiar campos
-    document.getElementById('txtNoExpediente').value = '';
-    document.getElementById('txtNumeroInterno').value = '';
-    document.getElementById('txtActividad').value = '';
-    document.getElementById('txtObservaciones').value = '';
 
-    // limpiar alerta estado expediente
+const camposLimpiar = [
+    "txtNoExpediente",
+    "txtNumeroInterno",
+    "txtActividad",
+    "txtObservaciones"
+];
+
+camposLimpiar.forEach(id => {
+
+    const campo = document.getElementById(id);
+
+    if(campo){
+        campo.value = "";
+    }
+
+});
+
+
+// limpiar alerta estado expediente
 
 const alertaEstado =
 document.getElementById(
