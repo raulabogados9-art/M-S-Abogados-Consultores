@@ -337,9 +337,14 @@ document.getElementById('cmbPersonaResponsable')
 document.getElementById('cmbPersonaResponsable').selectedIndex
 ]?.dataset?.actividad || '',
 
+Portal:
+document.querySelector(
+'input[name="portal"]:checked'
+).value,
+
 Observaciones:
 document.getElementById('txtObservaciones').value,
-
+    
 UsuarioCaptura:
 sessionStorage.getItem('nombre'),
 
