@@ -928,20 +928,24 @@ PRESTADOS
 
 async function cargarPrestados(){
 
-const response=
+const response =
 await fetch(
-API_URL+'?sheet=PRESTADOS'
+API_URL + '?sheet=PRESTADOS'
 );
 
-const datos=
+const datos =
 await response.json();
 
-const tbody=
+const tbody =
 document.getElementById(
 'tbodyPrestados'
 );
 
-tbody.innerHTML+=`
+tbody.innerHTML = '';
+
+datos.forEach(exp=>{
+
+tbody.innerHTML += `
 
 <tr>
 
@@ -957,7 +961,6 @@ tbody.innerHTML+=`
 class="btn btn-warning btn-sm"
 onclick="devolverExpediente(
 this,
-
 '${exp.ID}',
 '${exp.NumeroInterno}',
 '${exp.NoExpediente}',
