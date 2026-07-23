@@ -1149,13 +1149,21 @@ tbody.innerHTML+=`
 
 <td>${fecha}</td>
 
-<td>${mov.NumeroInterno||''}</td>
+<td>${mov.NumeroInterno || ''}</td>
 
-<td>${mov.NoExpediente||''}</td>
+<td>${mov.NoExpediente || ''}</td>
 
-<td>${mov.TipoMovimiento||''}</td>
+<td>${mov.TipoMovimiento || ''}</td>
 
-<td>${mov.PersonaResponsable||''}</td>
+<td>${mov.PersonaResponsable || ''}</td>
+
+<td>${mov.Actividad || ''}</td>
+
+<td>${mov.Portal || ''}</td>
+
+<td>${mov.UsuarioSistema || ''}</td>
+
+<td>${mov.Observaciones || ''}</td>
 
 </tr>
 
