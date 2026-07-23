@@ -941,17 +941,15 @@ document.getElementById(
 'tbodyPrestados'
 );
 
-tbody.innerHTML='';
-
-datos.forEach(exp=>{
-
-tbody.innerHTML+=`
+<tbody.innerHTML+=`
 
 <tr>
 
 <td>${exp.NumeroInterno || ''}</td>
 <td>${exp.NoExpediente || ''}</td>
 <td>${exp.PersonaResponsable || ''}</td>
+<td>${exp.Actividad || ''}</td>
+<td>${exp.Portal || ''}</td>
 
 <td>
 
