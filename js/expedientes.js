@@ -516,6 +516,7 @@ tr.innerHTML = `
 <td>${exp.NoExpediente||''}</td>
 <td>${exp.PersonaResponsable||''}</td>
 <td>${exp.Actividad||''}</td>
+<td>${exp.Portal||''}</td>
 <td>${exp.UsuarioCaptura||''}</td>
 
 <td>
