@@ -941,7 +941,7 @@ document.getElementById(
 'tbodyPrestados'
 );
 
-<tbody.innerHTML+=`
+tbody.innerHTML+=`
 
 <tr>
 
