@@ -1157,13 +1157,6 @@ tbody.innerHTML+=`
 
 <td>${mov.PersonaResponsable || ''}</td>
 
-<td>${mov.Actividad || ''}</td>
-
-<td>${mov.Portal || ''}</td>
-
-<td>${mov.UsuarioSistema || ''}</td>
-
-<td>${mov.Observaciones || ''}</td>
 
 </tr>
 
