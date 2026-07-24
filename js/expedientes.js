@@ -762,7 +762,7 @@ cacheSistema.historico=[];
 
 
 /* actualizar solo módulos necesarios */
-
+await window.cargarExpedientes?.();
 await window.cargarPrestados?.();
 await window.cargarHistorico?.();
 
