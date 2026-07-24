@@ -1171,6 +1171,8 @@ tbody.innerHTML+=`
 
 <td>${mov.Portal || ''}</td>
 
+<td>${mov.UsuarioSistema || ''}</td>
+
 
 </tr>
 
