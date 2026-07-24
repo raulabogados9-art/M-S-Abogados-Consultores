@@ -943,11 +943,17 @@ document.getElementById(
 
 tbody.innerHTML = '';
 
+const fragment =
+document.createDocumentFragment();
+
+
 datos.forEach(exp=>{
 
-tbody.innerHTML += `
+const tr =
+document.createElement('tr');
 
-<tr>
+
+tr.innerHTML = `
 
 <td>${exp.NumeroInterno || ''}</td>
 <td>${exp.NoExpediente || ''}</td>
@@ -976,13 +982,14 @@ Devolver
 
 </td>
 
-</tr>
-
 `;
+
+fragment.appendChild(tr);
 
 });
 
-}
+
+tbody.appendChild(fragment);
 
 async function devolverExpediente(
 btn,
