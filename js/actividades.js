@@ -1,7 +1,3 @@
-/* ==========================
-CARGAR ACTIVIDADES
-========================== */
-
 async function cargarActividadesTabla(){
 
 try{
@@ -23,11 +19,17 @@ if(!tbody)return;
 
 tbody.innerHTML='';
 
+const fragment =
+document.createDocumentFragment();
+
+
 actividadesSistema.forEach(a=>{
 
-tbody.innerHTML+=`
+const tr =
+document.createElement('tr');
 
-<tr>
+
+tr.innerHTML = `
 
 <td>${a.Actividad||''}</td>
 
@@ -46,6 +48,7 @@ Editar
 
 </button>
 
+
 <button
 class="btn btn-danger btn-sm"
 onclick="cambiarEstadoActividad(
@@ -63,11 +66,16 @@ ${a.Activo==='Si'
 
 </td>
 
-</tr>
-
 `;
 
+
+fragment.appendChild(tr);
+
 });
+
+
+tbody.appendChild(fragment);
+
 
 }
 catch(error){
