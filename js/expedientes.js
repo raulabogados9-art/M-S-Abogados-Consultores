@@ -531,7 +531,7 @@ onclick="prestarExpediente(
 '${exp.Actividad}',
 '${exp.Portal}',
 '${exp.Observaciones}',
-'${exp.UsuarioCaptura}'
+'${sessionStorage.getItem("nombre")}'
 )">
 
 Prestar
