@@ -109,15 +109,24 @@ if(!tbody)return;
 
 tbody.innerHTML='';
 
+const fragment =
+document.createDocumentFragment();
+
+
 datos.forEach(p=>{
 
-tbody.innerHTML+=`
+const tr =
+document.createElement('tr');
 
-<tr>
+
+tr.innerHTML = `
 
 <td>${p.Nombre||''}</td>
+
 <td>${p.Actividad||''}</td>
+
 <td>${p.Activo||''}</td>
+
 
 <td>
 
@@ -129,6 +138,7 @@ Editar
 
 </button>
 
+
 <button
 class="btn btn-danger btn-sm"
 onclick="cambiarEstadoPersona('${p.ID}','${p.Activo}')">
@@ -139,11 +149,16 @@ ${p.Activo==='Si' ? 'Desactivar' : 'Activar'}
 
 </td>
 
-</tr>
-
 `;
 
+
+fragment.appendChild(tr);
+
+
 });
+
+
+tbody.appendChild(fragment);
 
 }
 
