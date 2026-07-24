@@ -1157,6 +1157,8 @@ tbody.innerHTML+=`
 
 <td>${mov.PersonaResponsable || ''}</td>
 
+<td>${mov.Portal || ''}</td>
+
 
 </tr>
 
