@@ -991,6 +991,8 @@ fragment.appendChild(tr);
 
 tbody.appendChild(fragment);
 
+}
+
 async function devolverExpediente(
 btn,
 id,
