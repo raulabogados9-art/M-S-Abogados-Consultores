@@ -328,24 +328,27 @@ function crearEncabezadoReporte(
 
 
 
-    worksheet.addRow([]);
+   worksheet.addRow([
 
+    "Fecha",
 
+    "Número Interno",
 
+    "No. Expediente",
 
-    worksheet.addRow([
+    "Tipo Movimiento",
 
-        "Fecha",
+    "Persona Responsable",
 
-        "Número Interno",
+    "Actividad",
 
-        "No. Expediente",
+    "Portal",
 
-        "Tipo Movimiento",
+    "Usuario Captura",
 
-        "Persona Responsable"
+    "Observaciones"
 
-    ]);
+]);
 
 
 
