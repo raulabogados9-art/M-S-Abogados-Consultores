@@ -529,6 +529,7 @@ onclick="prestarExpediente(
 '${exp.NoExpediente}',
 '${exp.PersonaResponsable}',
 '${exp.Actividad}',
+'${exp.Portal}',
 '${exp.Observaciones}',
 '${exp.UsuarioCaptura}'
 )">
@@ -653,6 +654,7 @@ interno,
 expediente,
 responsable,
 actividad,
+portal,
 observaciones,
 usuarioCaptura
 ){
@@ -673,6 +675,7 @@ NumeroInterno:interno,
 NoExpediente:expediente,
 PersonaResponsable:responsable,
 Actividad:actividad,
+Portal:portal,
 
 Estado:'Prestado',
 
@@ -698,10 +701,14 @@ TipoMovimiento:'Salida',
 PersonaResponsable:responsable,
 Actividad:actividad,
 
+Portal:portal,
+
 UsuarioSistema:
 sessionStorage.getItem('nombre'),
 
-FechaHora:fecha
+FechaHora:fecha,
+
+Observaciones:observaciones
 
 };
 
@@ -725,6 +732,7 @@ NoExpediente:expediente,
     
 PersonaResponsable:responsable,
 Actividad:actividad,
+Portal:portal,
 
 FechaPrimerSalida:fecha,
 FechaUltimoMovimiento:fecha,
@@ -741,15 +749,10 @@ FechaHora:fecha
 })
 
 });
+    
 alert(
 'Expediente prestado correctamente'
 );
-
-/* limpiar cache */
-alert(
-'Expediente devuelto correctamente'
-);
-
 
 /* limpiar cache */
 
