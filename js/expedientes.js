@@ -384,7 +384,7 @@ sheet:'EXPEDIENTES',
 alert('Expediente registrado');
 
 const modalElement =
-document.getElementById('modalSalida');
+document.getElementById('modalPrestado');
 
 const modal =
 bootstrap.Modal.getInstance(modalElement);
