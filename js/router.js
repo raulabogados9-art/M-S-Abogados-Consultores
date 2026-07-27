@@ -17,17 +17,28 @@ modulo.nombre
 
 
 
-/*
-Compatibilidad actual
-EXPEDIENTES
-*/
+const cargador =
+CARGADORES_MODULOS[modulo.id];
 
-if(
-modulo.id==="expedientes" &&
-typeof mostrarModulo==="function"
-){
 
-mostrarModulo(
+
+if(!cargador){
+
+console.warn(
+"No existe cargador para:",
+modulo.id
+);
+
+return;
+
+}
+
+
+
+if(!cargador.funcion){
+
+console.warn(
+"Módulo sin función activa:",
 modulo.id
 );
 
@@ -38,25 +49,32 @@ return;
 
 
 /*
-Futuros módulos
-
-Aquí después cargaremos:
-
-personas
-usuarios
-reportes
-
+Buscar función real
 */
 
+const funcion =
+window[cargador.funcion];
 
-console.warn(
-"Módulo sin cargador:",
-modulo.id
+
+
+if(
+typeof funcion !== "function"
+){
+
+console.error(
+"Función no encontrada:",
+cargador.funcion
 );
 
+return;
 
 }
 
+
+
+funcion(
+modulo.id
+);
 
 function abrirModulo(id){
 
