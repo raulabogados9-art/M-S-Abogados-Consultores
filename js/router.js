@@ -38,6 +38,15 @@ Aquí posteriormente cargaremos
 el módulo correspondiente
 */
 
+/* Mientras Expedientes siga siendo
+   independiente usamos el sistema actual */
+
+if(typeof mostrarModulo === "function"){
+
+    mostrarModulo(id);
+
+}
+
 
 }
 
