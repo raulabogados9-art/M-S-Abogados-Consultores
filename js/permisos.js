@@ -74,6 +74,8 @@ Consulta: {
 
 }
 
+};
+
 
 /* =====================================
    VALIDAR PERMISO ACTUAL
