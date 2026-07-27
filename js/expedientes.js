@@ -449,32 +449,40 @@ return cacheSistema.expedientes;
 
 }
 
-const response=
+
+const response =
 await fetch(
 API_URL+'?sheet=EXPEDIENTES'
 );
 
-const texto=
+
+const texto =
 await response.text();
+
 
 console.log(
 'RESPUESTA EXPEDIENTES:',
 texto
 );
 
+
 /* convertir a JSON */
 
-const datos=
+const datos =
 JSON.parse(texto);
 
-cacheSistema.expedientes=
+
+cacheSistema.expedientes =
 datos;
+
 
 renderizarExpedientes(
 datos
 );
 
+
 return datos;
+
 
 }
 catch(error){
@@ -486,7 +494,8 @@ error
 
 }
 
-};
+}
+
 function renderizarExpedientes(datos){
 
 const tbody =
