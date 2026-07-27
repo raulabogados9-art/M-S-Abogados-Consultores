@@ -975,6 +975,10 @@ tr.innerHTML = `
 
 <td>
 
+${
+tienePermiso('devolver')
+?
+`
 <button
 class="btn btn-warning btn-sm"
 onclick="devolverExpediente(
@@ -991,7 +995,10 @@ this,
 Devolver
 
 </button>
-
+`
+:
+''
+}
 </td>
 
 `;
