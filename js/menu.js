@@ -1,50 +1,8 @@
 /* =====================================
-   MENU CENTRAL DEL SISTEMA
-   M&S ABOGADOS CONSULTORES
+MENU CENTRAL DEL SISTEMA
+M&S ABOGADOS CONSULTORES
 ===================================== */
 
-
-/* =====================================
-   DEFINICIÓN DE MÓDULOS
-===================================== */
-
-const MENU_SISTEMA = [
-
-{
-    id:"expedientes",
-    nombre:"Expedientes",
-    permiso:"expedientes"
-},
-
-
-{
-    id:"personas",
-    nombre:"Personas",
-    permiso:"personas"
-},
-
-
-{
-    id:"usuarios",
-    nombre:"Usuarios",
-    permiso:"usuarios"
-},
-
-
-{
-    id:"reportes",
-    nombre:"Reportes",
-    permiso:"reportes"
-}
-
-
-];
-
-
-
-/* =====================================
-   CREAR MENU
-===================================== */
 
 function cargarMenuSistema(){
 
@@ -66,17 +24,25 @@ return;
 }
 
 
-
 menu.innerHTML="";
 
 
 
-MENU_SISTEMA.forEach(modulo=>{
+SISTEMA.modulos.forEach(modulo=>{
+
+
+if(!modulo.activo){
+
+return;
+
+}
+
 
 
 if(
-tienePermiso(modulo.permiso)
+tienePermiso(modulo.id)
 ){
+
 
 const boton =
 document.createElement("button");
