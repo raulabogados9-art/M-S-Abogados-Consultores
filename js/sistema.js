@@ -48,8 +48,24 @@ archivo:"usuarios",
 activo:false
 },
 
-]
 
+{
+id:"reportes",
+nombre:"Reportes",
+archivo:"reportes",
+activo:false
+},
+
+
+{
+id:"bitacora",
+nombre:"Bitácora",
+archivo:"bitacora",
+activo:false
+},
+
+
+]
 
 };
 
