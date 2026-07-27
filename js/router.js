@@ -76,6 +76,9 @@ funcion(
 modulo.id
 );
 
+}
+
+
 function abrirModulo(id){
 
 
