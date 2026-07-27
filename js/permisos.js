@@ -8,47 +8,71 @@ const PERMISOS_ROLES = {
 
 Administrador: {
 
+    /* MÓDULOS */
+
+    expedientes: true,
+    personas: true,
+    usuarios: true,
+    reportes: true,
+    bitacora: true,
+
+
+    /* ACCIONES EXPEDIENTES */
+
     registrar: true,
     prestar: true,
     devolver: true,
     exportar: true,
 
-    personas: true,
-    actividades: true,
-    usuarios: true
+    actividades: true
 
 },
 
 
 Archivo: {
 
+    /* MÓDULOS */
+
+    expedientes: true,
+    personas: false,
+    usuarios: false,
+    reportes: true,
+    bitacora: true,
+
+
+    /* ACCIONES */
+
     registrar: true,
     prestar: true,
     devolver: true,
     exportar: true,
 
-    personas: false,
-    actividades: false,
-    usuarios: false
+    actividades: false
 
 },
 
 
 Consulta: {
 
+    /* MÓDULOS */
+
+    expedientes: true,
+    personas: false,
+    usuarios: false,
+    reportes: true,
+    bitacora: false,
+
+
+    /* ACCIONES */
+
     registrar: false,
     prestar: false,
     devolver: false,
     exportar: false,
 
-    personas: false,
-    actividades: false,
-    usuarios: false
+    actividades: false
 
 }
-
-
-};
 
 
 /* =====================================
