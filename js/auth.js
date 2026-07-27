@@ -214,28 +214,94 @@ const modulos = [
 'usuarios'
 ];
 
+
 modulos.forEach(id => {
-document.getElementById(id)?.style.setProperty('display', 'none');
+
+document
+.getElementById(id)
+?.style
+.setProperty('display','none');
+
 });
 
-document.getElementById('expedientes')?.style.setProperty('display', 'block');
+
+document
+.getElementById('expedientes')
+?.style
+.setProperty('display','block');
+
+
 
 if (rol === 'Administrador') {
 
-['menuUsuarios', 'menuPersonas', 'menuActividades'].forEach(id => {
-document.getElementById(id)?.style.setProperty('display', '');
+[
+'menuUsuarios',
+'menuPersonas',
+'menuActividades'
+].forEach(id => {
+
+document
+.getElementById(id)
+?.style
+.setProperty('display','');
+
 });
 
 } else {
 
-['menuUsuarios', 'menuPersonas', 'menuActividades'].forEach(id => {
-document.getElementById(id)?.style.setProperty('display', 'none');
+
+[
+'menuUsuarios',
+'menuPersonas',
+'menuActividades'
+].forEach(id => {
+
+document
+.getElementById(id)
+?.style
+.setProperty('display','none');
+
 });
 
 }
 
+
+
+/* ==========================
+ACCIONES POR PERMISO
+========================== */
+
+const acciones = {
+
+btnNuevoExpediente:'registrar',
+btnPrestar:'prestar',
+btnDevolver:'devolver',
+btnExportarHistorico:'exportar'
+
+};
+
+
+Object.keys(acciones).forEach(id=>{
+
+const boton =
+document.getElementById(id);
+
+
+if(!boton){
+return;
 }
 
+
+if(!tienePermiso(acciones[id])){
+
+boton.style.display='none';
+
+}
+
+});
+
+
+}
 /* ==========================
 MODULOS
 ========================== */
