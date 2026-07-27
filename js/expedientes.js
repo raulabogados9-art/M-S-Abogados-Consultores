@@ -955,6 +955,18 @@ API_URL + '?sheet=PRESTADOS'
 const datos =
 await response.json();
 
+
+if(!Array.isArray(datos)){
+
+console.error(
+'Respuesta PRESTADOS inválida:',
+datos
+);
+
+return;
+
+}
+
 const tbody =
 document.getElementById(
 'tbodyPrestados'
