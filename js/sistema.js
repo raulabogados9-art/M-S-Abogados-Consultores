@@ -62,7 +62,7 @@ id:"bitacora",
 nombre:"Bitácora",
 archivo:"bitacora",
 activo:false
-},
+}
 
 
 ]
@@ -70,10 +70,8 @@ activo:false
 };
 
 
-
 window.SISTEMA =
 SISTEMA;
-
 
 
 /* ===============================
