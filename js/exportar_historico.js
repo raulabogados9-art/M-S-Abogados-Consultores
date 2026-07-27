@@ -326,28 +326,19 @@ function crearEncabezadoReporte(
 
 
 
-   worksheet.getRow(filaEncabezado)
+  const filaEncabezado = 9;
 
-
+worksheet.getRow(filaEncabezado).values = [
     "Fecha",
-
     "Número Interno",
-
     "No. Expediente",
-
     "Tipo Movimiento",
-
     "Persona Responsable",
-
     "Actividad",
-
     "Portal",
-
     "Usuario Captura",
-
-  
-]);
-
+    "Observaciones"
+];
 
 
 }
@@ -361,35 +352,27 @@ function ajustarColumnas(
 ){
 
 
-    worksheet.columns=[
+    worksheet.columns = [
 
+    { width:16 },
 
-        {
-            width:16
-        },
+    { width:18 },
 
+    { width:20 },
 
-        {
-            width:20
-        },
+    { width:20 },
 
+    { width:35 },
 
-        {
-            width:22
-        },
+    { width:30 },
 
+    { width:20 },
 
-        {
-            width:28
-        },
+    { width:22 },
 
+    { width:40 }
 
-        {
-            width:38
-        }
-
-
-    ];
+];
 
 
 }
@@ -430,8 +413,7 @@ function aplicarFormatoTabla(
 
 
 
-   for(let c = 1; c <= 8; c++)
-){
+   for(let c = 1; c <= 9; c++){
 
     const celda =
     encabezado.getCell(c);
