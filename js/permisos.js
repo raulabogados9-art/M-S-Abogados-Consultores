@@ -103,3 +103,14 @@ function aplicarPermisos(){
     });
 
 }
+
+
+/* =====================================
+   COMPATIBILIDAD CON AUTH.JS
+===================================== */
+
+function configurarPermisos(){
+
+    aplicarPermisos();
+
+}
