@@ -122,6 +122,11 @@ if(typeof configurarPermisos==='function'){
 configurarPermisos();
 }
 
+
+if(typeof aplicarPermisos==='function'){
+aplicarPermisos();
+}
+
 /* password obligatorio */
 
 if(usuarioValido.DebeCambiarPassword==='Si'){
@@ -358,6 +363,11 @@ if (typeof configurarPermisos === 'function') {
 configurarPermisos();
 }
 
+
+if(typeof aplicarPermisos==='function'){
+aplicarPermisos();
+}
+  
 if (sessionStorage.getItem('DebeCambiarPassword') === 'Si') {
 setTimeout(() => {
 const modal = document.getElementById('modalCambioPassword');
