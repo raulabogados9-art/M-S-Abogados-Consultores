@@ -100,7 +100,7 @@ function crearEncabezadoReporte(
 
 
     worksheet.mergeCells(
-        "B1:I1"
+        "B1:H1"
     );
 
 
@@ -150,7 +150,7 @@ function crearEncabezadoReporte(
 
 
     worksheet.mergeCells(
-        "B2:I2"
+        "B2:H2"
     );
 
 
@@ -199,7 +199,7 @@ function crearEncabezadoReporte(
     // ======================================
 
 
-    worksheet.mergeCells("A3:I3");
+    worksheet.mergeCells("A3:H3");
 
 
 
@@ -326,7 +326,7 @@ function crearEncabezadoReporte(
 
 
 
-   worksheet.getRow(filaEncabezado).values = [
+   worksheet.getRow(filaEncabezado)
 
 
     "Fecha",
