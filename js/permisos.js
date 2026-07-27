@@ -76,12 +76,11 @@ function aplicarPermisos(){
 
     const elementos = {
 
-        btnNuevoExpediente:'registrar',
-        btnExportarHistorico:'exportar',
-        btnPrestar:'prestar',
-        btnDevolver:'devolver'
+    btnNuevoExpediente:'registrar',
+    btnPrestarTodos:'prestar',
+    btnExportarHistorico:'exportar'
 
-    };
+};
 
 
     Object.keys(elementos).forEach(id=>{
