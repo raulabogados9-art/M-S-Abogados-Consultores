@@ -530,6 +530,10 @@ tr.innerHTML = `
 
 <td>
 
+${
+tienePermiso('prestar')
+?
+`
 <button
 class="btn btn-primary btn-sm"
 onclick="prestarExpediente(
@@ -546,7 +550,10 @@ onclick="prestarExpediente(
 Prestar
 
 </button>
-
+`
+:
+''
+}
 </td>
 
 `;
