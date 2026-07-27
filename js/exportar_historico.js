@@ -326,7 +326,8 @@ function crearEncabezadoReporte(
 
 
 
-   worksheet.addRow([
+   worksheet.getRow(filaEncabezado).values = [
+
 
     "Fecha",
 
@@ -344,8 +345,7 @@ function crearEncabezadoReporte(
 
     "Usuario Captura",
 
-    "Observaciones"
-
+  
 ]);
 
 
@@ -430,10 +430,7 @@ function aplicarFormatoTabla(
 
 
 
-    for(
-    let c=1;
-    c<=5;
-    c++
+   for(let c = 1; c <= 8; c++)
 ){
 
     const celda =
@@ -939,16 +936,13 @@ try{
     // ======================================
 
 
-    worksheet.autoFilter={
+   worksheet.autoFilter = {
 
+    from: "A9",
 
-        from:"A9",
+    to: "H9"
 
-        to:"E9"
-
-
-    };
-
+};
 
 
 
