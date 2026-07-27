@@ -1,46 +1,75 @@
 /* =====================================
-ROUTER DEL SISTEMA
+SISTEMA CENTRAL
+M&S ABOGADOS CONSULTORES
 ===================================== */
 
 
-function abrirModulo(id){
+const SISTEMA = {
 
 
-const modulo =
-SISTEMA.modulos.find(
-m=>m.id===id
-);
+nombre:
+"M&S Abogados Consultores",
 
 
-if(!modulo){
+version:
+"3.0.0",
 
-console.error(
-"Módulo no encontrado:",
-id
-);
 
-return;
+moduloActual:
+null,
 
+
+modulos:[
+
+{
+id:"expedientes",
+nombre:"Expedientes",
+archivo:"expedientes",
+activo:true
+},
+
+
+{
+id:"personas",
+nombre:"Personas",
+archivo:"personas",
+activo:false
+},
+
+
+{
+id:"usuarios",
+nombre:"Usuarios",
+archivo:"usuarios",
+activo:false
 }
 
 
-SISTEMA.moduloActual=id;
+]
 
 
-console.log(
-"Abriendo módulo:",
-modulo.nombre
-);
+};
 
 
-/*
-Aquí posteriormente cargaremos
-el módulo correspondiente
-*/
+/* ===============================
+OBTENER USUARIO ACTUAL
+=============================== */
 
+function usuarioActual(){
+
+return {
+
+nombre:
+sessionStorage.getItem("nombre"),
+
+
+usuario:
+sessionStorage.getItem("usuario"),
+
+
+rol:
+sessionStorage.getItem("rol")
+
+};
 
 }
-
-
-window.abrirModulo =
-abrirModulo;
