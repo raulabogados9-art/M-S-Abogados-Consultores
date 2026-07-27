@@ -1,23 +1,55 @@
-CARGADORES_MODULOS = {
+/* =====================================
+CARGADORES DE MÓDULOS
+M&S ABOGADOS CONSULTORES
+===================================== */
+
+
+const CARGADORES_MODULOS = {
+
 
 expedientes:{
-funcion:"mostrarModulo"
+
+funcion:
+"mostrarModulo"
+
 },
+
 
 personas:{
-funcion:null
+
+funcion:
+null
+
 },
+
 
 usuarios:{
-funcion:null
+
+funcion:
+null
+
 },
+
 
 reportes:{
-funcion:null
+
+funcion:
+null
+
 },
 
+
 bitacora:{
-funcion:null
-}
+
+funcion:
+null
 
 }
+
+
+};
+
+
+
+window.CARGADORES_MODULOS =
+CARGADORES_MODULOS;
