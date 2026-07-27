@@ -265,7 +265,7 @@ actualizarActividadPersona();
 
     // 5. abrir modal
    const modalElement =
-document.getElementById('modalSalida');
+document.getElementById('modalPrestado');
 
 
 const modal =
@@ -679,7 +679,7 @@ Portal:portal,
 
 Estado:'Prestado',
 
-FechaPrimerSalida:fecha,
+FechaPrimerPrestado:fecha,
 FechaUltimoMovimiento:fecha,
 
 Observaciones:observaciones,
@@ -734,7 +734,7 @@ PersonaResponsable:responsable,
 Actividad:actividad,
 Portal:portal,
 
-FechaPrimerSalida:fecha,
+FechaPrimerPrestado:fecha,
 FechaUltimoMovimiento:fecha,
 
 Observaciones:observaciones,
