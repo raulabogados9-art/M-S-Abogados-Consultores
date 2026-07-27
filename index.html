@@ -181,21 +181,23 @@ Usuarios
 
 
     <button
-        class="btn btn-success mb-3"
-        onclick="abrirModalExpediente()">
+id="btnNuevoExpediente"
+class="btn btn-success mb-3"
+onclick="abrirModalExpediente()">
 
-        Nuevo Expediente
+Nuevo Expediente
 
-    </button>
+</button>
 
 
-    <button
-        class="btn btn-warning mb-3 ms-3"
-        onclick="prestarTodosExpedientes()">
+   <button
+id="btnPrestar"
+class="btn btn-warning mb-3 ms-3"
+onclick="prestarTodosExpedientes()">
 
-        Prestar Todos
+Prestar Todos
 
-    </button>
+</button>
 
 
 </div>
@@ -519,13 +521,14 @@ onkeyup="filtrarExpedientes()">
     </h3>
 
     <button
+        id="btnExportarHistorico"
         class="btn btn-success btn-sm"
         onclick="exportarHistorico()"
         title="Exportar Histórico">
 
         📄 Exportar
 
-    </button>
+</button>
 
 </div>
 
