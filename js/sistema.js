@@ -46,7 +46,7 @@ id:"usuarios",
 nombre:"Usuarios",
 archivo:"usuarios",
 activo:false
-}
+},
 
 ]
 
