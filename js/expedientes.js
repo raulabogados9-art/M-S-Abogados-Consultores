@@ -696,7 +696,7 @@ ID:Date.now(),
 NumeroInterno:interno,
 NoExpediente:expediente,
 
-TipoMovimiento:'Salida',
+TipoMovimiento:'Prestado',
 
 PersonaResponsable:responsable,
 Actividad:actividad,
