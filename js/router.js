@@ -1,5 +1,6 @@
 /* =====================================
 ROUTER DEL SISTEMA
+M&S ABOGADOS CONSULTORES
 ===================================== */
 
 
@@ -11,6 +12,11 @@ SISTEMA.modulos.find(
 m=>m.id===id
 );
 
+
+
+/* ==========================
+VALIDAR EXISTENCIA
+========================== */
 
 if(!modulo){
 
@@ -24,6 +30,51 @@ return;
 }
 
 
+
+/* ==========================
+VALIDAR SI ESTÁ ACTIVO
+========================== */
+
+if(!modulo.activo){
+
+mostrarAccesoDenegado(
+modulo.nombre
+);
+
+return;
+
+}
+
+
+
+/* ==========================
+VALIDAR PERMISO
+========================== */
+
+if(
+typeof tienePermiso === "function"
+){
+
+if(
+!tienePermiso(modulo.id)
+){
+
+mostrarAccesoDenegado(
+modulo.nombre
+);
+
+return;
+
+}
+
+}
+
+
+
+/* ==========================
+ACTUALIZAR SISTEMA
+========================== */
+
 SISTEMA.moduloActual=id;
 
 
@@ -33,13 +84,12 @@ modulo.nombre
 );
 
 
-/*
-Aquí posteriormente cargaremos
-el módulo correspondiente
-*/
 
-/* Mientras Expedientes siga siendo
-   independiente usamos el sistema actual */
+/* ==========================
+COMPATIBILIDAD ACTUAL
+EXPEDIENTES
+========================== */
+
 
 if(typeof mostrarModulo === "function"){
 
@@ -48,7 +98,23 @@ if(typeof mostrarModulo === "function"){
 }
 
 
+
 }
+
+
+
+function mostrarAccesoDenegado(nombreModulo){
+
+
+alert(
+"Este usuario no tiene acceso al módulo: "
++
+nombreModulo
+);
+
+
+}
+
 
 
 window.abrirModulo =
