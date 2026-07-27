@@ -337,7 +337,7 @@ worksheet.getRow(filaEncabezado).values = [
     "Actividad",
     "Portal",
     "Usuario Captura",
-    "Observaciones"
+  
 ];
 
 
@@ -413,7 +413,7 @@ function aplicarFormatoTabla(
 
 
 
-   for(let c = 1; c <= 9; c++){
+   for(let c = 1; c <= 8; c++){
 
     const celda =
     encabezado.getCell(c);
@@ -845,8 +845,7 @@ try{
 
     mov.UsuarioSistema || "",
 
-    mov.Observaciones || ""
-
+    
 ]);
 
 
