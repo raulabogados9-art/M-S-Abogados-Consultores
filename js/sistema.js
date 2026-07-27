@@ -29,7 +29,7 @@ modulos:[
 id:"expedientes",
 nombre:"Expedientes",
 archivo:"expedientes",
-activo:true
+activo:false
 },
 
 
