@@ -450,10 +450,20 @@ return cacheSistema.expedientes;
 }
 
 
-const response =
-await fetch(
-API_URL+'?sheet=EXPEDIENTES'
+const url =
+API_URL+'?sheet=EXPEDIENTES';
+
+console.log(
+"URL CONSULTADA:",
+url
 );
+
+
+const response =
+await fetch(url,{
+method:'GET',
+cache:'no-cache'
+});
 
 
 const texto =
@@ -488,8 +498,13 @@ return datos;
 catch(error){
 
 console.error(
-'Error cargando expedientes:',
+"ERROR CARGANDO EXPEDIENTES:",
 error
+);
+
+console.error(
+"API UTILIZADA:",
+API_URL+'?sheet=EXPEDIENTES'
 );
 
 }
