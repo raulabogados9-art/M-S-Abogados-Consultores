@@ -100,7 +100,7 @@ function crearEncabezadoReporte(
 
 
     worksheet.mergeCells(
-        "B1:E1"
+        "B1:I1"
     );
 
 
@@ -150,7 +150,7 @@ function crearEncabezadoReporte(
 
 
     worksheet.mergeCells(
-        "B2:E2"
+        "B2:I2"
     );
 
 
@@ -199,9 +199,7 @@ function crearEncabezadoReporte(
     // ======================================
 
 
-    worksheet.mergeCells(
-        "A3:E3"
-    );
+    worksheet.mergeCells("A3:I3");
 
 
 
@@ -850,20 +848,27 @@ try{
 
 
 
-            worksheet.addRow([
+           worksheet.addRow([
 
+    fecha,
 
-                fecha,
+    mov.NumeroInterno || "",
 
-                mov.NumeroInterno || "",
+    mov.NoExpediente || "",
 
-                mov.NoExpediente || "",
+    mov.TipoMovimiento || "",
 
-                mov.TipoMovimiento || "",
+    mov.PersonaResponsable || "",
 
-                mov.PersonaResponsable || ""
+    mov.Actividad || "",
 
-            ]);
+    mov.Portal || "",
+
+    mov.UsuarioSistema || "",
+
+    mov.Observaciones || ""
+
+]);
 
 
 
