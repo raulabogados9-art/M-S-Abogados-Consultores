@@ -3,6 +3,60 @@ ROUTER DEL SISTEMA
 M&S ABOGADOS CONSULTORES
 ===================================== */
 
+/* =====================================
+EJECUTAR MÓDULO
+===================================== */
+
+function ejecutarModulo(modulo){
+
+
+console.log(
+"Cargando módulo:",
+modulo.nombre
+);
+
+
+
+/*
+Compatibilidad actual
+EXPEDIENTES
+*/
+
+if(
+modulo.id==="expedientes" &&
+typeof mostrarModulo==="function"
+){
+
+mostrarModulo(
+modulo.id
+);
+
+return;
+
+}
+
+
+
+/*
+Futuros módulos
+
+Aquí después cargaremos:
+
+personas
+usuarios
+reportes
+
+*/
+
+
+console.warn(
+"Módulo sin cargador:",
+modulo.id
+);
+
+
+}
+
 
 function abrirModulo(id){
 
@@ -83,22 +137,9 @@ console.log(
 modulo.nombre
 );
 
-
-
-/* ==========================
-COMPATIBILIDAD ACTUAL
-EXPEDIENTES
-========================== */
-
-
-if(typeof mostrarModulo === "function"){
-
-    mostrarModulo(id);
-
-}
-
-
-
+ejecutarModulo(
+modulo
+);
 }
 
 
