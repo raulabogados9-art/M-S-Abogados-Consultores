@@ -74,11 +74,15 @@ PERMISOS_ROLES[rol][accion] === true
 
 function aplicarPermisos(){
 
-    const elementos = {
+  const elementos = {
 
-    btnNuevoExpediente:'registrar',
-    btnPrestarTodos:'prestar',
-    btnExportarHistorico:'exportar'
+btnNuevoExpediente:'registrar',
+btnPrestarTodos:'prestar',
+btnExportarHistorico:'exportar',
+
+menuPersonas:'personas',
+menuActividades:'actividades',
+menuUsuarios:'usuarios'
 
 };
 
