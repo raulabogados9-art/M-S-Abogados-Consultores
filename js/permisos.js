@@ -67,3 +67,40 @@ PERMISOS_ROLES[rol][accion] === true
 );
 
 }
+
+/* =====================================
+   APLICAR PERMISOS VISUALES
+===================================== */
+
+function aplicarPermisos(){
+
+    const elementos = {
+
+        btnNuevoExpediente:'registrar',
+        btnExportarHistorico:'exportar',
+        btnPrestar:'prestar',
+        btnDevolver:'devolver'
+
+    };
+
+
+    Object.keys(elementos).forEach(id=>{
+
+        const elemento =
+        document.getElementById(id);
+
+
+        if(!elemento){
+            return;
+        }
+
+
+        if(!tienePermiso(elementos[id])){
+
+            elemento.style.display='none';
+
+        }
+
+    });
+
+}
