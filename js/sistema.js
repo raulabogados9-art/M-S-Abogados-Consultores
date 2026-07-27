@@ -8,6 +8,10 @@ const SISTEMA = {
 
 
 nombre:
+"M&S Sistema Central",
+
+
+empresa:
 "M&S Abogados Consultores",
 
 
@@ -44,11 +48,16 @@ archivo:"usuarios",
 activo:false
 }
 
-
 ]
 
 
 };
+
+
+
+window.SISTEMA =
+SISTEMA;
+
 
 
 /* ===============================
@@ -60,16 +69,20 @@ function usuarioActual(){
 return {
 
 nombre:
-sessionStorage.getItem("nombre"),
+sessionStorage.getItem("nombre") || "",
 
 
 usuario:
-sessionStorage.getItem("usuario"),
+sessionStorage.getItem("usuario") || "",
 
 
 rol:
-sessionStorage.getItem("rol")
+sessionStorage.getItem("rol") || ""
 
 };
 
 }
+
+
+window.usuarioActual =
+usuarioActual;
