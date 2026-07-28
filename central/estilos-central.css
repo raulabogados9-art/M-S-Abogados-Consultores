@@ -1,1 +1,480 @@
+/* =====================================================
+M&S SISTEMA CENTRAL V3.0
+ESTILOS GENERALES ERP
+===================================================== */
 
+
+/* ==========================
+RESET GENERAL
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+
+body{
+
+    height:100vh;
+    background:#f4f6f9;
+    color:#333;
+
+}
+
+
+/* ==========================
+CONTENEDOR PRINCIPAL
+========================== */
+
+.sistema-central{
+
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+
+}
+
+
+
+/* ==========================
+HEADER INSTITUCIONAL
+========================== */
+
+.header-central{
+
+    height:80px;
+
+    background:#ffffff;
+
+    border-bottom:
+    1px solid #dcdcdc;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+    0 25px;
+
+}
+
+
+/* IDENTIDAD */
+
+.identidad{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+.logo-central{
+
+    width:55px;
+
+    height:55px;
+
+    object-fit:contain;
+
+    margin-right:15px;
+
+}
+
+
+
+.nombre-sistema h1{
+
+    font-size:24px;
+
+    color:#1f3c5b;
+
+    font-weight:700;
+
+}
+
+
+
+.nombre-sistema span{
+
+    font-size:14px;
+
+    color:#777;
+
+}
+
+
+
+/* MODULO ACTUAL */
+
+.modulo-actual{
+
+    text-align:center;
+
+}
+
+
+
+.modulo-actual span{
+
+    font-size:12px;
+
+    color:#777;
+
+}
+
+
+
+.modulo-actual h2{
+
+    font-size:22px;
+
+    color:#1f3c5b;
+
+}
+
+
+
+/* USUARIO */
+
+.usuario-central{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+}
+
+
+
+.usuario-central strong{
+
+    font-size:15px;
+
+}
+
+
+
+.usuario-central span{
+
+    font-size:13px;
+
+    color:#666;
+
+}
+
+
+
+.usuario-central button{
+
+
+    margin-top:8px;
+
+    padding:
+    6px 14px;
+
+
+    border:none;
+
+    border-radius:5px;
+
+    background:#8b0000;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+
+
+.usuario-central button:hover{
+
+    background:#a30000;
+
+}
+
+
+
+/* ==========================
+CUERPO CENTRAL
+========================== */
+
+
+.contenedor-central{
+
+    flex:1;
+
+    display:flex;
+
+    overflow:hidden;
+
+}
+
+
+
+/* ==========================
+SIDEBAR
+========================== */
+
+
+.sidebar-central{
+
+
+    width:250px;
+
+    background:#1f2937;
+
+    color:white;
+
+    padding:20px 0;
+
+
+}
+
+
+
+#menuCentral{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+
+#menuCentral a{
+
+
+    padding:
+    14px 25px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:15px;
+
+
+}
+
+
+
+#menuCentral a:hover{
+
+
+    background:#374151;
+
+}
+
+
+
+/* ==========================
+AREA CONTENIDO
+========================== */
+
+
+.contenido-central{
+
+
+    flex:1;
+
+    padding:25px;
+
+    overflow-y:auto;
+
+
+}
+
+
+
+/* BREADCRUMB */
+
+
+.breadcrumb{
+
+    background:white;
+
+    padding:12px 18px;
+
+    border-radius:6px;
+
+    margin-bottom:20px;
+
+    color:#666;
+
+    box-shadow:
+    0 1px 3px rgba(0,0,0,.1);
+
+}
+
+
+
+#breadcrumbModulo{
+
+    font-weight:bold;
+
+    color:#1f3c5b;
+
+}
+
+
+
+/* ==========================
+VISTA CENTRAL
+========================== */
+
+
+#vistaCentral{
+
+
+    background:white;
+
+    min-height:400px;
+
+    border-radius:8px;
+
+    padding:30px;
+
+    box-shadow:
+
+    0 2px 5px rgba(0,0,0,.1);
+
+}
+
+
+
+#vistaCentral h2{
+
+    color:#1f3c5b;
+
+    margin-bottom:15px;
+
+}
+
+
+
+#vistaCentral p{
+
+    color:#666;
+
+}
+
+
+
+/* ==========================
+TARJETAS DASHBOARD
+PREPARACIÓN FUTURA
+========================== */
+
+
+.card-dashboard{
+
+
+    background:white;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    box-shadow:
+
+    0 2px 8px rgba(0,0,0,.1);
+
+}
+
+
+
+.grid-dashboard{
+
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+}
+
+
+
+
+
+/* ==========================
+BOTONES SISTEMA
+========================== */
+
+
+.btn-central{
+
+
+    background:#1f3c5b;
+
+    color:white;
+
+    border:none;
+
+    padding:
+    10px 18px;
+
+    border-radius:5px;
+
+    cursor:pointer;
+
+
+}
+
+
+.btn-central:hover{
+
+
+    background:#294f75;
+
+}
+
+
+
+/* ==========================
+FOOTER
+========================== */
+
+
+.footer-central{
+
+
+    height:45px;
+
+    background:#ffffff;
+
+    border-top:
+
+    1px solid #ddd;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-around;
+
+
+    font-size:13px;
+
+    color:#666;
+
+
+}
