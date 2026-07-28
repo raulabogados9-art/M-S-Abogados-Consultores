@@ -29,44 +29,44 @@ modulos:[
 id:"expedientes",
 nombre:"Expedientes",
 archivo:"expedientes",
+area:"operacion",
 activo:true
 },
-
 
 {
 id:"personas",
 nombre:"Personas",
 archivo:"personas",
+area:"operacion",
 activo:false
 },
-
 
 {
 id:"usuarios",
 nombre:"Usuarios",
 archivo:"usuarios",
+area:"seguridad",
 activo:false
 },
-
 
 {
 id:"reportes",
 nombre:"Reportes",
 archivo:"reportes",
+area:"administracion",
 activo:false
 },
-
 
 {
 id:"bitacora",
 nombre:"Bitácora",
 archivo:"bitacora",
+area:"administracion",
 activo:false
 }
 
-
 ]
-
+  
 };
 
 
