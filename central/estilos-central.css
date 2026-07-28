@@ -723,3 +723,49 @@ FOOTER
     font-weight:bold;
 
 }
+
+/* ==========================
+   DASHBOARD CENTRAL V3.0
+========================== */
+
+
+.dashboard-central{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+.tarjeta-dashboard{
+
+    padding:20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+
+
+.tarjeta-dashboard h3{
+
+    margin-top:0;
+
+}
+
+
+
+.panel-bienvenida{
+
+    padding:25px;
+
+}
