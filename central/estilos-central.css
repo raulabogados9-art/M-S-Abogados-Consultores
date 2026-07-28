@@ -568,3 +568,99 @@ FOOTER
     margin-top:5px;
 
 }
+
+/* ==========================
+   ESTRUCTURA PRINCIPAL ERP V3.0
+========================== */
+
+
+/* Contenedor general */
+
+.sistema-central{
+
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+
+}
+
+
+/* Cuerpo entre header y footer */
+
+.contenedor-central{
+
+    flex:1;
+
+    display:flex;
+
+    overflow:hidden;
+
+}
+
+
+
+/* ==========================
+   MENU LATERAL
+========================== */
+
+
+.sidebar-central{
+
+    width:240px;
+
+    min-height:100%;
+
+    padding:20px;
+
+}
+
+
+
+/* Navegación */
+
+#menuCentral{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+
+/* ==========================
+   AREA DE TRABAJO
+========================== */
+
+
+.contenido-central{
+
+    flex:1;
+
+    padding:25px;
+
+    overflow:auto;
+
+}
+
+
+
+/* Ruta de navegación */
+
+.breadcrumb{
+
+    margin-bottom:20px;
+
+}
+
+
+
+/* Vista principal */
+
+#vistaCentral{
+
+    padding:25px;
+
+}
