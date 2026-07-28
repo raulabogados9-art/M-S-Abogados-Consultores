@@ -18,6 +18,16 @@ empresa:
 version:
 "3.0.0",
 
+areas:[
+
+"operacion",
+
+"administracion",
+
+"seguridad"
+
+],
+
 
 moduloActual:
 null,
