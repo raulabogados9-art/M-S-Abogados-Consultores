@@ -236,9 +236,16 @@ modulo.nombre;
 enlace.onclick =
 ()=>{
 
+
+    activarMenu(
+    enlace
+    );
+
+
     abrirModulo(
     modulo
     );
+
 
 };
 
@@ -256,6 +263,39 @@ enlace
 }
 
 
+/* ==========================
+ACTIVAR MENU
+========================== */
+
+
+function activarMenu(
+elemento
+){
+
+
+const enlaces =
+document.querySelectorAll(
+"#menuCentral a"
+);
+
+
+
+enlaces.forEach(
+enlace=>{
+
+    enlace.classList.remove(
+    "activo"
+    );
+
+});
+
+
+elemento.classList.add(
+"activo"
+);
+
+
+}
 
 
 
