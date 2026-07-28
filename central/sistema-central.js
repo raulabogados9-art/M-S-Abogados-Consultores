@@ -62,7 +62,6 @@ const sistemaCentral = {
         },
 
 
-
         {
             id:"reportes",
             nombre:"Reportes",
