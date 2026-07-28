@@ -106,15 +106,12 @@ document.getElementById(
 'mainContainer'
 ).style.display='block';
 
-document.getElementById(
-'lblUsuario'
-).innerText=
-usuarioValido.NombreCompleto;
 
-document.getElementById(
-'lblRol'
-).innerText=
-usuarioValido.Rol;
+if(typeof mostrarUsuarioSesion==='function'){
+
+    mostrarUsuarioSesion();
+
+}
 
 /* permisos */
 
