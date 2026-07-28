@@ -664,3 +664,51 @@ FOOTER
     padding:25px;
 
 }
+
+/* ==========================
+   MENU CENTRAL ERP V3.0
+========================== */
+
+
+/* Títulos de categorías */
+
+.titulo-menu{
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    margin-top:20px;
+
+    margin-bottom:8px;
+
+    text-transform:uppercase;
+
+}
+
+
+/* Opciones del menú */
+
+#menuCentral a{
+
+    display:block;
+
+    padding:12px 15px;
+
+    text-decoration:none;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+}
+
+
+
+/* Efecto selección */
+
+#menuCentral a:hover{
+
+    transform:translateX(4px);
+
+}
