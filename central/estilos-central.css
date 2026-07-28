@@ -712,3 +712,14 @@ FOOTER
     transform:translateX(4px);
 
 }
+
+/* ==========================
+   MENU ACTIVO
+========================== */
+
+
+#menuCentral a.activo{
+
+    font-weight:bold;
+
+}
