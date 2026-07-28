@@ -99,13 +99,14 @@ SISTEMA.moduloActual.slice(1);
 }
 
 
-window.mostrarInformacionSistema =
-mostrarInformacionSistema;
-
 /* ==========================
-EXPORTAR FUNCIÓN
+EXPORTAR FUNCIONES
 ========================== */
 
 
 window.mostrarUsuarioSesion =
 mostrarUsuarioSesion;
+
+
+window.mostrarInformacionSistema =
+mostrarInformacionSistema;
