@@ -353,8 +353,11 @@ if (!nombre) return;
 document.getElementById('loginContainer').style.display = 'none';
 document.getElementById('mainContainer').style.display = 'block';
 
-document.getElementById('lblUsuario').innerText = sessionStorage.getItem('nombre');
-document.getElementById('lblRol').innerText = sessionStorage.getItem('rol');
+if(typeof mostrarUsuarioSesion==='function'){
+
+    mostrarUsuarioSesion();
+
+}
 
 if (typeof configurarPermisos === 'function') {
 configurarPermisos();
