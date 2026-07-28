@@ -282,15 +282,134 @@ document.getElementById(
 
 
 
+switch(modulo.id){
+
+
+case "dashboard":
+
+
+vista.innerHTML = `
+
+<h2>
+Dashboard
+</h2>
+
+<p>
+Panel principal del Sistema Central.
+</p>
+
+`;
+
+break;
+
+
+
+case "expedientes":
+
+
+vista.innerHTML = `
+
+<h2>
+Expedientes
+</h2>
+
+<p>
+Módulo de gestión de expedientes.
+</p>
+
+`;
+
+break;
+
+
+
+case "personas":
+
+
+vista.innerHTML = `
+
+<h2>
+Personas
+</h2>
+
+<p>
+Módulo de administración de personas.
+</p>
+
+`;
+
+break;
+
+
+
+case "reportes":
+
+
+vista.innerHTML = `
+
+<h2>
+Reportes
+</h2>
+
+<p>
+Módulo de reportes del sistema.
+</p>
+
+`;
+
+break;
+
+
+
+case "usuarios":
+
+
+vista.innerHTML = `
+
+<h2>
+Usuarios
+</h2>
+
+<p>
+Administración de usuarios y permisos.
+</p>
+
+`;
+
+break;
+
+
+
+case "bitacora":
+
+
+vista.innerHTML = `
+
+<h2>
+Bitácora
+</h2>
+
+<p>
+Registro de seguridad y auditoría.
+</p>
+
+`;
+
+break;
+
+
+
+default:
+
+
 vista.innerHTML = `
 
 <h2>
 ${modulo.nombre}
 </h2>
 
-
 <p>
-Módulo preparado para integración.
+Módulo no configurado.
 </p>
 
 `;
@@ -299,6 +418,8 @@ Módulo preparado para integración.
 
 }
 
+
+}
 
 
 
