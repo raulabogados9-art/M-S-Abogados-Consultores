@@ -16,32 +16,35 @@ usuarioActual();
 
 
 
-const elemento =
+const lblUsuario =
 document.getElementById(
-"usuarioSesion"
+"lblUsuario"
 );
 
 
 
-if(!elemento){
-
-console.warn(
-"No existe usuarioSesion"
+const lblRol =
+document.getElementById(
+"lblRol"
 );
 
-return;
+
+
+if(lblUsuario){
+
+lblUsuario.innerText =
+usuario.nombre || "";
 
 }
 
 
 
-elemento.innerHTML =
+if(lblRol){
 
-usuario.nombre
-+
-" | "
-+
-usuario.rol;
+lblRol.innerText =
+usuario.rol || "";
+
+}
 
 
 
@@ -50,30 +53,9 @@ usuario.rol;
 
 
 /* ==========================
-CERRAR SESIÓN
+EXPORTAR FUNCIÓN
 ========================== */
 
-function cerrarSesion(){
-
-
-sessionStorage.clear();
-
-
-
-window.location.reload();
-
-
-}
-
-
-
-/* ==========================
-EXPORTAR FUNCIONES
-========================== */
 
 window.mostrarUsuarioSesion =
 mostrarUsuarioSesion;
-
-
-window.cerrarSesion =
-cerrarSesion;
