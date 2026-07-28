@@ -448,19 +448,6 @@ BOTONES SISTEMA
 
 
 /* ==========================
-   LOGO SISTEMA CENTRAL
-========================== */
-
-.logo img,
-.logo-img{
-    height:60px;
-    width:auto;
-    object-fit:contain;
-}
-
-
-
-/* ==========================
 FOOTER
 ========================== */
 
@@ -488,5 +475,96 @@ FOOTER
 
     color:#666;
 
+
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+/* estilos actuales del footer */
+
+
+/* ==========================
+   AJUSTES HEADER CENTRAL V3.0
+========================== */
+
+.identidad img{
+    height:60px;
+    width:auto;
+    object-fit:contain;
+}
+
+
+.header-central{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    height:85px;
+    padding:0 25px;
+
+}
+
+
+.identidad{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+}
+
+
+.nombre-sistema h1{
+
+    margin:0;
+    font-size:24px;
+
+}
+
+
+.nombre-sistema span{
+
+    font-size:14px;
+
+}
+
+
+.modulo-actual{
+
+    text-align:center;
+
+}
+
+
+.modulo-actual span{
+
+    font-size:12px;
+
+}
+
+
+.modulo-actual h2{
+
+    margin:3px 0 0;
+    font-size:18px;
+
+}
+
+
+.usuario-central{
+
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+
+}
+
+
+.usuario-central button{
+
+    margin-top:5px;
 
 }
