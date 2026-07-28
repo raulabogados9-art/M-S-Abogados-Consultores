@@ -153,6 +153,13 @@ ACTUALIZAR SISTEMA
 SISTEMA.moduloActual=id;
 
 
+if(typeof mostrarInformacionSistema==='function'){
+
+    mostrarInformacionSistema();
+
+}
+
+
 console.log(
 "Abriendo módulo:",
 modulo.nombre
