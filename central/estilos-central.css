@@ -447,6 +447,18 @@ BOTONES SISTEMA
 }
 
 
+/* ==========================
+   LOGO SISTEMA CENTRAL
+========================== */
+
+.logo img,
+.logo-img{
+    height:60px;
+    width:auto;
+    object-fit:contain;
+}
+
+
 
 /* ==========================
 FOOTER
