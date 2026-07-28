@@ -9,40 +9,52 @@ const CARGADORES_MODULOS = {
 
 expedientes:{
 
-funcion:
-"mostrarModulo"
+nombre:"Expedientes",
+
+funcion:"mostrarModulo",
+
+inicializar:true
 
 },
 
 
 personas:{
 
-funcion:
-null
+nombre:"Personas",
+
+funcion:null,
+
+inicializar:false
 
 },
-
 
 usuarios:{
 
-funcion:
-null
+nombre:"Usuarios",
+
+funcion:null,
+
+inicializar:false
 
 },
-
 
 reportes:{
 
-funcion:
-null
+nombre:"Reportes",
+
+funcion:null,
+
+inicializar:false
 
 },
 
-
 bitacora:{
 
-funcion:
-null
+nombre:"Bitácora",
+
+funcion:null,
+
+inicializar:false
 
 }
 
