@@ -56,6 +56,14 @@ const sistemaCentral = {
 
 
         {
+        id:"personas",
+        nombre:"Personas",
+        categoria:"OPERACIÓN"
+        },
+
+
+
+        {
             id:"reportes",
             nombre:"Reportes",
             categoria:"OPERACIÓN"
